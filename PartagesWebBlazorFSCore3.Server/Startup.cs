@@ -51,6 +51,7 @@ namespace PartagesWebBlazorFSCore3.Server
             services.AddTransient<Seed>();
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
+            services.AddScoped<IForumRepository, ForumRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters

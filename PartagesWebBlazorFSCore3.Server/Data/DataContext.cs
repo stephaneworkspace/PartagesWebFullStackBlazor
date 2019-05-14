@@ -28,5 +28,17 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         /// Entity Message
         /// </summary> 
         public DbSet<Message> Messages { get; set; }
+        /// <summary>
+        /// Entity ForumCategorie
+        /// </summary>
+        public DbSet<ForumCategorie> ForumCategories { get; set; }
+        /// <summary>
+        /// Entity ForumTopic
+        /// </summary>
+        public DbSet<ForumTopic> ForumTopics { get; set; }
+        /// <summary>
+        /// Entity ForumPost
+        /// </summary>
+        public DbSet<ForumPost> ForumPosts { get; set; }
     }
 }

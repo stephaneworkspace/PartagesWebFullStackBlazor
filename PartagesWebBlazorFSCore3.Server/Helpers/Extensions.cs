@@ -20,7 +20,7 @@ namespace PartagesWebBlazorFSCore3.Server.Helpers
         /// <summary>
         /// Header for Application-Error used in Configure from Startup.cs
         /// </summary>
-        /// <remarks>13.05.2019: For Angular/Asp.net Core back/front</remarks>
+        /// <remarks>14.05.2019: For Angular/Asp.net Core back/front</remarks>
         public static void AddApplicationError(this HttpResponse response, string message)
         {
             response.Headers.Add("Application-Error", message);

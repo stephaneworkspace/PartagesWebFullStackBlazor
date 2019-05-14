@@ -17,7 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using NSwag.Annotations;
 using PartagesWebBlazorFSCore3.Server.Data;
 using PartagesWebBlazorFSCore3.Server.Dtos.Auth.Input;
-using PartagesWebBlazorFSCore3.Server.Dtos.Auth.Outpt;
+using PartagesWebBlazorFSCore3.Server.Dtos.Auth.Output;
 using PartagesWebBlazorFSCore3.Shared.Models;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -29,7 +29,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    // [SwaggerTag("Auth", Description = "Authentification controller")]
+    [SwaggerTag("Auth", Description = "Authentification controller")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthRepository _repo;
@@ -75,7 +75,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         /// </summary> 
         /// <param name="dto">Dto</param>
         [HttpPost("login")]
-        [SwaggerResponse(HttpStatusCode.OK, typeof(void), Description = "Ok with token")]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(void), Description = "Ok")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, typeof(void), Description = "Pas autorisé à se connecter")]
         public async Task<IActionResult> Login(UserForLoginInputDto dto)
         {

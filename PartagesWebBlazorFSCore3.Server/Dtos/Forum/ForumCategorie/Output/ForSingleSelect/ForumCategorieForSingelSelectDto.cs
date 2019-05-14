@@ -7,16 +7,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PartagesWebBlazorFSCore3.Server.Dtos.Auth.Outpt
+namespace PartagesWebBlazorFSCore3.Server.Dtos.Forum.ForumCategorie.Output.ForSingleSelect
 {
     /// <summary>
     /// Dto
     /// </summary>
-    public class UserForWorkOutputDto
+    public class ForumCategorieForSingleSelectDto
     {
         /// <summary>
-        /// Username
+        /// Primary key
         /// </summary>
-        public string Username { get; set; }
+        public int Id { get; set; }
+        /// <summary>
+        /// Categorie name
+        /// </summary>
+        public string Name { get; set; }
     }
 }

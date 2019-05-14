@@ -15,7 +15,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
     /// <summary>
     /// Repository
     /// </summary>
-    interface IForumRepository
+    public interface IForumRepository
     {
         /// <summary>  
         /// Add entity in DataContext
@@ -63,7 +63,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         /// </summary>
         /// <param name="id">ForumCategorie primary key</param>
         /// <returns></returns>
-        Task<int> GetCountPostFromForumCategorie(int id);
+        Task<int> GetCountForumPostFromForumCategorie(int id);
         /// <summary>
         /// Last ForumPost from a ForumCategorie
         /// </summary>
@@ -93,7 +93,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         /// <returns></returns>
         Task<int> GetCountLastForumPostFromAForumTopic(int id); 
         /// <summary>
-        /// Get last ForumPoste from a ForumTopic
+        /// Get last ForumPost from a ForumTopic
         /// </summary>
         /// <param name="id">ForumTopic primary key</param>
         /// <returns></returns>
@@ -104,7 +104,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         /// <param name="id">ForumTopic primary key</param>
         Task<bool> IncViewForumTopic(int id);
         /**
-         * ForumPoste
+         * ForumPost
          **/
         /// <summary>  
         /// Get ForumPosts paged
@@ -113,7 +113,6 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         /// <param name="id">ForumTopic primary key</param>
         /// <returns></returns> 
         Task<PagedList<ForumPost>> GetForumPosts(ForumPostParams forumPostParams, int id);
-
         /// <summary>  
         /// Get ForumPost
         /// </summary>
