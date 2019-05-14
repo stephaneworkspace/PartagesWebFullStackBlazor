@@ -60,7 +60,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         /// <param name="userId">User [Authorize]</param>
         /// <returns></returns> 
         /// <remarks>User authentification by token</remarks>
-        Task<PagedList<Message>> GetMessageries(MessageParams messageParams, int userId);
+        Task<PagedList<Message>> GetMessages(MessageParams messageParams, int userId);
         /// <summary>
         /// Count unread message
         /// </summary>
