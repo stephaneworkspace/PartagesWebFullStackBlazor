@@ -12,14 +12,14 @@ namespace PartagesWebBlazorFSCore3.Server.Helpers.PagedParams
     /// <summary>
     /// Pagination params
     /// </summary>
-    public class MessageParams
+    public class ForumPostParams
     {
         /// <summary>
         /// Maximum page size
         /// </summary>
         private const int MaxPageSize = 50;
         /// <summary>
-        /// Numéro de pages
+        /// Page number
         /// </summary>
         public int PageNumber { get; set; } = 1;
         /// <summary>

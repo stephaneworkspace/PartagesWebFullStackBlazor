@@ -40,6 +40,10 @@ namespace PartagesWebBlazorFSCore3.Shared.Models
         /// </summary>
         public DateTime Date { get; set; }
         /// <summary>
+        /// Subject
+        /// </summary>
+        public string Subject { get; set; }
+        /// <summary>
         /// Content of the message
         /// </summary>
         public string Content { get; set; }

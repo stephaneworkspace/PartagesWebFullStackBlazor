@@ -56,7 +56,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         /// <summary>  
         /// Read all Message
         /// </summary>
-        /// <param name="messageParams">Pagination</param>
+        /// <param name="messageParams">Pagination params</param>
         /// <param name="userId">User [Authorize]</param>
         /// <returns></returns> 
         /// <remarks>User authentification by token</remarks>
