@@ -26,9 +26,14 @@ namespace PartagesWebBlazorFSCore3.Server
         {
             Configuration = configuration;
         }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        /// <summary>
+        /// Method called by the runtime
+        /// </summary>
+        /// <param name="services">Services</param>
+        /// <remarks>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        /// </remarks>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(x => x.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -42,8 +47,12 @@ namespace PartagesWebBlazorFSCore3.Server
                     new[] { "application/octet-stream" });
             });
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// Configure
+        /// </summary>
+        /// <param name="app">Application Builder</param>
+        /// <param name="env">Host Environment</param>
+        /// <remarks>This method gets called by the runtime. Use this method to configure the HTTP request pipeline.</remarks>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseResponseCompression();
