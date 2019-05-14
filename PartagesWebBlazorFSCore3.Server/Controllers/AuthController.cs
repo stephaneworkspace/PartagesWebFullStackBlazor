@@ -97,7 +97,6 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var user = _mapper.Map<UserForWorkOutputDto>(userFromRepo);
-            // Messagerie non lu
             var messagesUnread = await _repoMessage.GetCountMessagesUnread(userFromRepo.Id);
             return Ok(new
             {
