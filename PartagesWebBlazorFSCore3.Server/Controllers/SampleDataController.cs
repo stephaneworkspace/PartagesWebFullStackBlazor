@@ -1,4 +1,8 @@
-﻿using PartagesWebBlazorFSCore3.Shared;
+﻿//-----------------------------------------------------------------------
+// <license>GPL 2</license>
+// <author>Stéphane</author>
+//-----------------------------------------------------------------------
+using PartagesWebBlazorFSCore3.Shared;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

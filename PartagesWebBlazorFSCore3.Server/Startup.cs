@@ -48,7 +48,7 @@ namespace PartagesWebBlazorFSCore3.Server
             services.AddSwaggerDocument();
             // services.AddCors();
             services.AddAutoMapper();
-            // services.AddTransient<Seed>();
+            services.AddTransient<Seed>();
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -74,7 +74,7 @@ namespace PartagesWebBlazorFSCore3.Server
         /// <param name="app">Application Builder</param>
         /// <param name="env">Host Environment</param>
         /// <remarks>This method gets called by the runtime. Use this method to configure the HTTP request pipeline.</remarks>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Seed seeder)
         {
             app.UseResponseCompression();
 
@@ -87,6 +87,7 @@ namespace PartagesWebBlazorFSCore3.Server
             app.UseRouting();
 
             // cut
+            // seeder.SeedUsers(); Data already Seed in Database
             // app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseAuthentication();
             app.UseSwagger();
