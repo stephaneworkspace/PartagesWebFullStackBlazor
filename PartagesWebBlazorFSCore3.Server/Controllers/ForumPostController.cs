@@ -9,13 +9,17 @@ using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NSwag.Annotations;
 using PartagesWebBlazorFSCore3.Server.Data;
+using PartagesWebBlazorFSCore3.Server.Dtos.Forum.ForumPost.Input.ForReply;
 using PartagesWebBlazorFSCore3.Server.Dtos.Forum.ForumPost.Output.ForList;
+using PartagesWebBlazorFSCore3.Server.Dtos.Forum.ForumPost.Output.ForSelect;
 using PartagesWebBlazorFSCore3.Server.Helpers;
 using PartagesWebBlazorFSCore3.Server.Helpers.PagedParams;
+using PartagesWebBlazorFSCore3.Shared.Models;
 
 namespace PartagesWebBlazorFSCore3.Server.Controllers
 {
@@ -54,7 +58,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         [HttpGet("{id}")]
         [SwaggerResponse(HttpStatusCode.OK, typeof(ForumPostForListDtoWithVirtual[]), Description = "Ok")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Impossible de mettre à jour le nombre de vue du sujet")]
-        public async Task<IActionResult> GetForumPostes([FromQuery] ForumPostParams forumPostParams, int id)
+        public async Task<IActionResult> GetForumPosts([FromQuery] ForumPostParams forumPostParams, int id)
         {
             var boolTrue = await _repo.IncViewForumTopic(id);
             if (!boolTrue)
@@ -94,6 +98,50 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
                 itemsDtoFinal.Add(itemDtoWithVirtual);
             }
             return Ok(itemsDtoFinal);
+        }
+        /// <summary>
+        /// Response to a ForumPost
+        /// </summary>
+        /// <param name="Dto">Dto Input</param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(ForumPost), Description = "Ok")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Impossible de répondre à ce poste")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Contenu » est obligatoire.")]
+        public async Task<IActionResult> ReplyForumPoste(ForumPostForReplyDto Dto)
+        {
+            // Trouver l'utilisateur actuel
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            // Préparation du model
+            var Item = new ForumPost
+            {
+                ForumTopicId = Dto.ForumTopicId,
+                UserId = userId,
+                Date = DateTime.Now,
+                Content = Dto.Content
+            };
+
+            _repo.Add(Item);
+
+            if (await _repo.SaveAll())
+                return Ok(Item);
+
+            return BadRequest("Impossible de répondre à ce poste");
+        }
+        /// <summary>  
+        /// Get ForumPost
+        /// </summary> 
+        /// <param name="id">ForumPost primary key</param>
+        [HttpGet("ForumPostId/{id}")]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(ForumPostForSelectDto), Description = "Ok")]
+        public async Task<IActionResult> GetForumPost(int id)
+        {
+            var item = await _repo.GetForumPost(id);
+            ForumPostForSelectDto newDto = new ForumPostForSelectDto();
+            var itemDto = _mapper.Map<ForumPostForSelectDto>(item);
+            return Ok(itemDto);
         }
     }
 }
