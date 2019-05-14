@@ -15,7 +15,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
     /// <summary>
     /// Private message repository
     /// </summary>
-    interface IMessageRepository
+    public interface IMessageRepository
     {
         /// <summary>  
         /// Add entity in DataContext
