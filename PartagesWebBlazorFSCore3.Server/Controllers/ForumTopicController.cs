@@ -6,15 +6,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NSwag.Annotations;
 using PartagesWebBlazorFSCore3.Server.Data;
+using PartagesWebBlazorFSCore3.Server.Dtos.Forum.ForumTopic.Input.ForNewTopicDto;
 using PartagesWebBlazorFSCore3.Server.Dtos.Forum.ForumTopic.Output.ForList;
+using PartagesWebBlazorFSCore3.Server.Dtos.Forum.ForumTopic.Output.ForSingleSelect;
 using PartagesWebBlazorFSCore3.Server.Helpers;
 using PartagesWebBlazorFSCore3.Server.Helpers.PagedParams;
+using PartagesWebBlazorFSCore3.Shared.Models;
 
 namespace PartagesWebBlazorFSCore3.Server.Controllers
 {
@@ -47,7 +52,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         /// <param name="forumTopicParams">Pagination params</param>
         /// <param name="id">ForumCategorie primary key</param>
         [HttpGet("{id}")]
-        [SwaggerResponse(HttpStatusCode.OK, typeof(ForumTopicForListDto[]), Description = "Liste des sujets")]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(ForumTopicForListDto[]), Description = "Ok")]
         public async Task<IActionResult> GetForumSujets([FromQuery] ForumTopicParams forumTopicParams, int id)
         {
             var items = await _repo.GetForumTopics(forumTopicParams, id);
@@ -68,6 +73,68 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             }
             Response.AddPagination(items.CurrentPage, items.PageSize, items.TotalCount, items.TotalPages);
             return Ok(newDto);
+        }
+        /// <summary>  
+        /// Get ForumTopic
+        /// </summary> 
+        /// <param name="id">ForumTopic primary key</param>
+        [HttpGet("ForumTopicId/{id}")]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(ForumTopicForSelectDto), Description = "Ok")]
+        public async Task<IActionResult> GetForumSujet(int id)
+        {
+            var item = await _repo.GetForumTopic(id);
+            ForumTopicForSelectDto newDto = new ForumTopicForSelectDto();
+            var itemDto = _mapper.Map<ForumTopicForSelectDto>(item);
+            return Ok(itemDto);
+        }
+        /// <summary>
+        /// New ForumTopic and ForumPost
+        /// </summary>
+        /// <param name="Dto">Dto Input</param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(ForumPost), Description = "Ok")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Impossible de créer le sujet")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Contenu » est obligatoire.")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Nom du sujet » est obligatoire.")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Catégorie du sujet » est obligatoire.")]
+        public async Task<IActionResult> NouveauSujetEtPoste(ForumPostForNewForumTopicDto Dto)
+        {
+            // Prepare ForumTopic
+            var ItemForumTopic = new ForumTopic
+            {
+                Date = DateTime.Now,
+                ForumCategorieId = Dto.ForumCategorieId,
+                Name = Dto.NameTopic,
+                View = 0
+            };
+
+            _repo.Add(ItemForumTopic);
+
+            if (!await _repo.SaveAll())
+            {
+                return BadRequest("Impossible de créer le sujet");
+            }
+
+            // Find current user
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            // Prepare ForumPost
+            var Item = new ForumPost
+            {
+                ForumTopicId = ItemForumTopic.Id,
+                UserId = userId,
+                Date = DateTime.Now,
+                Content = Dto.Content
+            };
+
+            _repo.Add(Item);
+
+            if (await _repo.SaveAll())
+                return Ok(Item);
+
+            return BadRequest("Impossible de créer le sujet");
         }
     }
 }
