@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿//-----------------------------------------------------------------------
+// <license>GPL 2</license>
+// <author>Stéphane</author>
+//-----------------------------------------------------------------------
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PartagesWebBlazorFSCore3.Shared.Models;
-using PartagesWebBlazorFSCore3.Shared.Models.Message;
 
 namespace PartagesWebBlazorFSCore3.Server.Data
 {

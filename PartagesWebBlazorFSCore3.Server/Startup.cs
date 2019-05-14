@@ -1,3 +1,7 @@
+//-----------------------------------------------------------------------
+// <license>GPL 2</license>
+// <author>Stéphane</author>
+//-----------------------------------------------------------------------
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

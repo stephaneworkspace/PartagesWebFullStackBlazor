@@ -1,4 +1,8 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <license>GPL 2</license>
+// <author>Stéphane</author>
+//-----------------------------------------------------------------------
+using System;
 using System.Collections.Generic;
 using System.Text;
 

@@ -1,8 +1,12 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <license>GPL 2</license>
+// <author>Stéphane</author>
+//-----------------------------------------------------------------------
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PartagesWebBlazorFSCore3.Shared.Models.Message
+namespace PartagesWebBlazorFSCore3.Shared.Models
 {
     /// <summary>
     /// Model Message

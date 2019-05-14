@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore;
+﻿//-----------------------------------------------------------------------
+// <license>GPL 2</license>
+// <author>Stéphane</author>
+//-----------------------------------------------------------------------
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 
