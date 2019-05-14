@@ -20,8 +20,6 @@ using PartagesWebBlazorFSCore3.Server.Dtos.Auth.Input;
 using PartagesWebBlazorFSCore3.Server.Dtos.Auth.Output;
 using PartagesWebBlazorFSCore3.Shared.Models;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace PartagesWebBlazorFSCore3.Server.Controllers
 {
     /// <summary>

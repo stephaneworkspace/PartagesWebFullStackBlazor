@@ -12,8 +12,6 @@ using PartagesWebBlazorFSCore3.Server.Dtos.Forum.ForumCategorie.Output.ForList;
 using PartagesWebBlazorFSCore3.Server.Dtos.Forum.ForumCategorie.Output.ForSingleSelect;
 using PartagesWebBlazorFSCore3.Server.Helpers.PagedParams;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace PartagesWebBlazorFSCore3.Server.Controllers
 {
     /// <summary>
