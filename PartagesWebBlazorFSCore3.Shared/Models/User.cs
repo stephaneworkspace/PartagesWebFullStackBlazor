@@ -29,5 +29,9 @@ namespace PartagesWebBlazorFSCore3.Shared.Models
         /// Date Created
         /// </summary>
         public DateTime Created { get; set; }
+        /// <summary>
+        /// Switch Deactivated
+        /// </summary>
+        public bool SwDeactivated { get; set; }
     }
 }
