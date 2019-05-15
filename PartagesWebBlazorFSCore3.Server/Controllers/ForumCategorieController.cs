@@ -1,4 +1,8 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <license>GPL 2</license>
+// <author>Stéphane</author>
+//-----------------------------------------------------------------------
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -8,9 +12,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NSwag.Annotations;
 using PartagesWebBlazorFSCore3.Server.Data;
-using PartagesWebBlazorFSCore3.Server.Dtos.Forum.ForumCategorie.Output.ForList;
-using PartagesWebBlazorFSCore3.Server.Dtos.Forum.ForumCategorie.Output.ForSingleSelect;
 using PartagesWebBlazorFSCore3.Server.Helpers.PagedParams;
+using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForList;
+using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForSingleSelect;
 
 namespace PartagesWebBlazorFSCore3.Server.Controllers
 {

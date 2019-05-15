@@ -14,11 +14,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NSwag.Annotations;
 using PartagesWebBlazorFSCore3.Server.Data;
-using PartagesWebBlazorFSCore3.Server.Dtos.Forum.ForumPost.Input.ForReply;
-using PartagesWebBlazorFSCore3.Server.Dtos.Forum.ForumPost.Output.ForList;
-using PartagesWebBlazorFSCore3.Server.Dtos.Forum.ForumPost.Output.ForSelect;
 using PartagesWebBlazorFSCore3.Server.Helpers;
 using PartagesWebBlazorFSCore3.Server.Helpers.PagedParams;
+using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Forum.ForumPost.ForReply;
+using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumPost.ForList;
+using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumPost.ForSelect;
 using PartagesWebBlazorFSCore3.Shared.Models;
 
 namespace PartagesWebBlazorFSCore3.Server.Controllers

@@ -16,8 +16,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using NSwag.Annotations;
 using PartagesWebBlazorFSCore3.Server.Data;
-using PartagesWebBlazorFSCore3.Server.Dtos.Auth.Input;
-using PartagesWebBlazorFSCore3.Server.Dtos.Auth.Output;
+using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth;
+using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Auth;
 using PartagesWebBlazorFSCore3.Shared.Models;
 
 namespace PartagesWebBlazorFSCore3.Server.Controllers
