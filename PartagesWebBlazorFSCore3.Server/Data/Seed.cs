@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using PartagesWebBlazorFSCore3.Server.Dtos.Input.Seed.Forum.ForumPost.ForSeed;
 using PartagesWebBlazorFSCore3.Server.Dtos.Input.Seed.Forum.ForumTopic.ForSeed;
 using PartagesWebBlazorFSCore3.Shared.Models;
 using System;
@@ -112,6 +113,31 @@ namespace PartagesWebBlazorFSCore3.Server.Data
                         View = item.View
                     };
                     _context.ForumTopics.Add(forumTopic);
+                    await _context.SaveChangesAsync();
+                }
+            }
+        }
+        ///<summary>
+        /// Seed ForumPost
+        ///</summary>
+        public async void SeedForumPost()
+        {
+            var itemData = System.IO.File.ReadAllText("Data/Seed/ForumPostsSeedData.json", Encoding.GetEncoding("iso-8859-1"));
+            var items3 = JsonConvert.DeserializeObject<List<ForumPostForSeedDto>>(itemData);
+            foreach (var item in items3)
+            {
+                if (!_context.ForumPosts.Any(x => x.Content.ToLower() == item.Content.ToLower()))
+                {
+                    ForumTopic forumTopic = _context.ForumTopics.Where(x => x.Name == item.NameForumTopic).First();
+                    User userPost = _context.Users.Where(x => x.Username == item.Username).First();
+                    ForumPost forumPost = new ForumPost
+                    {
+                        ForumTopicId = forumTopic.Id,
+                        UserId = userPost.Id,
+                        Date = item.Date,
+                        Content = item.Content
+                    };
+                    _context.ForumPosts.Add(forumPost);
                     await _context.SaveChangesAsync();
                 }
             }

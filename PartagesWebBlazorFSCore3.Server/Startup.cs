@@ -91,6 +91,7 @@ namespace PartagesWebBlazorFSCore3.Server
             // seeder.SeedUsers(); Data already Seed in Database
             // seeder.SeedForumCategorie();
             // seeder.SeedForumTopic();
+            // seeder.SeedForumPost();
             // app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseAuthentication();
             app.UseSwagger();
