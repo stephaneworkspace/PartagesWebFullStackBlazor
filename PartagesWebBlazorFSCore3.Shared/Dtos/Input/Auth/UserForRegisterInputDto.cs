@@ -19,6 +19,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth
         /// Username
         /// </summary>
         [Required]
+        [StringLength(30, MinimumLength = 2, ErrorMessage = "Vous devez spécifier un nom d'utilisateur entre 2 et 30 caractères")]
         public string Username { get; set; }
         /// <summary>
         /// Password

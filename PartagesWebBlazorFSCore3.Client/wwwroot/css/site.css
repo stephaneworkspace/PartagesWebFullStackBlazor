@@ -85,11 +85,13 @@ app {
 }
 
 .valid.modified:not([type=checkbox]) {
-    outline: 1px solid #26b050;
+    /*outline: 1px solid #26b050;*/
+    border-color: #23d160;
 }
 
 .invalid {
-    outline: 1px solid red;
+    /* outline: 1px solid red; */
+    border-color: #ff3860;
 }
 
 .validation-message {

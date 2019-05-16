@@ -18,7 +18,8 @@ namespace PartagesWebBlazorFSCore3.Client
               })
               .AddBulmaProviders()
               .AddFontAwesomeIcons()
-              .AddSingleton<UserForCheckIfAvailableDto>();
+              .AddSingleton<UserForCheckIfAvailableDto>()
+              .AddSingleton<UserForRegisterInputDto>();
         }
 
         public void Configure(IComponentsApplicationBuilder app)
