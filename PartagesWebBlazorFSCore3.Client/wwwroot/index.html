@@ -14,6 +14,17 @@
 <body>
     <app>Loading...</app>
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/alertify.min.js"></script>
+    <script>
+    window.ShowAlert = (message) => {
+        alert(message);
+    }
+    window.Vibrate = () => {
+      navigator.vibrate(100);
+    }
+    window.Alertify = () => {
+        alertify.notify('sample', 'success', 5, function () { console.log('dismissed'); });
+    }
+    </script>
     <!--<script>var notification = alertify.notify('sample', 'success', 5, function(){  console.log('dismissed'); });</script>-->
     <script src="_framework/blazor.webassembly.js"></script>
 </body>

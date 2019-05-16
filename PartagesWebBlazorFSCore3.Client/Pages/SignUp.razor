@@ -1,5 +1,6 @@
 ﻿@page "/signUp"
 @inject HttpClient Http
+@inject IJSRuntime JsRuntime
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth;
 @using PartagesWebBlazorFSCore3.Client.Component;
 @using System.Text;
@@ -14,19 +15,20 @@
     @*<ServerSideValidator ref="serverSideValidator" />*@
     <div class="field">
         <label class="label">Nom d'utilisateur</label>
-        <p class="control has-icons-left"> <!--has-icons-right-->
+        <p class="control has-icons-left">
+            <!--has-icons-right-->
             <InputText id="username" bind-Value="@model.Username" class="input" />
             <span class="icon is-small is-left">
                 <i class="fas fa-user"></i>
             </span>
             @*
-        <span class="icon is-small is-right">
-            <i class="fas fa-check"></i>
-        </span>
-        @if (swAvailable)
-        {
-            <span class="help is-success">Ce nom d'utilisateur est disponible</span>
-        }
+                <span class="icon is-small is-right">
+                    <i class="fas fa-check"></i>
+                </span>
+                @if (swAvailable)
+                {
+                    <span class="help is-success">Ce nom d'utilisateur est disponible</span>
+                }
             *@
             <span class="help is-danger"><ValidationMessage For="@(() => model.Username)" /></span>
         </p>
@@ -88,39 +90,12 @@
             }
         }
     *@
-    protected async Task HandleValidSubmit()
-    {
-        /*
-            await ClientFactory.Create("/api/account/register", createButton)
-                .OnBadRequest<Dictionary<string, List<string>>>(errors => {
-
-                    serverSideValidator.DisplayErrors(errors);
-                })
-                .OnOK(async () =>
-                {
-                    await JsInterop.Toastr("success", "Successfully registered, please confirm your account by clicking on the link in the email sent to " + registerCommand.Email);
-                    registerCommand = new RegisterCommand();
-                    StateHasChanged();
-                })
-                .Post(registerCommand);*/
-        UserExistText = "";
-        var client = new HttpClient();
-        var requestJson = Json.Serialize(model);
-        HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, "http://localhost:54789/api/Auth/register");
-        // req.Headers.Add("Authorization", $"bearer {bearer}");
-        req.Content = new StringContent(requestJson, Encoding.UTF8, "application/json");
-        var response = await client.SendAsync(req);
-        switch (response.StatusCode) {
-            case System.Net.HttpStatusCode.Created:
-                UserExistText = "";
-                break;
-            case System.Net.HttpStatusCode.BadRequest:
-                UserExistText = await response.Content.ReadAsStringAsync();
-                break;
-        };
-        /*
-        await client.PostJsonAsync("/api/Auth/register", model)
+protected async Task HandleValidSubmit()
+{
+    /*
+        await ClientFactory.Create("/api/account/register", createButton)
             .OnBadRequest<Dictionary<string, List<string>>>(errors => {
+
                 serverSideValidator.DisplayErrors(errors);
             })
             .OnOK(async () =>
@@ -129,6 +104,53 @@
                 registerCommand = new RegisterCommand();
                 StateHasChanged();
             })
-            .Post(registerCommand);  */
-    }
+            .Post(registerCommand);*/
+    UserExistText = "";
+    var client = new HttpClient();
+    var requestJson = Json.Serialize(model);
+    HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, "http://localhost:54789/api/Auth/register");
+    // req.Headers.Add("Authorization", $"bearer {bearer}");
+    req.Content = new StringContent(requestJson, Encoding.UTF8, "application/json");
+    var response = await client.SendAsync(req);
+    switch (response.StatusCode)
+    {
+        case System.Net.HttpStatusCode.Created:
+            UserExistText = "";
+            break;
+        case System.Net.HttpStatusCode.BadRequest:
+            UserExistText = await response.Content.ReadAsStringAsync();
+            Alertify(UserExistText);
+            break;
+    };
+    /*
+    await client.PostJsonAsync("/api/Auth/register", model)
+        .OnBadRequest<Dictionary<string, List<string>>>(errors => {
+            serverSideValidator.DisplayErrors(errors);
+        })
+        .OnOK(async () =>
+        {
+            await JsInterop.Toastr("success", "Successfully registered, please confirm your account by clicking on the link in the email sent to " + registerCommand.Email);
+            registerCommand = new RegisterCommand();
+            StateHasChanged();
+        })
+        .Post(registerCommand);  */
+}
+
+
+private async void Alertify(string textNotify)
+{
+    // alertify.notify('sample', 'success', 5, function(){  console.log('dismissed'); });
+    //var text = await JsRuntime.InvokeAsync<string>("alertify", textNotify);
+    //StateHasChanged();
+
+    //var syncJsRunTime = await JsRuntime.InvokeAsync<bool>("Vibrate", 100);
+
+
+    var syncJsRunTime = await JsRuntime.InvokeAsync<bool>("Alertify", 100);
+    StateHasChanged();
+
+}
+
+
+
 }
