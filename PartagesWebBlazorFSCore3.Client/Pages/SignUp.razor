@@ -146,7 +146,7 @@ private async void Alertify(string textNotify)
     //var syncJsRunTime = await JsRuntime.InvokeAsync<bool>("Vibrate", 100);
 
 
-    var syncJsRunTime = await JsRuntime.InvokeAsync<bool>("Alertify", 100);
+    var syncJsRunTime = await JsRuntime.InvokeAsync<bool>("Alertify", "Hello", "success", 5);
     StateHasChanged();
 
 }

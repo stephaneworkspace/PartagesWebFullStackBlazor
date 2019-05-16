@@ -21,8 +21,8 @@
     window.Vibrate = () => {
       navigator.vibrate(100);
     }
-    window.Alertify = () => {
-        alertify.notify('sample', 'success', 5, function () { console.log('dismissed'); });
+    window.Alertify = (text, type, sec) => {
+        alertify.notify(text, type, sec, function () { console.log('dismissed'); });
     }
     </script>
     <!--<script>var notification = alertify.notify('sample', 'success', 5, function(){  console.log('dismissed'); });</script>-->
