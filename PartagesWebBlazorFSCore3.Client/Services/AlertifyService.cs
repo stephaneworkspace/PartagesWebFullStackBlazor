@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace PartagesWebBlazorFSCore3.Client.Services
 {
+    /// <summary>
+    /// Javascript -> C#/Blazor with Alertify.js
+    /// Nuget AlertifyJS
+    /// </summary>
     public class AlertifyService
     {
         private readonly IJSRuntime _jsRuntime;
