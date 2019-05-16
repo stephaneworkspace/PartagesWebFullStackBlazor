@@ -121,7 +121,8 @@ protected async Task HandleValidSubmit()
             break;
         case System.Net.HttpStatusCode.BadRequest:
             UserExistText = await response.Content.ReadAsStringAsync();
-            Alertify(UserExistText);
+            alertifyService = new AlertifyService(JsRuntime);
+            alertifyService.Open($"L'utilisateur « {model.Username} » existe déjà ! ", AlertifyService.Type.Error);
             break;
     };
     /*
@@ -136,26 +137,5 @@ protected async Task HandleValidSubmit()
             StateHasChanged();
         })
         .Post(registerCommand);  */
-}
-
-
-private async void Alertify(string textNotify)
-{
-    // alertify.notify('sample', 'success', 5, function(){  console.log('dismissed'); });
-    //var text = await JsRuntime.InvokeAsync<string>("alertify", textNotify);
-    //StateHasChanged();
-
-    //var syncJsRunTime = await JsRuntime.InvokeAsync<bool>("Vibrate", 100);
-
-
-    //var syncJsRunTime = await JsRuntime.InvokeAsync<bool>("Alertify", "Hello", "success", 5);
-    // StateHasChanged();
-
-    alertifyService = new AlertifyService(JsRuntime);
-    alertifyService.Open("Test !");
-
-}
-
-
-
+    }
 }
