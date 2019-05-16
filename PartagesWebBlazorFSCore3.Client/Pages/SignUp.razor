@@ -25,9 +25,8 @@
         </div>
         <div class="field">
             <p class="control has-icons-left">
-                <!-- https://github.com/aspnet/AspNetCore/blob/master/src/Components/Components/src/Forms/InputComponents/InputText.cs -->
-                <input id="password" value="@model.Password" type="password" class="input" />
-                <input class="input" type="password" placeholder="Password">
+                <!-- https://github.com/aspnet/AspNetCore/issues/9179  added this to the 3.0.0-preview6 milestone  -->
+                <InputText id="password" bind-Value="@model.Password" class="input" />
                 <span class="icon is-small is-left">
                     <i class="fas fa-lock"></i>
                 </span>
