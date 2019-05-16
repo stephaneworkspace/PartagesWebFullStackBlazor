@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Blazorise;
 using Blazorise.Bulma;
 using Blazorise.Icons.FontAwesome;
+using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth;
 
 namespace PartagesWebBlazorFSCore3.Client
 {
@@ -16,7 +17,8 @@ namespace PartagesWebBlazorFSCore3.Client
                   options.ChangeTextOnKeyPress = true; // optional
               })
               .AddBulmaProviders()
-              .AddFontAwesomeIcons();
+              .AddFontAwesomeIcons()
+              .AddSingleton<UserForCheckIfAvailableDto>();
         }
 
         public void Configure(IComponentsApplicationBuilder app)

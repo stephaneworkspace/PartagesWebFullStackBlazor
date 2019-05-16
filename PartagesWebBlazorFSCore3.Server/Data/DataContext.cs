@@ -14,7 +14,6 @@ namespace PartagesWebBlazorFSCore3.Server.Data
 {
     public class DataContext: DbContext
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
         /// <summary>  
         /// Constructor
         /// </summary>  

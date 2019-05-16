@@ -105,6 +105,16 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
                 messagesUnread
             });
         }
+        /// <summary>
+        /// Username available
+        /// </summary>
+        [HttpPost("available")]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(Boolean), Description = "Ok")]
+        public async Task<IActionResult> Available(UserForCheckIfAvailableDto dto)
+        {
+            Boolean swUserExist = await _repo.UserExists(dto.Username);
+            return Ok(!swUserExist);
+        }
         /* : Controller (with view support)
         // GET: /<controller>/
         public IActionResult Index()
