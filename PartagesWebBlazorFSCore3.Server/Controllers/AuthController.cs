@@ -55,6 +55,9 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         [HttpPost("register")]
         [SwaggerResponse(HttpStatusCode.Created, typeof(void), Description = "Ok")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "L'utilisateur existe déjà")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Le champ « Nom d'utilisateur » est obligatoire.")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Vous devez spécifier un nom d'utilisateur entre 2 et 30 caractères")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Le champ « Mot de passe » est obligatoire.")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Vous devez spécifier un mot de passe entre 4 et 8 caractères")]
         public async Task<IActionResult> Register(UserForRegisterInputDto dto)
         {

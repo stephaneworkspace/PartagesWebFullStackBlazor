@@ -1,80 +1,124 @@
 ﻿@page "/signUp"
 @inject HttpClient Http
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth;
-    <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit">
-        <DataAnnotationsValidator />
-        <!--<ValidationSummary />-->
-        <div class="field">
-            <label class="label">Username</label>
-            <p class="control has-icons-left has-icons-right">
-                <InputText id="username" bind-Value="@model.Username" class="input" />
-                <span class="icon is-small is-left">
-                    <i class="fas fa-user"></i>
-                </span>
-                <span class="icon is-small is-right">
-                    <i class="fas fa-check"></i>
-                </span>
-                @*
+@using PartagesWebBlazorFSCore3.Client.Component;
+@using System.Text;
+<EditForm Model="@model" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <!--<ValidationSummary />-->
+    <ServerSideValidator ref="serverSideValidator" />
+    <div class="field">
+        <label class="label">Username</label>
+        <p class="control has-icons-left has-icons-right">
+            <InputText id="username" bind-Value="@model.Username" class="input" />
+            <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+            </span>
+            <span class="icon is-small is-right">
+                <i class="fas fa-check"></i>
+            </span>
+            @*
                 @if (swAvailable)
                 {
                     <span class="help is-success">Ce nom d'utilisateur est disponible</span>
                 }
-                *@
-                <span class="help is-danger"><ValidationMessage For="@(() => model.Username)" /></span>
-            </p>
-        </div>
-        <div class="field">
-            <p class="control has-icons-left">
-                <!-- https://github.com/aspnet/AspNetCore/issues/9179  added this to the 3.0.0-preview6 milestone  -->
-                <InputText id="password" bind-Value="@model.Password" class="input" />
-                <span class="icon is-small is-left">
-                    <i class="fas fa-lock"></i>
-                </span>
-                <span class="help is-danger">This email is invalid</span>
-            </p>
-        </div>
-        <div class="field">
-            <p class="control">
-                <button class="button is-success" type="submit">
-                    Register
-                </button>
-            </p>
-        </div>
-    </EditForm>
+            *@
+            <span class="help is-danger"><ValidationMessage For="@(() => model.Username)" /></span>
+        </p>
+    </div>
+    <div class="field">
+        <p class="control has-icons-left">
+            <!-- https://github.com/aspnet/AspNetCore/issues/9179  added this to the 3.0.0-preview6 milestone  -->
+            <InputText id="password" bind-Value="@model.Password" class="input" />
+            <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+            </span>
+            <span class="help is-danger">This email is invalid</span>
+        </p>
+    </div>
+    <div>@test</div>
+    <div class="field">
+        <p class="control">
+            <button class="button is-success" type="submit">
+                Register
+            </button>
+        </p>
+    </div>
+</EditForm>
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @functions {
     private UserForRegisterInputDto model = new UserForRegisterInputDto();
-@*
-    string UsernameAvailableCssClass = "input";
-    bool swAvailable;
-    protected async Task CheckIfUsernameAvailable(UIChangeEventArgs e)
-    {
-        if ((string)e.Value != "")
+    ServerSideValidator serverSideValidator;
+    string test = "";
+    @*
+        string UsernameAvailableCssClass = "input";
+        bool swAvailable;
+        protected async Task CheckIfUsernameAvailable(UIChangeEventArgs e)
         {
-            var client = new HttpClient();
-            UserForCheckIfAvailableDto dto = new UserForCheckIfAvailableDto();
-            dto.Username = (string)e.Value;
-            swAvailable = await Http.PostJsonAsync<Boolean>("api/Auth/Available", dto);
-            if (swAvailable)
+            if ((string)e.Value != "")
             {
-                UsernameAvailableCssClass = "input is-success";
+                var client = new HttpClient();
+                UserForCheckIfAvailableDto dto = new UserForCheckIfAvailableDto();
+                dto.Username = (string)e.Value;
+                swAvailable = await Http.PostJsonAsync<Boolean>("api/Auth/available", dto);
+                if (swAvailable)
+                {
+                    UsernameAvailableCssClass = "input is-success";
+                }
+                else
+                {
+                    UsernameAvailableCssClass = "input";
+                }
             }
             else
             {
-                UsernameAvailableCssClass = "input";
+                swAvailable = true;
+                UsernameAvailableCssClass = "";
             }
         }
-        else
-        {
-            swAvailable = true;
-            UsernameAvailableCssClass = "";
-        }
-    }
-*@
-    protected void HandleValidSubmit()
+    *@
+    protected async Task HandleValidSubmit()
     {
+    /*
+        await ClientFactory.Create("/api/account/register", createButton)  
+            .OnBadRequest<Dictionary<string, List<string>>>(errors => {  
+  
+                serverSideValidator.DisplayErrors(errors);  
+            })  
+            .OnOK(async () =>  
+            {  
+                await JsInterop.Toastr("success", "Successfully registered, please confirm your account by clicking on the link in the email sent to " + registerCommand.Email);  
+                registerCommand = new RegisterCommand();  
+                StateHasChanged();  
+            })  
+            .Post(registerCommand);*/  
 
+        var client = new HttpClient();
+        var requestJson = Json.Serialize(model);
+        HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, "http://localhost:54789/api/Auth/register");
+        // req.Headers.Add("Authorization", $"bearer {bearer}");
+        req.Content = new StringContent(requestJson, Encoding.UTF8, "application/json");
+        var response = await client.SendAsync(req);
+        if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+        {
+            test = "Bad Request";
+        } else
+        {
+            test = "";
+        }
+        /*
+        await client.PostJsonAsync("/api/Auth/register", model)
+            .OnBadRequest<Dictionary<string, List<string>>>(errors => {
+                serverSideValidator.DisplayErrors(errors);
+            })
+            .OnOK(async () =>
+            {
+                await JsInterop.Toastr("success", "Successfully registered, please confirm your account by clicking on the link in the email sent to " + registerCommand.Email);
+                registerCommand = new RegisterCommand();
+                StateHasChanged();
+            })
+            .Post(registerCommand);  */
     }
 }

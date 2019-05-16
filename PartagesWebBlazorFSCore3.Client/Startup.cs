@@ -4,6 +4,7 @@ using Blazorise;
 using Blazorise.Bulma;
 using Blazorise.Icons.FontAwesome;
 using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth;
+using PartagesWebBlazorFSCore3.Client.Component;
 
 namespace PartagesWebBlazorFSCore3.Client
 {
@@ -18,6 +19,7 @@ namespace PartagesWebBlazorFSCore3.Client
               })
               .AddBulmaProviders()
               .AddFontAwesomeIcons()
+              .AddSingleton<ServerSideValidator>()
               .AddSingleton<UserForCheckIfAvailableDto>()
               .AddSingleton<UserForRegisterInputDto>();
         }
