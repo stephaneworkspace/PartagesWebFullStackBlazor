@@ -1,0 +1,74 @@
+﻿@page "/login"
+@inject HttpClient Http
+@inject IJSRuntime JsRuntime
+@inject IUriHelper UriHelper
+@inject AlertifyService _alertifyService
+@inject HttpAuthService _httpAuthService
+@using PartagesWebBlazorFSCore3.Client.Services;
+@using PartagesWebBlazorFSCore3.Client.Services.Http;
+@using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth;
+@using PartagesWebBlazorFSCore3.Shared.Helpers;
+<EditForm Model="@model" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    @if (InvalidCredentialsText != "")
+    {
+        <ul class="validation-errors">
+            <li class="validation-message">@InvalidCredentialsText</li>
+        </ul>
+    }
+    <div class="field">
+        <label class="label">Nom d'utilisateur</label>
+        <p class="control has-icons-left">
+            <InputText id="username" bind-Value="@model.Username" class="input" />
+            <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+            </span>
+            <span class="help is-danger"><ValidationMessage For="@(() => model.Username)" /></span>
+        </p>
+    </div>
+    <div class="field">
+        <label class="label">Mot de passe</label>
+        <p class="control has-icons-left">
+            <!-- https://github.com/aspnet/AspNetCore/issues/9179  added this to the 3.0.0-preview6 milestone  -->
+            <!--<MyInput id="password" type="password" bind-Value="@model.Password" class="input" />-->
+            <InputText id="password" bind-Value="@model.Password" class="input" />
+            <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+            </span>
+            <span class="help is-danger"><ValidationMessage For="@(() => model.Password)" /></span>
+        </p>
+    </div>
+    <div class="field">
+        <p class="control">
+            <button class="button is-primary" type="submit">
+                Login
+            </button>
+        </p>
+    </div>
+</EditForm>
+@functions {
+    private UserForLoginInputDto model = new UserForLoginInputDto();
+    private string InvalidCredentialsText = "";
+    protected async Task HandleValidSubmit()
+    {
+
+        var client = new HttpClient();
+        var httpAuthService = new HttpAuthService(client);
+        var response = await _httpAuthService.PostLogin(model);
+        switch (response.StatusCode)
+        {
+            case System.Net.HttpStatusCode.OK:
+                InvalidCredentialsText = "";
+                _alertifyService = new AlertifyService(JsRuntime);
+                _alertifyService.Open($"Utilisateur « {model.Username.CapitalizeFirst()} » connecté", AlertifyService.Type.Success);
+                UriHelper.NavigateTo("/");
+                break;
+            case System.Net.HttpStatusCode.Unauthorized:
+                InvalidCredentialsText = await response.Content.ReadAsStringAsync();
+                _alertifyService = new AlertifyService(JsRuntime);
+                _alertifyService.Open(InvalidCredentialsText, AlertifyService.Type.Error);
+                break;
+        };
+    }
+}

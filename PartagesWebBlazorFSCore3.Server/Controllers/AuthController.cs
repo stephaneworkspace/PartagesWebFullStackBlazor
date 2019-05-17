@@ -77,12 +77,14 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         /// <param name="dto">Dto</param>
         [HttpPost("login")]
         [SwaggerResponse(HttpStatusCode.OK, typeof(void), Description = "Ok")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Le champ « Nom d'utilisateur » est obligatoire.")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Le champ « Mot de passe » est obligatoire.")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, typeof(void), Description = "Pas autorisé à se connecter")]
         public async Task<IActionResult> Login(UserForLoginInputDto dto)
         {
             var userFromRepo = await _repo.Login(dto.Username.ToLower(), dto.Password);
             if (userFromRepo == null)
-                return Unauthorized();
+                return Unauthorized("Pas autorisé à se connecter");
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
