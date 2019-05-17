@@ -1,7 +1,7 @@
 ﻿@inherits InputBase<string>
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components;
-<input value="@CurrentValue" autocomplete="@Autocomplete" type="@Type" id="@Id" class="@CssClass" />
+<input bind="@CurrentValue" autocomplete="@Autocomplete" type="@Type" id="@Id" class="@CssClass" />
 
 @functions{
     [Parameter]
