@@ -1,7 +1,7 @@
 ﻿@page "/signUp"
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime
-@inject Microsoft.AspNetCore.Blazor.Services.WebAssemblyUriHelper UriHelper
+@inject IUriHelper UriHelper
 @inject AlertifyService _alertifyService
 @inject HttpAuthService _httpAuthService
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth;
@@ -10,6 +10,7 @@
 @using PartagesWebBlazorFSCore3.Client.Component;
 @using System.Text;
 @using System.ComponentModel;
+@using Microsoft.AspNetCore.Blazor.Services;
 <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
@@ -44,6 +45,7 @@
         <label class="label">Mot de passe</label>
         <p class="control has-icons-left">
             <!-- https://github.com/aspnet/AspNetCore/issues/9179  added this to the 3.0.0-preview6 milestone  -->
+            <!--<MyInput id="password" type="password" value="@model.Password" class="input" />-->
             <InputText id="password" bind-Value="@model.Password" class="input" />
             <span class="icon is-small is-left">
                 <i class="fas fa-lock"></i>
@@ -83,47 +85,12 @@
             }
         }
     *@
-    protected async Task HandleValidSubmit()
-    {
-        /*
-            await ClientFactory.Create("/api/account/register", createButton)
-                .OnBadRequest<Dictionary<string, List<string>>>(errors => {
-
-                    serverSideValidator.DisplayErrors(errors);
-                })
-                .OnOK(async () =>
-                {
-                    await JsInterop.Toastr("success", "Successfully registered, please confirm your account by clicking on the link in the email sent to " + registerCommand.Email);
-                    registerCommand = new RegisterCommand();
-                    StateHasChanged();
-                })
-                .Post(registerCommand);*/
-        UserExistText = "";
-        /*
-        var client = new HttpClient();
-        var requestJson = Json.Serialize(model);
-        HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, "http://localhost:54789/api/Auth/register");
-        // req.Headers.Add("Authorization", $"bearer {bearer}");
-        req.Content = new StringContent(requestJson, Encoding.UTF8, "application/json");
-        var response = await client.SendAsync(req);*/
-        var client = new HttpClient();
-        var httpAuthService = new HttpAuthService(client);
-        var response = await _httpAuthService.PostRegister(model);
-        switch (response.StatusCode)
-        {
-            case System.Net.HttpStatusCode.Created:
-                UserExistText = "";
-                break;
-            case System.Net.HttpStatusCode.BadRequest:
-                UserExistText = await response.Content.ReadAsStringAsync();
-                _alertifyService = new AlertifyService(JsRuntime);
-                _alertifyService.Open(UserExistText, AlertifyService.Type.Error);
-                UriHelper.NavigateTo("/");
-                break;
-        };
-        /*
-        await client.PostJsonAsync("/api/Auth/register", model)
+protected async Task HandleValidSubmit()
+{
+    /*
+        await ClientFactory.Create("/api/account/register", createButton)
             .OnBadRequest<Dictionary<string, List<string>>>(errors => {
+
                 serverSideValidator.DisplayErrors(errors);
             })
             .OnOK(async () =>
@@ -132,6 +99,41 @@
                 registerCommand = new RegisterCommand();
                 StateHasChanged();
             })
-            .Post(registerCommand);  */
-    }
+            .Post(registerCommand);*/
+    UserExistText = "";
+    /*
+    var client = new HttpClient();
+    var requestJson = Json.Serialize(model);
+    HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, "http://localhost:54789/api/Auth/register");
+    // req.Headers.Add("Authorization", $"bearer {bearer}");
+    req.Content = new StringContent(requestJson, Encoding.UTF8, "application/json");
+    var response = await client.SendAsync(req);*/
+    var client = new HttpClient();
+    var httpAuthService = new HttpAuthService(client);
+    var response = await _httpAuthService.PostRegister(model);
+    switch (response.StatusCode)
+    {
+        case System.Net.HttpStatusCode.Created:
+            UserExistText = "";
+            break;
+        case System.Net.HttpStatusCode.BadRequest:
+            UserExistText = await response.Content.ReadAsStringAsync();
+            _alertifyService = new AlertifyService(JsRuntime);
+            _alertifyService.Open(UserExistText, AlertifyService.Type.Error);
+            UriHelper.NavigateTo("/");
+            break;
+    };
+    /*
+    await client.PostJsonAsync("/api/Auth/register", model)
+        .OnBadRequest<Dictionary<string, List<string>>>(errors => {
+            serverSideValidator.DisplayErrors(errors);
+        })
+        .OnOK(async () =>
+        {
+            await JsInterop.Toastr("success", "Successfully registered, please confirm your account by clicking on the link in the email sent to " + registerCommand.Email);
+            registerCommand = new RegisterCommand();
+            StateHasChanged();
+        })
+        .Post(registerCommand);  */
+}
 }
