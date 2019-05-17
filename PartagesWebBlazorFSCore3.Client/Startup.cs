@@ -32,7 +32,6 @@ namespace PartagesWebBlazorFSCore3.Client
               .AddSingleton<UserForRegisterInputDto>()
               // Services
               .AddSingleton<AlertifyService>()
-              .AddSingleton<AppState>()
               // Http services
               .AddSingleton<HttpAuthService>();
         }

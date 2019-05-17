@@ -2,8 +2,10 @@
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime
 @inject IUriHelper UriHelper
+@inject ILocalStorageService localStorage
 @inject AlertifyService _alertifyService
 @inject HttpAuthService _httpAuthService
+@using Blazored.LocalStorage;
 @using PartagesWebBlazorFSCore3.Client.Services;
 @using PartagesWebBlazorFSCore3.Client.Services.Http;
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth;
@@ -86,7 +88,7 @@
     {
         UserExistText = "";
         var client = new HttpClient();
-        var httpAuthService = new HttpAuthService(client);
+        var httpAuthService = new HttpAuthService(client, localStorage);
         var response = await _httpAuthService.PostRegister(model);
         switch (response.StatusCode)
         {

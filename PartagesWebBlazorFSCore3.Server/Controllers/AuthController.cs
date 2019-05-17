@@ -17,7 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using NSwag.Annotations;
 using PartagesWebBlazorFSCore3.Server.Data;
 using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth;
-using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Auth;
+using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Auth.Login;
 using PartagesWebBlazorFSCore3.Shared.Models;
 
 namespace PartagesWebBlazorFSCore3.Server.Controllers
@@ -101,14 +101,13 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             };
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            var user = _mapper.Map<UserForWorkOutputDto>(userFromRepo);
-            var messagesUnread = await _repoMessage.GetCountMessagesUnread(userFromRepo.Id);
-            return Ok(new
+            LoginDto loginDto = new LoginDto
             {
                 token = tokenHandler.WriteToken(token),
-                user,
-                messagesUnread
-            });
+                user = _mapper.Map<UserForLoginDto>(userFromRepo),
+                messagesUnread = await _repoMessage.GetCountMessagesUnread(userFromRepo.Id)
+            };
+            return Ok(loginDto);
         }
         /// <summary>
         /// Username available

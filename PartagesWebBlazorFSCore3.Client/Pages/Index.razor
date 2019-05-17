@@ -1,11 +1,23 @@
 ﻿@page "/"
-@inject AppState _appState
+@inject ILocalStorageService localStorage
+@using Blazored.LocalStorage;
 @using PartagesWebBlazorFSCore3.Client.Services;
 
 <h1>Hello, world!</h1>
 
-Welcome to your new app. @_appState.getJwt()
+Welcome to your new app.
+
+<br />
+JWT = @jwt;
 
 <NavLink class="nav-link" href="SignUp">S'inscrire</NavLink>
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+
+@functions {
+    string jwt = "";
+    protected override async Task OnInitAsync()
+    {
+        jwt = await localStorage.GetItemAsync<string>("token");
+    }
+}

@@ -2,9 +2,10 @@
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime
 @inject IUriHelper UriHelper
+@inject ILocalStorageService localStorage
 @inject AlertifyService _alertifyService
-@inject AppState _appState
 @inject HttpAuthService _httpAuthService
+@using Blazored.LocalStorage;
 @using PartagesWebBlazorFSCore3.Client.Services;
 @using PartagesWebBlazorFSCore3.Client.Services.Http;
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth;
@@ -55,7 +56,7 @@
     {
 
         var client = new HttpClient();
-        var httpAuthService = new HttpAuthService(client);
+        var httpAuthService = new HttpAuthService(client, localStorage);
         var response = await _httpAuthService.PostLogin(model);
         switch (response.StatusCode)
         {
@@ -63,7 +64,6 @@
                 InvalidCredentialsText = "";
                 _alertifyService = new AlertifyService(JsRuntime);
                 _alertifyService.Open($"Utilisateur « {model.Username.CapitalizeFirst()} » connecté", AlertifyService.Type.Success);
-                _appState.setJwt("toto");
                 UriHelper.NavigateTo("/");
                 break;
             case System.Net.HttpStatusCode.Unauthorized:
