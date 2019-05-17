@@ -3,6 +3,7 @@
 @inject IJSRuntime JsRuntime
 @inject IUriHelper UriHelper
 @inject AlertifyService _alertifyService
+@inject AppState _appState
 @inject HttpAuthService _httpAuthService
 @using PartagesWebBlazorFSCore3.Client.Services;
 @using PartagesWebBlazorFSCore3.Client.Services.Http;
@@ -62,6 +63,7 @@
                 InvalidCredentialsText = "";
                 _alertifyService = new AlertifyService(JsRuntime);
                 _alertifyService.Open($"Utilisateur « {model.Username.CapitalizeFirst()} » connecté", AlertifyService.Type.Success);
+                _appState.setJwt("toto");
                 UriHelper.NavigateTo("/");
                 break;
             case System.Net.HttpStatusCode.Unauthorized:

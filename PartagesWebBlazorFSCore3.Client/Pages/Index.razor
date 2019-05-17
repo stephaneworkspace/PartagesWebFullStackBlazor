@@ -1,8 +1,10 @@
 ﻿@page "/"
+@inject AppState _appState
+@using PartagesWebBlazorFSCore3.Client.Services;
 
 <h1>Hello, world!</h1>
 
-Welcome to your new app.
+Welcome to your new app. @_appState.getJwt()
 
 <NavLink class="nav-link" href="SignUp">S'inscrire</NavLink>
 
