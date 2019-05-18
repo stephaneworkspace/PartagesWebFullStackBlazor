@@ -1,0 +1,56 @@
+﻿@page "/newForumTopic/{id:int}"
+@inject IJSRuntime JsRuntime
+@inject IUriHelper UriHelper
+@inject LocalStorage Storage
+@inject IAlertifyService AlertifyService
+@inject IHttpForumCategorieService HttpForumCategorieService
+@inject IHttpForumTopicService HttpForumTopicService
+@using Cloudcrate.AspNetCore.Blazor.Browser.Storage
+@using PartagesWebBlazorFSCore3.Client.Helpers
+@using PartagesWebBlazorFSCore3.Client.Services
+@using PartagesWebBlazorFSCore3.Client.Services.Http
+@using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForSingleSelect
+
+<h1>Forum</h1>
+
+@if (forumCategorie == null)
+{
+    <p><em>Chargement...</em></p>
+}
+else
+{
+<p><a href="forumCategories">Index du forum</a> » <a href="forumTopics/@id">@forumCategorie.Name</a> » <a href="newForumTopic/@id">Nouveau sujet</a></p>
+    <p>à faire</p>
+    <button class="button is-primary" type="submit">Crée un nouveau sujet</button>
+}
+
+@functions {
+    // ForumCategorie id
+    [Parameter] int id { get; set; }
+    ForumCategorieForSingleSelectDto forumCategorie;
+
+    protected override async Task OnInitAsync()
+    {
+        // Load data with query on load page
+        await LoadData();
+        StateHasChanged();
+    }
+
+    private async Task LoadData()
+    {
+        HttpResponseMessage response;
+
+        response = await HttpForumCategorieService.GetForumCategorie(id);
+        switch (response.StatusCode)
+        {
+            case System.Net.HttpStatusCode.OK:
+                string content = await response.Content.ReadAsStringAsync();
+                forumCategorie = Json.Deserialize<ForumCategorieForSingleSelectDto>(content);
+                break;
+            default:
+                AlertifyService.Open("Erreur lors du chargement de la catégorie du forum", TypeAlertify.Error);
+                UriHelper.NavigateTo("/");
+                break;
+        }
+    }
+}

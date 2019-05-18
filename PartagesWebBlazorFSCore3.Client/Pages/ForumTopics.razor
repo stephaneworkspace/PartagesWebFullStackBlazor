@@ -23,7 +23,7 @@
 }
 else
 {
-    <p><a href="forumCategories">Index du forum</a> » <a href="forumTopics/@id">@forumCategorie.Name</a></p>
+<p><a href="forumCategories">Index du forum</a> » <a href="forumTopics/@id">@forumCategorie.Name</a></p>
     <table class="table">
         <thead>
             <tr>
@@ -118,7 +118,7 @@ else
 
     private void NewTopic()
     {
-        AlertifyService.Open($"New topic -> {id}", TypeAlertify.Default);         
+        UriHelper.NavigateTo($"/newForumTopic/{id}");
     }
 
     private void OnLocationChanges(object sender, string location) => RefreshType();
