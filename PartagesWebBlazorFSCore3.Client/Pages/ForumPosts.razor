@@ -11,6 +11,7 @@
 @using PartagesWebBlazorFSCore3.Client.Services.Http;
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumTopic.ForSingleSelect;
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumPost.ForList;
+@using PartagesWebBlazorFSCore3.Shared.Helpers;
 
 <h1>Forum</h1>
 
@@ -20,7 +21,7 @@
 }
 else
 {
-    <p><a href="forumCategories">Index du forum</a> » <a href="forumTopics/@forumTopic.Id">@forumTopic.ForumCategorie.Name</a> » <a href="forumPosts/@id">@forumTopic.Name</a></p>
+    <p><a href="forumCategories">Index du forum</a> » <a href="forumTopics/@forumTopic.ForumCategorieId">@forumTopic.ForumCategorie.Name</a> » <a href="forumPosts/@id">@forumTopic.Name</a></p>
     <table class="table">
         <thead>
             <tr>
@@ -40,7 +41,9 @@ else
             }
         </tbody>
     </table>
-    <BulmaPagination PageCount="3" CurrentPage="1" OnPageChanged="OnPageChange" ShowPageNumbers="true" PreviousText="Précédent" NextText="Suivant" VisiblePages="5"></BulmaPagination>
+    <p>Header : @pagination.CurrentPage / @pagination.ItemsPerPage / @pagination.TotalItems / @pagination.TotalPages</p>
+
+    <BulmaPagination PageCount="@pagination.TotalPages" CurrentPage="@pagination.CurrentPage" OnPageChanged="OnPageChange" ShowPageNumbers="true" PreviousText="Précédent" NextText="Suivant" VisiblePages="5"></BulmaPagination>
 }
 
 @functions {
@@ -48,6 +51,7 @@ else
     [Parameter] int id { get; set; }
     ForumPostForListDto[] items;
     ForumTopicForSelectDto forumTopic;
+    PaginationHeader pagination = new PaginationHeader();
 
     private async Task OnPageChange(int page)
     {
@@ -78,6 +82,8 @@ else
             case System.Net.HttpStatusCode.OK:
                 string content = await response.Content.ReadAsStringAsync();
                 items = Json.Deserialize<ForumPostForListDto[]>(content);
+                var head = response.Headers.GetValues("Pagination");
+                pagination = Json.Deserialize<PaginationHeader>(head.FirstOrDefault());
                 break;
             default:
                 AlertifyService.Open($"Erreur lors du chargement des sujets du forum de la catégorie {forumTopic.ForumCategorie.Name}, sujet {forumTopic.Name}", TypeAlertify.Error);

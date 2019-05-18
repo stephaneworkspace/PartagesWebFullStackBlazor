@@ -11,6 +11,7 @@
 @using PartagesWebBlazorFSCore3.Client.Services.Http;
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForSingleSelect;
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumTopic.ForList;
+@using PartagesWebBlazorFSCore3.Shared.Helpers;
 
 <h1>Forum</h1>
 
@@ -41,22 +42,15 @@ else
         </tbody>
     </table>
 }
-@*
-<!--
-<p>Header : @header.currentPage / @header.itemsPerPage / @header.totalItems / @header.totalPages</p>
--->
-*@
-<p>Header : @header</p>
-<p>Header2 : @header2.CurrentPage</p>
+
+<p>Header : @pagination.CurrentPage / @pagination.ItemsPerPage / @pagination.TotalItems / @pagination.TotalPages</p>
 
 @functions {
     // ForumCategorie id
     [Parameter] int id { get; set; }
     ForumTopicForListDto[] items;
     ForumCategorieForSingleSelectDto forumCategorie;
-
-    string header;
-    PaginationHeader header2 = new PaginationHeader();
+    PaginationHeader pagination = new PaginationHeader();
 
     protected override async Task OnInitAsync()
     {
@@ -82,9 +76,7 @@ else
                 string content = await response.Content.ReadAsStringAsync();
                 items = Json.Deserialize<ForumTopicForListDto[]>(content);
                 var head = response.Headers.GetValues("Pagination");
-                // header = Json.Deserialize<PaginationHeader>(head.FirstOrDefault());
-                header = head.FirstOrDefault();
-                header2 = Json.Deserialize<PaginationHeader>(header);
+                pagination = Json.Deserialize<PaginationHeader>(head.FirstOrDefault());
                 break;
             default:
                 AlertifyService.Open($"Erreur lors du chargement des sujets du forum de la catégorie {forumCategorie.Name}", TypeAlertify.Error);

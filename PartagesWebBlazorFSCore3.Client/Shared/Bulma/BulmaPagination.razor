@@ -1,8 +1,8 @@
 ﻿<style>
 </style>
 
-@if (PageCount > 1)
-{
+@*if (PageCount > 1)
+{*@
     <nav class="pagination is-centered" role="navigation" aria-label="pagination">
         @if (HasPrevious)
         {
@@ -38,13 +38,7 @@
             }
         </ul>
     </nav>
-}
-
-<!--
-<p>Start : @Start</p>
-<p>Finish : @Finish</p>
-<p>VisiblePages : @VisiblePages</p>
--->
+@*}*@
 
 @functions {
     [Parameter]
@@ -52,7 +46,7 @@
 
     [Parameter]
     private int CurrentPage { get; set; }
-    
+
     [Parameter]
     private Func<int, Task> OnPageChanged { get; set; }
 
@@ -78,14 +72,14 @@
         Start = Math.Max(CurrentPage - half, 1);
         Finish = Math.Min(CurrentPage + half, PageCount);
         VisiblePages = Math.Min(VisiblePages, PageCount);
-        /*if (Start == 1) ???
+        if (Start == 1)
         {
             Finish = VisiblePages;
         }
-        if (Finish >= PageCount) ???
+        if (Finish >= PageCount)
         {
-            Start = PageCount - VisiblePages;
-        }*/
+            Start = PageCount - VisiblePages + 1;
+        }
         base.OnParametersSet();
     }
 
