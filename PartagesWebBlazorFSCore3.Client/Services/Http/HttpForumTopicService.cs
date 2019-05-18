@@ -31,9 +31,9 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         /// Get all ForumTopics from a ForumCategorie
         /// </summary>
         /// <returns></returns>
-        public async Task<HttpResponseMessage> GetForumTopics(int id)
+        public async Task<HttpResponseMessage> GetForumTopics(int id, int page)
         {
-            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, $"{Constants.URL_BASE}api/ForumTopic/{id}");
+            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, $"{Constants.URL_BASE}api/ForumTopic/{id}?pageNumber={page}");
             return await _httpClient.SendAsync(req);
         }
 

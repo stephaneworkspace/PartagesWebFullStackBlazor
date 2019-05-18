@@ -6,14 +6,14 @@
 @inject IHttpForumCategorieService HttpForumCategorieService
 @inject IHttpForumTopicService HttpForumTopicService
 @implements IDisposable
-@using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
-@using Microsoft.AspNetCore.WebUtilities;
-@using PartagesWebBlazorFSCore3.Client.Helpers;
-@using PartagesWebBlazorFSCore3.Client.Services;
-@using PartagesWebBlazorFSCore3.Client.Services.Http;
-@using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForSingleSelect;
-@using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumTopic.ForList;
-@using PartagesWebBlazorFSCore3.Shared.Helpers;
+@using Cloudcrate.AspNetCore.Blazor.Browser.Storage
+@using Microsoft.AspNetCore.WebUtilities
+@using PartagesWebBlazorFSCore3.Client.Helpers
+@using PartagesWebBlazorFSCore3.Client.Services
+@using PartagesWebBlazorFSCore3.Client.Services.Http
+@using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForSingleSelect
+@using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumTopic.ForList
+@using PartagesWebBlazorFSCore3.Shared.Helpers
 
 <h1>Forum</h1>
 
@@ -36,7 +36,7 @@ else
             @foreach (var item in items)
             {
                 <tr>
-                    <td><a href="forumPosts/@item.Id?page=1">@item.Name</a></td>
+                    <td><a href="forumPosts/@item.Id">@item.Name</a></td>
                     <td>@item.View</td>
                     <td>@item.CountForumPost</td>
                 </tr>
@@ -82,7 +82,7 @@ else
                 break;
         }
 
-        response = await HttpForumTopicService.GetForumTopics(id);
+        response = await HttpForumTopicService.GetForumTopics(id, page);
         switch (response.StatusCode)
         {
             case System.Net.HttpStatusCode.OK:

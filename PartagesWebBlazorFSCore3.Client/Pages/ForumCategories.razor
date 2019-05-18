@@ -4,11 +4,12 @@
 @inject LocalStorage Storage
 @inject IAlertifyService AlertifyService
 @inject IHttpForumCategorieService HttpForumCategorieService
-@using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
-@using PartagesWebBlazorFSCore3.Client.Helpers;
-@using PartagesWebBlazorFSCore3.Client.Services;
-@using PartagesWebBlazorFSCore3.Client.Services.Http;
+@using Cloudcrate.AspNetCore.Blazor.Browser.Storage
+@using PartagesWebBlazorFSCore3.Client.Helpers
+@using PartagesWebBlazorFSCore3.Client.Services
+@using PartagesWebBlazorFSCore3.Client.Services.Http
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForList
+@using PartagesWebBlazorFSCore3.Shared.Helpers
 
 <h1>Forum</h1>
 
@@ -31,14 +32,21 @@ else
     </thead>
     <tbody>
         @foreach (var item in items)
-            {
+        {
         <tr>
             <td><a href="forumTopics/@item.Id">@item.Name</a></td>
             <td>@item.CountForumTopic</td>
             <td>@item.CountForumPost</td>
-            <td>A faire</td>
-        </tr>
+            @if (item.LastForumPost == null)
+            {
+                <td></td>
             }
+            else
+            {
+                <td><a href="forumPosts/@item.LastForumPost.ForumTopic.Id">@item.LastForumPost.ForumTopic.Name</a> par @item.LastForumPost.User.Username.CapitalizeFirst()</td>
+            }
+        </tr>
+         }
     </tbody>
 </table>
 }
