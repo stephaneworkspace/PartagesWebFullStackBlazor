@@ -43,7 +43,6 @@ namespace PartagesWebBlazorFSCore3.Client.Services
                     await this._jsRuntime.InvokeAsync<bool>("Alertify", message, 5);
                     break;
             }
-            var syncJsRunTime = await this._jsRuntime.InvokeAsync<bool>("Alertify", message, type, 5);
         }
     }
 }

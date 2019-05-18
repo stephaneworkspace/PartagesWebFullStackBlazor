@@ -23,7 +23,8 @@
     <div class="field">
         <label class="label">Nom d'utilisateur</label>
         <p class="control has-icons-left">
-            <InputText id="username" bind-Value="@model.Username" class="input" />
+            <MyInput id="username" type="text" bind-Value="@model.Username" class="input" Autocomplete="username" />
+            <!--<InputText id="username" bind-Value="@model.Username" class="input" />-->
             <span class="icon is-small is-left">
                 <i class="fas fa-user"></i>
             </span>
@@ -34,7 +35,7 @@
         <label class="label">Mot de passe</label>
         <p class="control has-icons-left">
             <!-- https://github.com/aspnet/AspNetCore/issues/9179 added this to the 3.0.0-preview6 milestone  -->
-            <MyInput id="password" type="password" bind-Value="@model.Password" class="input" />
+            <MyInput id="password" type="password" bind-Value="@model.Password" class="input" Autocomplete="current-password" />
             <!--<InputText id="password" bind-Value="@model.Password" class="input" />-->
             <span class="icon is-small is-left">
                 <i class="fas fa-lock"></i>
