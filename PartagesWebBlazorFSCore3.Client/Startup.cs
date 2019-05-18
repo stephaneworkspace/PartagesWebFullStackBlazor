@@ -25,8 +25,6 @@ namespace PartagesWebBlazorFSCore3.Client
               //.AddBulmaProviders()
               .AddFontAwesomeIcons()*/
               .AddSingleton<IUriHelper>(sp => WebAssemblyUriHelper.Instance)
-              // Dtos
-              // .AddSingleton<UserForRegisterInputDto>()
               // Services
               .AddSingleton<IAlertifyService, AlertifyService>()
               // Http services
