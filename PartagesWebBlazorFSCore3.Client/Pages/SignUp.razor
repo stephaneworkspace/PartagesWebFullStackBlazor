@@ -4,7 +4,7 @@
 @inject IUriHelper UriHelper
 @inject LocalStorage Storage
 @inject AlertifyService _alertifyService
-@inject HttpAuthService _httpAuthService
+@inject IHttpAuthService HttpAuthService
 @using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
 @using PartagesWebBlazorFSCore3.Client.Services;
 @using PartagesWebBlazorFSCore3.Client.Services.Http;
@@ -76,15 +76,14 @@
             swAvailable = await Http.PostJsonAsync<Boolean>("api/Auth/available", model);
             StateHasChanged();
         }*/
-        var httpAuthService = new HttpAuthService(Http, Storage);
-        swAvailable = await _httpAuthService.PostIsAvailable(model);
+        swAvailable = await HttpAuthService.PostIsAvailable(model);
         StateHasChanged();
     }
 
     protected async Task HandleValidSubmit()
     {
         UserExistText = "";
-        var response = await _httpAuthService.PostRegister(model);
+        var response = await HttpAuthService.PostRegister(model);
         switch (response.StatusCode)
         {
             case System.Net.HttpStatusCode.Created:

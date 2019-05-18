@@ -1,9 +1,9 @@
-﻿using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth;
 
 namespace PartagesWebBlazorFSCore3.Client.Services.Http
 {

@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth;
 using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Auth.Login;
-using PartagesWebBlazorFSCore3.Shared.Helpers;
 using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
 
 namespace PartagesWebBlazorFSCore3.Client.Services.Http
