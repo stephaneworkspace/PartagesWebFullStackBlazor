@@ -1,15 +1,10 @@
 using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Blazorise;
-using Blazorise.Bulma;
-using Blazorise.Icons.FontAwesome;
-using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth;
 using PartagesWebBlazorFSCore3.Client.Services;
 using PartagesWebBlazorFSCore3.Client.Services.Http;
 using Microsoft.AspNetCore.Blazor.Services;
 using Microsoft.AspNetCore.Components;
 using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
-using PartagesWebBlazorFSCore3.Client.Helpers;
 
 namespace PartagesWebBlazorFSCore3.Client
 {
@@ -18,12 +13,6 @@ namespace PartagesWebBlazorFSCore3.Client
         public void ConfigureServices(IServiceCollection services)
         {
             services
-              /*.AddBlazorise(options =>
-              {
-                  options.ChangeTextOnKeyPress = true; // optional
-              })
-              //.AddBulmaProviders()
-              .AddFontAwesomeIcons()*/
               .AddSingleton<IUriHelper>(sp => WebAssemblyUriHelper.Instance)
               // Services
               .AddSingleton<IAlertifyService, AlertifyService>()
@@ -37,9 +26,6 @@ namespace PartagesWebBlazorFSCore3.Client
 
         public void Configure(IComponentsApplicationBuilder app)
         {
-            /*app
-              //.UseBulmaProviders()
-              .UseFontAwesomeIcons();*/
             app.AddComponent<App>("app");
         }
     }
