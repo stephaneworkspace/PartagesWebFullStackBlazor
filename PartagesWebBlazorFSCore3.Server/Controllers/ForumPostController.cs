@@ -34,6 +34,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         private readonly IForumRepository _repo;
         private readonly IMapper _mapper;
         private readonly IConfiguration _config;
+
         /// <summary>  
         /// Cette méthode est le constructeur 
         /// </summary>  
@@ -46,6 +47,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             _mapper = mapper;
             _repo = repo;
         }
+
         /// <summary>  
         /// Get paged ForumPosts
         /// </summary> 
@@ -98,11 +100,13 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             }
             return Ok(itemsDtoFinal);
         }
+        
         /// <summary>
         /// Response to a ForumPost
         /// </summary>
         /// <param name="Dto">Dto Input</param>
         /// <returns></returns>
+        /// 
         [Authorize]
         [HttpPost]
         [SwaggerResponse(HttpStatusCode.OK, typeof(ForumPost), Description = "Ok")]
@@ -129,6 +133,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
 
             return BadRequest("Impossible de répondre à ce poste");
         }
+
         /// <summary>  
         /// Get ForumPost
         /// </summary> 

@@ -17,12 +17,12 @@ namespace PartagesWebBlazorFSCore3.Client
         public void ConfigureServices(IServiceCollection services)
         {
             services
-              .AddBlazorise(options =>
+              /*.AddBlazorise(options =>
               {
                   options.ChangeTextOnKeyPress = true; // optional
               })
-              .AddBulmaProviders()
-              .AddFontAwesomeIcons()
+              //.AddBulmaProviders()
+              .AddFontAwesomeIcons()*/
               .AddSingleton<IUriHelper>(sp => WebAssemblyUriHelper.Instance)
               // Dtos
               .AddSingleton<UserForCheckIfAvailableDto>()
@@ -39,9 +39,9 @@ namespace PartagesWebBlazorFSCore3.Client
 
         public void Configure(IComponentsApplicationBuilder app)
         {
-            app
-              .UseBulmaProviders()
-              .UseFontAwesomeIcons();
+            /*app
+              //.UseBulmaProviders()
+              .UseFontAwesomeIcons();*/
             app.AddComponent<App>("app");
         }
     }

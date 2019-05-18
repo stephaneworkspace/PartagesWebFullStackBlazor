@@ -16,11 +16,11 @@
 
 @if (items == null || forumTopic == null)
 {
-    <p><em>Loading... @id</em></p>
+    <p><em>Loading...</em></p>
 }
 else
 {
-<p><a href="forumCategories">Index du forum</a> » <a href="forumTopics/@forumTopic.Id">@forumTopic.ForumCategorie.Name</a> » <a href="forumPosts/@id">@forumTopic.Name</a></p>
+    <p><a href="forumCategories">Index du forum</a> » <a href="forumTopics/@forumTopic.Id">@forumTopic.ForumCategorie.Name</a> » <a href="forumPosts/@id">@forumTopic.Name</a></p>
     <table class="table">
         <thead>
             <tr>
@@ -40,6 +40,8 @@ else
             }
         </tbody>
     </table>
+    <BulmaPagination PageCount="3" CurrentPage="1" OnPageChanged="OnPageChange" ShowPageNumbers="true" PreviousText="Précédent" NextText="Suivant" VisiblePages="5"></BulmaPagination>
+    <!--OnPageChanged="Foo"-->
 }
 
 @functions {
@@ -47,6 +49,12 @@ else
     [Parameter] int id { get; set; }
     ForumPostForListDto[] items;
     ForumTopicForSelectDto forumTopic;
+
+    private async Task OnPageChange(int page)
+    {
+        AlertifyService.Open($"Page change {page}", TypeAlertify.Default);
+        StateHasChanged();
+    }
 
     protected override async Task OnInitAsync()
     {
