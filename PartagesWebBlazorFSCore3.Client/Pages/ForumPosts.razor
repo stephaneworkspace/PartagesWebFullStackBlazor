@@ -43,7 +43,7 @@ else
     </table>
     <p>Header : @pagination.CurrentPage / @pagination.ItemsPerPage / @pagination.TotalItems / @pagination.TotalPages</p>
 
-    <BulmaPagination PageCount="@pagination.TotalPages" CurrentPage="@pagination.CurrentPage" OnPageChanged="OnPageChange" ShowPageNumbers="true" PreviousText="Précédent" NextText="Suivant" VisiblePages="5"></BulmaPagination>
+    <BulmaPagination PageCount="@pagination.TotalPages" CurrentPage="@pagination.CurrentPage" OnPageChanged="OnPageChange"></BulmaPagination>
 }
 
 @functions {
