@@ -71,30 +71,29 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             var itemsDtoFinal = new List<ForumPostForListDtoWithVirtual>();
             foreach (var itemDto in itemsDto)
             {
-                var itemDtoWithVirtual = new ForumPostForListDtoWithVirtual();
-                itemDtoWithVirtual.Id = itemDto.Id;
-                itemDtoWithVirtual.ForumTopic = itemDto.ForumTopic;
-                itemDtoWithVirtual.ForumTopicId = itemDto.ForumTopicId;
-                itemDtoWithVirtual.User.Id = itemDto.User.Id;
-                itemDtoWithVirtual.User.Username = itemDto.User.Username;
-                itemDtoWithVirtual.User.Created = itemDto.User.Created;
-                itemDtoWithVirtual.UserId = itemDto.UserId;
-                itemDtoWithVirtual.Content = itemDto.Content;
-                itemDtoWithVirtual.Date = itemDto.Date;
                 var UserIdCurrent = 0;
                 if (User.Identity.IsAuthenticated)
                 {
                     UserIdCurrent = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
                 }
-                if (UserIdCurrent == itemDto.UserId)
+                var userWithVirtual = new UserForListForumPostDtoWithVirtual
                 {
-                    itemDtoWithVirtual.SwCurrentUser = true;
-                }
-                else
+                    Id = itemDto.User.Id,
+                    Username = itemDto.User.Username,
+                    Created = itemDto.User.Created,
+                    MessageCount = await _repo.GetCountUserForumPost(itemDto.UserId)
+                };
+                var itemDtoWithVirtual = new ForumPostForListDtoWithVirtual
                 {
-                    itemDtoWithVirtual.SwCurrentUser = false;
-                }
-                itemDtoWithVirtual.User.MessageCount = await _repo.GetCountUserForumPost(itemDto.UserId);
+                    Id = itemDto.Id,
+                    ForumTopic = itemDto.ForumTopic,
+                    ForumTopicId = itemDto.ForumTopicId,
+                    User = userWithVirtual,
+                    UserId = itemDto.UserId,
+                    Content = itemDto.Content,
+                    Date = itemDto.Date,
+                    SwCurrentUser = UserIdCurrent == itemDto.UserId
+                };
                 itemsDtoFinal.Add(itemDtoWithVirtual);
             }
             return Ok(itemsDtoFinal);

@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace PartagesWebBlazorFSCore3.Client.Services.Http
 {
+    /// <summary>
+    /// ForumTopic Service
+    /// </summary>
     public class HttpForumTopicService : IHttpForumTopicService
     {
         /// <summary>
@@ -31,6 +34,17 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         public async Task<HttpResponseMessage> GetForumTopics(int id)
         {
             HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, $"{Constants.URL_BASE}api/ForumTopic/{id}");
+            return await _httpClient.SendAsync(req);
+        }
+
+        /// <summary>
+        /// Get a selected ForumTopic
+        /// </summary>
+        /// <param name="id">ForumTopic primary key</param>
+        /// <returns></returns>
+        public async Task<HttpResponseMessage> GetForumTopic(int id)
+        {
+            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, $"{Constants.URL_BASE}api/ForumTopic/ForumTopicId/{id}");
             return await _httpClient.SendAsync(req);
         }
     }

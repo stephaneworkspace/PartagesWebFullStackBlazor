@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace PartagesWebBlazorFSCore3.Client.Services.Http
 {
+    /// <summary>
+    /// ForumCategorie service
+    /// </summary>
     public class HttpForumCategorieService : IHttpForumCategorieService
     {
         /// <summary>

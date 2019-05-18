@@ -7,14 +7,22 @@ using System.Threading.Tasks;
 namespace PartagesWebBlazorFSCore3.Client.Services.Http
 {
     /// <summary>
-    /// Interface ForumTopics service
+    /// Interface ForumTopic service
     /// </summary>
     interface IHttpForumTopicService
     {
         /// <summary>
         /// Get all ForumTopics from a ForumCategorieId
         /// </summary>
+        /// <param name="id">ForumCategorieId</param>
         /// <returns></returns>
         Task<HttpResponseMessage> GetForumTopics(int id);
+
+        /// <summary>
+        /// Get a selected ForumTopic
+        /// </summary>
+        /// <param name="id">ForumTopic primary key</param>
+        /// <returns></returns>
+        Task<HttpResponseMessage> GetForumTopic(int id);
     }
 }

@@ -10,7 +10,7 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
     /// <summary>
     /// Interface Auth service
     /// </summary>
-    public interface IHttpAuthService
+    interface IHttpAuthService
     {
         /// <summary>
         /// Check if dto.Username is available
