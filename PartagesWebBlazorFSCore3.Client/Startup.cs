@@ -9,6 +9,7 @@ using PartagesWebBlazorFSCore3.Client.Services.Http;
 using Microsoft.AspNetCore.Blazor.Services;
 using Microsoft.AspNetCore.Components;
 using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
+using PartagesWebBlazorFSCore3.Client.Helpers;
 
 namespace PartagesWebBlazorFSCore3.Client
 {
@@ -27,6 +28,7 @@ namespace PartagesWebBlazorFSCore3.Client
               // Dtos
               .AddSingleton<UserForCheckIfAvailableDto>()
               .AddSingleton<UserForRegisterInputDto>()
+              .AddSingleton<PaginationHeader>()
               // Services
               .AddSingleton<IAlertifyService, AlertifyService>()
               // Http services

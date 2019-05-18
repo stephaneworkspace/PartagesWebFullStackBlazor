@@ -41,12 +41,22 @@ else
         </tbody>
     </table>
 }
+@*
+<!--
+<p>Header : @header.currentPage / @header.itemsPerPage / @header.totalItems / @header.totalPages</p>
+-->
+*@
+<p>Header : @header</p>
+<p>Header2 : @header2.CurrentPage</p>
 
 @functions {
     // ForumCategorie id
     [Parameter] int id { get; set; }
     ForumTopicForListDto[] items;
     ForumCategorieForSingleSelectDto forumCategorie;
+
+    string header;
+    PaginationHeader header2 = new PaginationHeader();
 
     protected override async Task OnInitAsync()
     {
@@ -71,6 +81,10 @@ else
             case System.Net.HttpStatusCode.OK:
                 string content = await response.Content.ReadAsStringAsync();
                 items = Json.Deserialize<ForumTopicForListDto[]>(content);
+                var head = response.Headers.GetValues("Pagination");
+                // header = Json.Deserialize<PaginationHeader>(head.FirstOrDefault());
+                header = head.FirstOrDefault();
+                header2 = Json.Deserialize<PaginationHeader>(header);
                 break;
             default:
                 AlertifyService.Open($"Erreur lors du chargement des sujets du forum de la catégorie {forumCategorie.Name}", TypeAlertify.Error);
