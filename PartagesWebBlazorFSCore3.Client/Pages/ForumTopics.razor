@@ -17,7 +17,7 @@
 
 @if (items == null || forumCategorie == null)
 {
-    <p><em>Loading...</em></p>
+    <p><em>Chargement...</em></p>
 }
 else
 {
@@ -41,9 +41,8 @@ else
             }
         </tbody>
     </table>
+    <BulmaPagination PageCount="@pagination.TotalPages" CurrentPage="@pagination.CurrentPage" OnPageChanged="OnPageChange"></BulmaPagination>
 }
-
-<p>Header : @pagination.CurrentPage / @pagination.ItemsPerPage / @pagination.TotalItems / @pagination.TotalPages</p>
 
 @functions {
     // ForumCategorie id
@@ -83,5 +82,11 @@ else
                 UriHelper.NavigateTo("/");
                 break;
         };
+    }
+
+    private async Task OnPageChange(int page)
+    {
+        AlertifyService.Open($"Page change {page}", TypeAlertify.Default);
+        StateHasChanged();
     }
 }
