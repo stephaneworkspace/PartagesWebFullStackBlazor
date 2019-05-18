@@ -9,7 +9,7 @@ using PartagesWebBlazorFSCore3.Client.Services;
 using PartagesWebBlazorFSCore3.Client.Services.Http;
 using Microsoft.AspNetCore.Blazor.Services;
 using Microsoft.AspNetCore.Components;
-using Blazored.LocalStorage;
+using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
 
 namespace PartagesWebBlazorFSCore3.Client
 {
@@ -24,7 +24,6 @@ namespace PartagesWebBlazorFSCore3.Client
               })
               .AddBulmaProviders()
               .AddFontAwesomeIcons()
-              .AddBlazoredLocalStorage()
               // .AddSingleton<ServerSideValidator>()
               .AddSingleton<IUriHelper>(sp => WebAssemblyUriHelper.Instance)
               // Dtos
@@ -33,7 +32,8 @@ namespace PartagesWebBlazorFSCore3.Client
               // Services
               .AddSingleton<AlertifyService>()
               // Http services
-              .AddSingleton<HttpAuthService>();
+              .AddSingleton<HttpAuthService>()
+              .AddStorage();
         }
 
         public void Configure(IComponentsApplicationBuilder app)

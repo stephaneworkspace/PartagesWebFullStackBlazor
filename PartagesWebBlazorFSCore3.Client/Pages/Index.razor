@@ -1,7 +1,6 @@
 ﻿@page "/"
-@inject ILocalStorageService localStorage
-@using Blazored.LocalStorage;
-@using PartagesWebBlazorFSCore3.Client.Services;
+@inject LocalStorage Storage
+@using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
 
 <h1>Hello, world!</h1>
 
@@ -16,8 +15,8 @@ JWT = @jwt;
 
 @functions {
     string jwt = "";
-    protected override async Task OnInitAsync()
+    protected override void OnInit()
     {
-        jwt = await localStorage.GetItemAsync<string>("token");
+        jwt = Storage["token"];
     }
 }

@@ -13,9 +13,9 @@
 
   <ItemGroup>
     <PackageReference Include="AlertifyJS" Version="1.11.2" />
-    <PackageReference Include="Blazored.LocalStorage" Version="2.0.0" />
     <PackageReference Include="Blazorise.Bulma" Version="0.7.3" />
     <PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.7.3" />
+    <PackageReference Include="Cloudcrate.AspNetCore.Blazor.Browser.Storage" Version="3.0.0-preview5-19227-02" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="3.0.0-preview5-19227-01" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="3.0.0-preview5-19227-01" PrivateAssets="all" />
   </ItemGroup>

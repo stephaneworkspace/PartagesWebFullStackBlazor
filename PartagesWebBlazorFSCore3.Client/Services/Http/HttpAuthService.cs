@@ -6,8 +6,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Blazored.LocalStorage;
+// using Blazored.LocalStorage;
 using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Auth.Login;
+using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
 
 namespace PartagesWebBlazorFSCore3.Client.Services.Http
 {
@@ -17,16 +18,16 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         /// HttpClient
         /// </summary>
         private readonly HttpClient _httpClient;
-        private ILocalStorageService _localStorage;
+        private LocalStorage _storage;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="httpClient">Http client</param>
-        public HttpAuthService(HttpClient httpClient, ILocalStorageService localStorage)
+        public HttpAuthService(HttpClient httpClient, LocalStorage storage)
         {
             _httpClient = httpClient;
-            _localStorage = localStorage;
+            _storage = storage;
         }
 
         /// <summary>
@@ -59,7 +60,8 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
                 // Set local storage
                 string content = await response.Content.ReadAsStringAsync();
                 LoginDto _dto = Json.Deserialize<LoginDto>(content);
-                await _localStorage.SetItemAsync("token", _dto.token);
+                _storage["token"] = _dto.token;
+                // await _localStorage.SetItemAsync("token", _dto.token);
                 //    messagesUnread
             }
             return response;
