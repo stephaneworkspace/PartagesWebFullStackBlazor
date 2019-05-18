@@ -12,13 +12,13 @@ using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
 
 namespace PartagesWebBlazorFSCore3.Client.Services.Http
 {
-    public class HttpAuthService
+    public class HttpAuthService: IHttpAuthService
     {
         /// <summary>
         /// HttpClient
         /// </summary>
         private readonly HttpClient _httpClient;
-        private LocalStorage _storage;
+        private readonly LocalStorage _storage;
 
         /// <summary>
         /// Constructor

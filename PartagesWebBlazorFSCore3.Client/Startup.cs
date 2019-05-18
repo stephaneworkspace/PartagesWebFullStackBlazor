@@ -30,7 +30,7 @@ namespace PartagesWebBlazorFSCore3.Client
               // Services
               .AddSingleton<AlertifyService>()
               // Http services
-              .AddSingleton<HttpAuthService>()
+              .AddSingleton<IHttpAuthService, HttpAuthService>()
               .AddStorage();
         }
 
