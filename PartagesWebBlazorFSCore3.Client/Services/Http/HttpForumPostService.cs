@@ -25,9 +25,9 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
             _httpClient = httpClient;
         }
 
-        public async Task<HttpResponseMessage> GetForumPosts(int id)
+        public async Task<HttpResponseMessage> GetForumPosts(int id, int page)
         {
-            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, $"{Constants.URL_BASE}api/ForumPost/{id}");
+            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, $"{Constants.URL_BASE}api/ForumPost/{id}?pageNumber={page}");
             return await _httpClient.SendAsync(req);
         }
     }

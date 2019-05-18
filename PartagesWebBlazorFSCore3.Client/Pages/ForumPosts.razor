@@ -5,6 +5,7 @@
 @inject IAlertifyService AlertifyService
 @inject IHttpForumTopicService HttpForumTopicService
 @inject IHttpForumPostService HttpForumPostService
+@implements IDisposable
 @using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
 @using Microsoft.AspNetCore.WebUtilities;
 @using PartagesWebBlazorFSCore3.Client.Helpers;
@@ -42,6 +43,7 @@ else
             }
         </tbody>
     </table>
+    @PageQuery
     <BulmaPagination PageCount="@pagination.TotalPages" CurrentPage="@pagination.CurrentPage" OnPageChanged="OnPageChange"></BulmaPagination>
 }
 
@@ -52,7 +54,19 @@ else
     ForumTopicForSelectDto forumTopic;
     PaginationHeader pagination = new PaginationHeader();
 
+    private string PageQuery { get; set; }
+
     protected override async Task OnInitAsync()
+    {
+        // Query param detection
+        RefreshType();
+        UriHelper.OnLocationChanged += OnLocationChanges;
+        // Load data with query on load page
+        await LoadDatas(Int32.Parse(PageQuery));
+        StateHasChanged();
+    }
+
+    private async Task LoadDatas(int page)
     {
         HttpResponseMessage response;
 
@@ -69,7 +83,7 @@ else
                 break;
         }
 
-        response = await HttpForumPostService.GetForumPosts(id);
+        response = await HttpForumPostService.GetForumPosts(id, page);
         switch (response.StatusCode)
         {
             case System.Net.HttpStatusCode.OK:
@@ -87,7 +101,21 @@ else
 
     private async Task OnPageChange(int page)
     {
-        AlertifyService.Open($"Page change {page}", TypeAlertify.Default);
+        await LoadDatas(page);
         StateHasChanged();
+    }
+
+    private void OnLocationChanges(object sender, string location) => RefreshType();
+
+    private void RefreshType()
+    {
+        var uri = new Uri(UriHelper.GetAbsoluteUri());
+        PageQuery = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query).TryGetValue("page", out var page) ? page.First() : "";
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        UriHelper.OnLocationChanged -= OnLocationChanges;
     }
 }

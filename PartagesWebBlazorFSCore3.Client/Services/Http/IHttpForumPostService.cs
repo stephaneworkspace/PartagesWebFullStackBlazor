@@ -16,6 +16,6 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         /// </summary>
         /// <param name="id">ForumSujetId</param>
         /// <returns></returns>
-        Task<HttpResponseMessage> GetForumPosts(int id);
+        Task<HttpResponseMessage> GetForumPosts(int id, int page);
     }
 }
