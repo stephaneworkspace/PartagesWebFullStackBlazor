@@ -54,14 +54,11 @@
     private string InvalidCredentialsText = "";
     protected async Task HandleValidSubmit()
     {
-
-        var client = new HttpClient();
-        var httpAuthService = new HttpAuthService(client, Storage);
+        InvalidCredentialsText = "";
         var response = await _httpAuthService.PostLogin(model);
         switch (response.StatusCode)
         {
             case System.Net.HttpStatusCode.OK:
-                InvalidCredentialsText = "";
                 _alertifyService = new AlertifyService(JsRuntime);
                 _alertifyService.Open($"Utilisateur « {model.Username.CapitalizeFirst()} » connecté", AlertifyService.Type.Success);
                 UriHelper.NavigateTo("/");
