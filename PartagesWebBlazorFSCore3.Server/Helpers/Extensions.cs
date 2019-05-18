@@ -20,12 +20,14 @@ namespace PartagesWebBlazorFSCore3.Server.Helpers
         /// <summary>
         /// Header for Application-Error used in Configure from Startup.cs
         /// </summary>
-        /// <remarks>14.05.2019: For Angular/Asp.net Core back/front</remarks>
+        /// <remarks>14.05.2019: For Angular/Asp.net Core back/front
+        /// 15.05: Desactivate for udemy</remarks>
         public static void AddApplicationError(this HttpResponse response, string message)
         {
+            /*
             response.Headers.Add("Application-Error", message);
             response.Headers.Add("Access-Control-Expose-Headers", "Application-Error");
-            response.Headers.Add("Access-Control-Allow-Origin", "*");
+            response.Headers.Add("Access-Control-Allow-Origin", "*");*/
         }
         /// <summary>
         /// Pagination header

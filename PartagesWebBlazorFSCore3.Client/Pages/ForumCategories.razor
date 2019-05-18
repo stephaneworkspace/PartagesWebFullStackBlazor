@@ -56,8 +56,6 @@ else
                 items = Json.Deserialize<ForumCategorieForListDto[]>(content);
                 break;
             default:
-                // await response.Content.ReadAsStringAsync();
-                AlertifyService = new AlertifyService(JsRuntime);
                 AlertifyService.Open("Erreur lors du chargement des catégories du forum", TypeAlertify.Error);
                 UriHelper.NavigateTo("/");
                 break;

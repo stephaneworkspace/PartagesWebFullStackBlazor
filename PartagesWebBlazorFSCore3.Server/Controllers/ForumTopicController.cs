@@ -34,6 +34,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         private readonly IForumRepository _repo;
         private readonly IMapper _mapper;
         private readonly IConfiguration _config;
+
         /// <summary>  
         /// Constructor
         /// </summary>  
@@ -46,6 +47,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             _mapper = mapper;
             _repo = repo;
         }
+
         /// <summary>  
         /// Get paged list of ForumTopic
         /// </summary> 
@@ -74,6 +76,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             Response.AddPagination(items.CurrentPage, items.PageSize, items.TotalCount, items.TotalPages);
             return Ok(newDto);
         }
+
         /// <summary>  
         /// Get ForumTopic
         /// </summary> 
@@ -87,6 +90,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             var itemDto = _mapper.Map<ForumTopicForSelectDto>(item);
             return Ok(itemDto);
         }
+
         /// <summary>
         /// New ForumTopic and ForumPost
         /// </summary>

@@ -88,13 +88,11 @@
         switch (response.StatusCode)
         {
             case System.Net.HttpStatusCode.Created:
-                AlertifyService = new AlertifyService(JsRuntime);
                 AlertifyService.Open($"Utilisateur « {model.Username.CapitalizeFirst()} » crée", TypeAlertify.Success);
                 UriHelper.NavigateTo("/");
                 break;
             case System.Net.HttpStatusCode.BadRequest:
                 UserExistText = await response.Content.ReadAsStringAsync();
-                AlertifyService = new AlertifyService(JsRuntime);
                 AlertifyService.Open(UserExistText, TypeAlertify.Error);
                 break;
         };
