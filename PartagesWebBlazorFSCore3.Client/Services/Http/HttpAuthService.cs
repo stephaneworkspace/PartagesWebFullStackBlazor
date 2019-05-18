@@ -37,7 +37,7 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public async Task<Boolean> PostIsAvailable(UserForRegisterInputDto dto)
+        public async Task<Boolean> PostIsAvailable(UserForRegisterAvailableInputDto dto)
         {
             Boolean swAvailable = false;
             if (dto.Username != "" && dto.Username.Length > 2 && dto.Username.Length < 30)

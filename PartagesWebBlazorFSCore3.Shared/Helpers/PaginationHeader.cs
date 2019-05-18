@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PartagesWebBlazorFSCore3.Server.Helpers
+namespace PartagesWebBlazorFSCore3.Shared.Helpers
 {
     /// <summary>
     /// Pagination Header
@@ -30,19 +30,5 @@ namespace PartagesWebBlazorFSCore3.Server.Helpers
         /// Total pages
         /// </summary>
         public int TotalPages { get; set; }
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="currentPage">Current page</param>
-        /// <param name="itemsPerPage">Items per page</param>
-        /// <param name="totalItems">Total items</param>
-        /// <param name="totalPages">Total pages</param>
-        public PaginationHeader(int currentPage, int itemsPerPage, int totalItems, int totalPages)
-        {
-            this.CurrentPage = currentPage;
-            this.ItemsPerPage = itemsPerPage;
-            this.TotalItems = totalItems;
-            this.TotalPages = totalPages;
-        }
     }
 }

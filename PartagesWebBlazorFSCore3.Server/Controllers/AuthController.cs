@@ -120,7 +120,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         /// <param name="dto">Dto</param>
         [HttpPost("available")]
         [SwaggerResponse(HttpStatusCode.OK, typeof(Boolean), Description = "Ok")]
-        public async Task<IActionResult> Available(UserForCheckIfAvailableDto dto)
+        public async Task<IActionResult> Available(UserForRegisterAvailableInputDto dto)
         {
             Boolean swAvailable = await _repo.UserExists(dto.Username);
             return Ok(!swAvailable);

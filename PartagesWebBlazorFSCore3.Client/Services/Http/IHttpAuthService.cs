@@ -17,7 +17,7 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        Task<Boolean> PostIsAvailable(UserForRegisterInputDto dto);
+        Task<Boolean> PostIsAvailable(UserForRegisterAvailableInputDto dto);
 
         /// <summary>
         /// Register a new User

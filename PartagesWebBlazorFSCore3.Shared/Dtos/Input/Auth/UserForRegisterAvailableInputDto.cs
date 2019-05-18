@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
 namespace PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth
 {
-    public class UserForCheckIfAvailableDto
+    public class UserForRegisterAvailableInputDto
     {
-        /// <summary>
-        /// Username
-        /// </summary>
         public string Username { get; set; }
     }
 }

@@ -26,9 +26,7 @@ namespace PartagesWebBlazorFSCore3.Client
               .AddFontAwesomeIcons()*/
               .AddSingleton<IUriHelper>(sp => WebAssemblyUriHelper.Instance)
               // Dtos
-              .AddSingleton<UserForCheckIfAvailableDto>()
-              .AddSingleton<UserForRegisterInputDto>()
-              .AddSingleton<PaginationHeader>()
+              // .AddSingleton<UserForRegisterInputDto>()
               // Services
               .AddSingleton<IAlertifyService, AlertifyService>()
               // Http services

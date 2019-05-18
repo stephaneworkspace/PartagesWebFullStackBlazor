@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PartagesWebBlazorFSCore3.Shared.Helpers;
 
 namespace PartagesWebBlazorFSCore3.Server.Helpers
 {
@@ -21,7 +22,7 @@ namespace PartagesWebBlazorFSCore3.Server.Helpers
         /// Header for Application-Error used in Configure from Startup.cs
         /// </summary>
         /// <remarks>14.05.2019: For Angular/Asp.net Core back/front
-        /// 15.05: Desactivate for udemy</remarks>
+        /// 15.05: Desactivate for udemy WARNING check in my code Application-Error</remarks>
         public static void AddApplicationError(this HttpResponse response, string message)
         {
             /*
@@ -39,7 +40,13 @@ namespace PartagesWebBlazorFSCore3.Server.Helpers
         /// <param name="totalPages">Total pages</param>
         public static void AddPagination(this HttpResponse response, int currentPage, int itemsPerPage, int totalItems, int totalPages)
         {
-            var paginationHeader = new PaginationHeader(currentPage, itemsPerPage, totalItems, totalPages);
+            var paginationHeader = new PaginationHeader
+            {
+                CurrentPage = currentPage,
+                ItemsPerPage = itemsPerPage,
+                TotalItems = totalItems,
+                TotalPages = totalPages
+            };
             // This 2 line for .pagination near .result else is just for header
             var camelCaseFormatter = new JsonSerializerSettings();
             camelCaseFormatter.ContractResolver = new CamelCasePropertyNamesContractResolver();

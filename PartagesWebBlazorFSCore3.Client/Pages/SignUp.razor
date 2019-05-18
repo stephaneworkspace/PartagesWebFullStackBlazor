@@ -70,14 +70,18 @@
 
     public async void CheckIfUsernameAvailableEvent(object sender, EventArgs e)
     {
+        UserForRegisterAvailableInputDto dtoAvailable = new UserForRegisterAvailableInputDto()
+        {
+            Username = model.Username
+        };
         // For udemy
         /*swAvailable = false;
-        if (model.Username != "" && model.Username.Length > 2 && model.Username.Length < 30)
+        if (dtoAvailable.Username != "" && dtoAvailable.Username.Length > 2 && dtoAvailable.Username.Length < 30)
         {
-            swAvailable = await Http.PostJsonAsync<Boolean>("api/Auth/available", model);
+            swAvailable = await Http.PostJsonAsync<Boolean>("api/Auth/available", dtoAvailable);
             StateHasChanged();
         }*/
-        swAvailable = await HttpAuthService.PostIsAvailable(model);
+        swAvailable = await HttpAuthService.PostIsAvailable(dtoAvailable);
         StateHasChanged();
     }
 
