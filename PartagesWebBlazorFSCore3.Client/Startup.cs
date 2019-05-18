@@ -4,7 +4,6 @@ using Blazorise;
 using Blazorise.Bulma;
 using Blazorise.Icons.FontAwesome;
 using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth;
-using PartagesWebBlazorFSCore3.Client.Component;
 using PartagesWebBlazorFSCore3.Client.Services;
 using PartagesWebBlazorFSCore3.Client.Services.Http;
 using Microsoft.AspNetCore.Blazor.Services;
@@ -24,7 +23,6 @@ namespace PartagesWebBlazorFSCore3.Client
               })
               .AddBulmaProviders()
               .AddFontAwesomeIcons()
-              // .AddSingleton<ServerSideValidator>()
               .AddSingleton<IUriHelper>(sp => WebAssemblyUriHelper.Instance)
               // Dtos
               .AddSingleton<UserForCheckIfAvailableDto>()

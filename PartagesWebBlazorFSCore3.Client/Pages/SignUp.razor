@@ -10,6 +10,7 @@
 @using PartagesWebBlazorFSCore3.Client.Services.Http;
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth;
 @using PartagesWebBlazorFSCore3.Shared.Helpers;
+
 <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
@@ -19,24 +20,20 @@
             <li class="validation-message">@UserExistText</li>
         </ul>
     }
-    @*<ServerSideValidator ref="serverSideValidator" />*@
     <div class="field">
         <label class="label">Nom d'utilisateur</label>
-        <p class="control has-icons-left">
-            <!--has-icons-right-->
+        <p class="control has-icons-left has-icons-right">
             <InputText id="username" bind-Value="@model.Username" class="input" />
-            <span class="icon is-small is-left">
+            <span class="icon is-small is-left ">
                 <i class="fas fa-user"></i>
             </span>
-            @*
+            @if (swAvailable)
+            {
                 <span class="icon is-small is-right">
                     <i class="fas fa-check"></i>
                 </span>
-                @if (swAvailable)
-                {
-                    <span class="help is-success">Ce nom d'utilisateur est disponible</span>
-                }
-            *@
+                <span class="help is-success">Ce nom d'utilisateur est disponible</span>
+            }
             <span class="help is-danger"><ValidationMessage For="@(() => model.Username)" /></span>
         </p>
     </div>
@@ -62,28 +59,27 @@
 </EditForm>
 @functions {
     private UserForRegisterInputDto model = new UserForRegisterInputDto();
-
-    // 15.05: For info // ServerSideValidator serverSideValidator; // not in use
-
+    private bool swAvailable = false;
     private string UserExistText = "";
-    @*
-        // 15.05 -> For info
-        bool swAvailable;
-        protected async Task CheckIfUsernameAvailable(UIChangeEventArgs e)
+
+    protected override void OnInit()
+    {
+        model.ValueChanged += CheckIfUsernameAvailableEvent;
+    }    
+
+    public async void CheckIfUsernameAvailableEvent(object sender, EventArgs e)
+    {
+        swAvailable = false;
+        if (model.Username != "" && model.Username.Length > 2 && model.Username.Length < 30)
         {
-            if ((string)e.Value != "")
-            {
-                var client = new HttpClient();
-                UserForCheckIfAvailableDto dto = new UserForCheckIfAvailableDto();
-                dto.Username = (string)e.Value;
-                swAvailable = await Http.PostJsonAsync<Boolean>("api/Auth/available", dto);
-            }
-            else
-            {
-                swAvailable = true;
-            }
+            var client = new HttpClient();
+            UserForCheckIfAvailableDto dto = new UserForCheckIfAvailableDto();
+            dto.Username = model.Username;
+            swAvailable = await Http.PostJsonAsync<Boolean>("api/Auth/available", dto);
+            StateHasChanged();
         }
-    *@
+    }
+
     protected async Task HandleValidSubmit()
     {
         UserExistText = "";

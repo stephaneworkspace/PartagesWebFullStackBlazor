@@ -19,6 +19,7 @@ using PartagesWebBlazorFSCore3.Server.Data;
 using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth;
 using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Auth.Login;
 using PartagesWebBlazorFSCore3.Shared.Models;
+using PartagesWebBlazorFSCore3.Shared.Helpers;
 
 namespace PartagesWebBlazorFSCore3.Server.Controllers
 {
@@ -34,6 +35,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         private readonly IMessageRepository _repoMessage;
         private readonly IConfiguration _config;
         private readonly IMapper _mapper;
+
         /// <summary>  
         /// Constructor
         /// </summary> 
@@ -48,13 +50,14 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             _repoMessage = repoMessage;
             _mapper = mapper;
         }
+
         /// <summary>  
         /// Register
         /// </summary> 
         /// <param name="userForRegisterDto">Dto</param>
         [HttpPost("register")]
         [SwaggerResponse(HttpStatusCode.Created, typeof(void), Description = "Ok")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "L'utilisateur « {dto.Username} » existe déjà")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "L'utilisateur « {dto.Username.CapitalizeFirst()} » existe déjà")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Le champ « Nom d'utilisateur » est obligatoire.")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Vous devez spécifier un nom d'utilisateur entre 2 et 30 caractères")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Le champ « Mot de passe » est obligatoire.")]
@@ -63,7 +66,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         {
             dto.Username = dto.Username.ToLower();
             if (await _repo.UserExists(dto.Username))
-                return BadRequest($"L'utilisateur « {dto.Username} » existe déjà");
+                return BadRequest($"L'utilisateur « {dto.Username.CapitalizeFirst()} » existe déjà");
             var userToCreate = new User
             {
                 Username = dto.Username
@@ -71,6 +74,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             _ = await _repo.Register(userToCreate, dto.Password);
             return StatusCode(201);
         }
+
         /// <summary>  
         /// Login
         /// </summary> 
@@ -109,22 +113,17 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             };
             return Ok(loginDto);
         }
+
         /// <summary>
         /// Username available
         /// </summary>
+        /// <param name="dto">Dto</param>
         [HttpPost("available")]
         [SwaggerResponse(HttpStatusCode.OK, typeof(Boolean), Description = "Ok")]
         public async Task<IActionResult> Available(UserForCheckIfAvailableDto dto)
         {
-            Boolean swUserExist = await _repo.UserExists(dto.Username);
-            return Ok(!swUserExist);
+            Boolean swAvailable = await _repo.UserExists(dto.Username);
+            return Ok(!swAvailable);
         }
-        /* : Controller (with view support)
-        // GET: /<controller>/
-        public IActionResult Index()
-        {
-            return View();
-        }
-        */
     }
 }

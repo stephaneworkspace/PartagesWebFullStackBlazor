@@ -17,6 +17,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
     public class AuthRepository : IAuthRepository
     {
         private readonly DataContext _context;
+
         /// <summary>  
         /// Constructor
         /// </summary>  
@@ -25,6 +26,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         {
             _context = context;
         }
+
         /// <summary>  
         /// Login
         /// </summary>  
@@ -43,6 +45,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
             }
             return user;
         }
+
         /// <summary>  
         /// Verifiy Password
         /// </summary>  
@@ -61,6 +64,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
             }
             return true;
         }
+
         /// <summary>  
         /// Register
         /// </summary>  
@@ -76,6 +80,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
             await _context.SaveChangesAsync();
             return user;
         }
+
         /// <summary>  
         /// Create password hash
         /// </summary>  
@@ -90,6 +95,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
                 passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
             }
         }
+
         /// <summary>  
         /// If user in model User exists
         /// </summary>  
