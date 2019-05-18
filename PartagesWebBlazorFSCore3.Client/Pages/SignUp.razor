@@ -69,27 +69,25 @@
 
     public async void CheckIfUsernameAvailableEvent(object sender, EventArgs e)
     {
-        swAvailable = false;
+        // For udemy
+        /*swAvailable = false;
         if (model.Username != "" && model.Username.Length > 2 && model.Username.Length < 30)
         {
-            var client = new HttpClient();
-            UserForCheckIfAvailableDto dto = new UserForCheckIfAvailableDto();
-            dto.Username = model.Username;
-            swAvailable = await Http.PostJsonAsync<Boolean>("api/Auth/available", dto);
+            swAvailable = await Http.PostJsonAsync<Boolean>("api/Auth/available", model);
             StateHasChanged();
-        }
+        }*/
+        var httpAuthService = new HttpAuthService(Http, Storage);
+        swAvailable = await _httpAuthService.PostIsAvailable(model);
+        StateHasChanged();
     }
 
     protected async Task HandleValidSubmit()
     {
         UserExistText = "";
-        var client = new HttpClient();
-        var httpAuthService = new HttpAuthService(client, Storage);
         var response = await _httpAuthService.PostRegister(model);
         switch (response.StatusCode)
         {
             case System.Net.HttpStatusCode.Created:
-                UserExistText = "";
                 _alertifyService = new AlertifyService(JsRuntime);
                 _alertifyService.Open($"Utilisateur « {model.Username.CapitalizeFirst()} » crée", AlertifyService.Type.Success);
                 UriHelper.NavigateTo("/");
@@ -100,17 +98,5 @@
                 _alertifyService.Open(UserExistText, AlertifyService.Type.Error);
                 break;
         };
-        /*
-        await client.PostJsonAsync("/api/Auth/register", model)
-            .OnBadRequest<Dictionary<string, List<string>>>(errors => {
-                serverSideValidator.DisplayErrors(errors);
-            })
-            .OnOK(async () =>
-            {
-                await JsInterop.Toastr("success", "Successfully registered, please confirm your account by clicking on the link in the email sent to " + registerCommand.Email);
-                registerCommand = new RegisterCommand();
-                StateHasChanged();
-            })
-            .Post(registerCommand);  */
     }
 }
