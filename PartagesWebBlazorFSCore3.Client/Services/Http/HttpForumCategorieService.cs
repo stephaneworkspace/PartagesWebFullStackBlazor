@@ -32,7 +32,7 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         /// <returns></returns>
         public async Task<HttpResponseMessage> GetForumCategorie(int id)
         {
-            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, $"{Constants.URL_BASE}api/ForumCategories/{id}");
+            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, $"{Constants.URL_BASE}api/ForumCategorie/{id}");
             return await _httpClient.SendAsync(req);
         }
 
@@ -42,7 +42,7 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         /// <returns></returns>
         public async Task<HttpResponseMessage> GetForumCategories()
         {
-            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, $"{Constants.URL_BASE}api/ForumCategories/");
+            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, $"{Constants.URL_BASE}api/ForumCategorie/");
             return await _httpClient.SendAsync(req);
         }
     }

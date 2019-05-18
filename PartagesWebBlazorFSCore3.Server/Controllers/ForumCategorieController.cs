@@ -51,7 +51,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         public async Task<IActionResult> GetForumCategories()
         {
             var items = await _repo.GetForumCategories();
-               List<ForumCategorieForListDto> newDto = new List<ForumCategorieForListDto>();
+            List<ForumCategorieForListDto> newDto = new List<ForumCategorieForListDto>();
             foreach (var unite in items)
             {
                 ForumCategorieForListDto Dto = new ForumCategorieForListDto

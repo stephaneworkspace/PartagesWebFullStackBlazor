@@ -25,7 +25,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForLi
         /// <summary>
         /// Topic name
         /// </summary>
-        public string Nom { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// Topic date
         /// </summary>
