@@ -3,6 +3,7 @@
 // <author>Stéphane</author>
 //-----------------------------------------------------------------------
 using Microsoft.EntityFrameworkCore;
+using PartagesWebBlazorFSCore3.Server.Helpers;
 using PartagesWebBlazorFSCore3.Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -72,28 +73,15 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         /// <param name="password">Password</param>
         public async Task<User> Register(User user, string password)
         {
+            user.Created = DateTime.Now;
             byte[] passwordHash, passwordSalt;
-            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            PasswordGenerate passwordGenerate = new PasswordGenerate();
+            passwordGenerate.CreatePasswordHash(password, out passwordHash, out passwordSalt);
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
             return user;
-        }
-
-        /// <summary>  
-        /// Create password hash
-        /// </summary>  
-        /// <param name="password">Password</param>
-        /// <param name="passwordHash"> (Out) Hash</param>
-        /// <param name="passwordSalt"> (Out) Salt</param>
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            using (var hmac = new System.Security.Cryptography.HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            }
         }
 
         /// <summary>  

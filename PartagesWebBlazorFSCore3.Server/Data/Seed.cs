@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using PartagesWebBlazorFSCore3.Server.Dtos.Input.Seed.Forum.ForumPost.ForSeed;
 using PartagesWebBlazorFSCore3.Server.Dtos.Input.Seed.Forum.ForumTopic.ForSeed;
+using PartagesWebBlazorFSCore3.Server.Helpers;
 using PartagesWebBlazorFSCore3.Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         /// DataContext
         /// </summary>
         private readonly DataContext _context;
+
         /// <summary>  
         /// Constructor
         /// </summary>  
@@ -32,6 +34,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         {
             _context = context;
         }
+
         /// <summary>  
         /// Seed User
         /// </summary> 
@@ -48,7 +51,8 @@ namespace PartagesWebBlazorFSCore3.Server.Data
                 // if (userQuery == null)
                 // if (!await _context.Users.AnyAsync(x => x.Username == user.Username))
                 // {
-                CreatePasswordHash("password", out byte[] passwordHash, out byte[] passwordSalt);
+                PasswordGenerate passwordGenerate = new PasswordGenerate();
+                passwordGenerate.CreatePasswordHash("password", out byte[] passwordHash, out byte[] passwordSalt);
 
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;
@@ -60,23 +64,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
 
             _context.SaveChanges();
         }
-        /// <summary>  
-        /// Create Password "Hash"
-        /// </summary> 
-        /// <remarks>
-        /// Copy/Past AuthRepository
-        /// </remarks>
-        /// <param name="password">Password</param>
-        /// <param name="passwordHash">(Out) Hash</param>
-        /// <param name="passwordSalt">(Out) Salt</param>
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            using (var hmac = new System.Security.Cryptography.HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            }
-        }
+
         ///<summary>
         /// Seed ForumCategorie
         ///</summary>
@@ -93,6 +81,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
                 await _context.SaveChangesAsync();
             }
         }
+
         ///<summary>
         /// Seed ForumTopic
         ///</summary>
@@ -117,6 +106,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
                 }
             }
         }
+
         ///<summary>
         /// Seed ForumPost
         ///</summary>

@@ -22,6 +22,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         /// DbContext
         /// </summary>
         private readonly DataContext _context;
+
         /// <summary>  
         /// Constructor
         /// </summary> 
@@ -30,6 +31,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         {
             _context = context;
         }
+
         /// <summary>  
         /// Add entity in DataContext
         /// </summary>  
@@ -39,6 +41,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         {
             _context.Add(entity);
         }
+
         /// <summary>
         /// Update entity in DataContext
         /// </summary>
@@ -48,6 +51,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         {
             _context.Update(entity);
         }
+
         /// <summary>  
         /// Delete entity in DataContext
         /// </summary>  
@@ -56,6 +60,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         {
             _context.Remove(entity);
         }
+
         /// <summary>  
         /// Save all changes in DataContext
         /// </summary> 
@@ -63,9 +68,11 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         {
             return await _context.SaveChangesAsync() > 0;
         }
+
         /**
          * Messagerie
          */
+
         /// <summary>  
         /// Check if switch read "SwRead" is turned on or off
         /// </summary>
@@ -78,6 +85,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
             Update(item);
             return await SaveAll();
         }
+
         /// <summary>  
         /// Get a message by primary key
         /// </summary>
@@ -88,6 +96,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
             var item = await _context.Messages.Where(x => x.Id == id).FirstOrDefaultAsync();
             return item;
         }
+
         /// <summary>  
         /// Read all Message
         /// </summary>
@@ -101,6 +110,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
                 .OrderBy(u => u.Date).Where(x => x.UserId == userId).AsQueryable();
             return await PagedList<Message>.CreateAsync(items, messageParams.PageNumber, messageParams.PageSize);
         }
+        
         /// <summary>
         /// Count unread message
         /// </summary>
@@ -112,6 +122,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
             await Task.FromResult(count);
             return count;
         }
+
         ///<summary>
         ///Return User model for SendByUserId?
         ///</summary>

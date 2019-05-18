@@ -19,6 +19,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         /// DbContext
         /// </summary>
         private readonly DataContext _context;
+
         /// <summary>  
         /// Constructor
         /// </summary> 
@@ -27,6 +28,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         {
             _context = context;
         }
+
         /// <summary>  
         /// Add entity in DataContext
         /// </summary>  
@@ -36,6 +38,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         {
             _context.Add(entity);
         }
+
         /// <summary>
         /// Update entity in DataContext
         /// </summary>
@@ -45,6 +48,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         {
             _context.Update(entity);
         }
+
         /// <summary>  
         /// Delete entity in DataContext
         /// </summary>  
@@ -53,6 +57,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         {
             _context.Remove(entity);
         }
+
         /// <summary>  
         /// Save all changes in DataContext
         /// </summary> 
@@ -60,9 +65,11 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         {
             return await _context.SaveChangesAsync() > 0;
         }
+
         /**
          * ForumCategorie
          **/
+
         /// <summary>  
         /// Get ForumCategories
         /// </summary>
@@ -72,6 +79,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
             var items = await _context.ForumCategories.OrderBy(u => u.Name).ToListAsync();
             return items;
         }
+
         /// <summary>  
         /// Get ForumCategire by primary key
         /// </summary>
@@ -82,6 +90,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
             var items = await _context.ForumCategories.Where(x => x.Id == id).FirstOrDefaultAsync();
             return items;
         }
+
         /// <summary>
         /// Count ForumTopics from a ForumCategorie
         /// </summary>
@@ -93,6 +102,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
             await Task.FromResult(count);
             return count;
         }
+
         /// <summary>
         /// Count ForumPostes from a ForumCategirue
         /// </summary>
@@ -110,6 +120,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
             }
             return count;
         }
+
         /// <summary>
         /// Last ForumPost from a ForumCategorie
         /// </summary>
@@ -120,9 +131,11 @@ namespace PartagesWebBlazorFSCore3.Server.Data
             var item = await _context.ForumPosts.Where(x => x.ForumTopic.ForumCategorieId == id).OrderByDescending(x => x.Date).FirstOrDefaultAsync();
             return item;
         }
+        
         /**
          * ForumTopic
          */
+
         /// <summary>  
         /// Get ForumTopic in paged list in a ForumCategorie
         /// </summary>
@@ -135,6 +148,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
                 .OrderBy(u => u.Date).Where(x => x.ForumCategorieId == id).AsQueryable();
             return await PagedList<ForumTopic>.CreateAsync(items, forumTopicParams.PageNumber, forumTopicParams.PageSize);
         }
+        
         /// <summary>  
         /// Get a ForumTopic by primary key
         /// </summary>
@@ -145,6 +159,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
             var item = await _context.ForumTopics.Where(x => x.Id == id).FirstOrDefaultAsync();
             return item;
         }
+        
         /// <summary>
         /// Count ForumPost from a ForumTopic
         /// </summary>
@@ -156,6 +171,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
             var count = await Task.FromResult(items);
             return count;
         }
+
         /// <summary>
         /// Get last ForumPost from a ForumTopic
         /// </summary>
@@ -166,6 +182,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
             var item = await _context.ForumPosts.Where(x => x.ForumTopic.Id == id).OrderByDescending(x => x.Date).FirstOrDefaultAsync();
             return item;
         }
+
         /// <summary>
         /// Increment a view in one ForumTopic
         /// </summary>
@@ -177,9 +194,11 @@ namespace PartagesWebBlazorFSCore3.Server.Data
             Update(item);
             return await SaveAll();
         }
+
         /**
          * ForumPost
          **/
+
         /// <summary>  
         /// Get ForumPosts paged
         /// </summary>
@@ -192,6 +211,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
                 .OrderBy(u => u.Date).Where(x => x.ForumTopicId == id).AsQueryable();
             return await PagedList<ForumPost>.CreateAsync(items, forumPostParams.PageNumber, forumPostParams.PageSize);
         }
+        
         /// <summary>  
         /// Get ForumPost
         /// </summary>
@@ -202,6 +222,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
             var item = await _context.ForumPosts.Where(x => x.Id == id).FirstOrDefaultAsync();
             return item;
         }
+        
         /// <summary>
         /// Count post from a User
         /// </summary>

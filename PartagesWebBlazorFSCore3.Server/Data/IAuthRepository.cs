@@ -21,12 +21,14 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         /// <param name="username">Username</param>
         /// <param name="password">Password</param>
         Task<User> Login(string username, string password);
+
         /// <summary>  
         /// Register
         /// </summary>  
         /// <param name="user">Model user</param>
         /// <param name="password">Password</param>        
         Task<User> Register(User user, string password);
+
         /// <summary>  
         /// Method if username exist in User model
         /// </summary>  
