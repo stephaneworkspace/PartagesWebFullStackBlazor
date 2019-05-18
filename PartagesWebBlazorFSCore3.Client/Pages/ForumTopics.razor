@@ -28,21 +28,33 @@ else
         <thead>
             <tr>
                 <th>Nom</th>
-                <th>Sujets</th>
+                <th>Vues</th>
                 <th>Postes</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in items)
+            @if (items.Length == 0)
             {
                 <tr>
-                    <td><a href="forumPosts/@item.Id">@item.Name</a></td>
-                    <td>@item.View</td>
-                    <td>@item.CountForumPost</td>
+                    <td>Aucun sujet</td>
+                    <td></td>
+                    <td></td>
                 </tr>
+            }
+            else
+            {
+                @foreach (var item in items)
+                {
+                    <tr>
+                        <td><a href="forumPosts/@item.Id">@item.Name</a></td>
+                        <td>@item.View</td>
+                        <td>@item.CountForumPost</td>
+                    </tr>
+                }
             }
         </tbody>
     </table>
+    <button class="button is-primary" onclick="@NewTopic">Nouveau sujet</button>
     <BulmaPagination PageCount="@pagination.TotalPages" CurrentPage="@pagination.CurrentPage" OnPageChanged="OnPageChange"></BulmaPagination>
 }
 
@@ -102,6 +114,11 @@ else
     {
         await LoadDatas(page);
         StateHasChanged();
+    }
+
+    private void NewTopic()
+    {
+        AlertifyService.Open($"New topic -> {id}", TypeAlertify.Default);         
     }
 
     private void OnLocationChanges(object sender, string location) => RefreshType();
