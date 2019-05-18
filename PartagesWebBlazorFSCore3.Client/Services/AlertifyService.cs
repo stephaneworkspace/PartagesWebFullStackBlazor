@@ -1,4 +1,5 @@
 ﻿using Microsoft.JSInterop;
+using PartagesWebBlazorFSCore3.Client.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace PartagesWebBlazorFSCore3.Client.Services
     {
         private readonly IJSRuntime _jsRuntime;
 
-        public Type TypeEnum { get; set; }
+        public TypeAlertify Type { get; set; }
 
         /// <summary>
         /// Constructor
@@ -25,17 +26,17 @@ namespace PartagesWebBlazorFSCore3.Client.Services
             _jsRuntime = jsRuntime;
         }
 
-        public async void Open(string message, Type type)
+        public async void Open(string message, TypeAlertify type)
         {
             switch (type)
             {
-                case Type.Success:
+                case TypeAlertify.Success:
                     await this._jsRuntime.InvokeAsync<bool>("Alertify", message, "success", 5);
                     break;
-                case Type.Error:
+                case TypeAlertify.Error:
                     await this._jsRuntime.InvokeAsync<bool>("Alertify", message, "error", 5);
                     break;
-                case Type.Warning:
+                case TypeAlertify.Warning:
                     await this._jsRuntime.InvokeAsync<bool>("Alertify", message, "warning", 5);
                     break;
                 default:

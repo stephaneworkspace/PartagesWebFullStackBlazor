@@ -6,6 +6,7 @@
 @inject IAlertifyService AlertifyService
 @inject IHttpAuthService HttpAuthService
 @using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
+@using PartagesWebBlazorFSCore3.Client.Helpers;
 @using PartagesWebBlazorFSCore3.Client.Services;
 @using PartagesWebBlazorFSCore3.Client.Services.Http;
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth;
@@ -65,7 +66,7 @@
     protected override void OnInit()
     {
         model.ValueChanged += CheckIfUsernameAvailableEvent;
-    }    
+    }
 
     public async void CheckIfUsernameAvailableEvent(object sender, EventArgs e)
     {
@@ -88,13 +89,13 @@
         {
             case System.Net.HttpStatusCode.Created:
                 AlertifyService = new AlertifyService(JsRuntime);
-                AlertifyService.Open($"Utilisateur « {model.Username.CapitalizeFirst()} » crée", Services.Type.Success);
+                AlertifyService.Open($"Utilisateur « {model.Username.CapitalizeFirst()} » crée", TypeAlertify.Success);
                 UriHelper.NavigateTo("/");
                 break;
             case System.Net.HttpStatusCode.BadRequest:
                 UserExistText = await response.Content.ReadAsStringAsync();
                 AlertifyService = new AlertifyService(JsRuntime);
-                AlertifyService.Open(UserExistText, Services.Type.Error);
+                AlertifyService.Open(UserExistText, TypeAlertify.Error);
                 break;
         };
     }

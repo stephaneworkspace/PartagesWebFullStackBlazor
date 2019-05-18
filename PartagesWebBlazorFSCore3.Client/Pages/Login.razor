@@ -6,6 +6,7 @@
 @inject IAlertifyService AlertifyService
 @inject IHttpAuthService HttpAuthService
 @using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
+@using PartagesWebBlazorFSCore3.Client.Helpers;
 @using PartagesWebBlazorFSCore3.Client.Services;
 @using PartagesWebBlazorFSCore3.Client.Services.Http;
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth;
@@ -52,6 +53,7 @@
 @functions {
     private UserForLoginInputDto model = new UserForLoginInputDto();
     private string InvalidCredentialsText = "";
+
     protected async Task HandleValidSubmit()
     {
         InvalidCredentialsText = "";
@@ -59,14 +61,12 @@
         switch (response.StatusCode)
         {
             case System.Net.HttpStatusCode.OK:
-                // AlertifyService = new AlertifyService(JsRuntime);
-                AlertifyService.Open($"Utilisateur « {model.Username.CapitalizeFirst()} » connecté", Services.Type.Success);
+                AlertifyService.Open($"Utilisateur « {model.Username.CapitalizeFirst()} » connecté", TypeAlertify.Success);
                 UriHelper.NavigateTo("/");
                 break;
             case System.Net.HttpStatusCode.Unauthorized:
                 InvalidCredentialsText = await response.Content.ReadAsStringAsync();
-                // AlertifyService = new AlertifyService(JsRuntime);
-                AlertifyService.Open(InvalidCredentialsText, Services.Type.Error);
+                AlertifyService.Open(InvalidCredentialsText, TypeAlertify.Error);
                 break;
         };
     }
