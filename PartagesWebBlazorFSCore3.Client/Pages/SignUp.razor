@@ -3,7 +3,7 @@
 @inject IJSRuntime JsRuntime
 @inject IUriHelper UriHelper
 @inject LocalStorage Storage
-@inject AlertifyService _alertifyService
+@inject IAlertifyService AlertifyService
 @inject IHttpAuthService HttpAuthService
 @using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
 @using PartagesWebBlazorFSCore3.Client.Services;
@@ -87,14 +87,14 @@
         switch (response.StatusCode)
         {
             case System.Net.HttpStatusCode.Created:
-                _alertifyService = new AlertifyService(JsRuntime);
-                _alertifyService.Open($"Utilisateur « {model.Username.CapitalizeFirst()} » crée", AlertifyService.Type.Success);
+                AlertifyService = new AlertifyService(JsRuntime);
+                AlertifyService.Open($"Utilisateur « {model.Username.CapitalizeFirst()} » crée", Services.Type.Success);
                 UriHelper.NavigateTo("/");
                 break;
             case System.Net.HttpStatusCode.BadRequest:
                 UserExistText = await response.Content.ReadAsStringAsync();
-                _alertifyService = new AlertifyService(JsRuntime);
-                _alertifyService.Open(UserExistText, AlertifyService.Type.Error);
+                AlertifyService = new AlertifyService(JsRuntime);
+                AlertifyService.Open(UserExistText, Services.Type.Error);
                 break;
         };
     }

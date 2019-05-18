@@ -28,7 +28,7 @@ namespace PartagesWebBlazorFSCore3.Client
               .AddSingleton<UserForCheckIfAvailableDto>()
               .AddSingleton<UserForRegisterInputDto>()
               // Services
-              .AddSingleton<AlertifyService>()
+              .AddSingleton<IAlertifyService, AlertifyService>()
               // Http services
               .AddSingleton<IHttpAuthService, HttpAuthService>()
               .AddStorage();

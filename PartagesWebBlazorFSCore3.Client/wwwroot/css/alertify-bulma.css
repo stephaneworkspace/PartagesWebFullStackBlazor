@@ -1,0 +1,14 @@
+﻿.alertify-notifier .ajs-message.ajs-success {
+    color: #fff;
+    background: hsl(171, 100%, 41%);
+}
+
+.alertify-notifier .ajs-message.ajs-error {
+    color: #fff;
+    background: hsl(348, 100%, 61%);
+}
+
+.alertify-notifier .ajs-message.ajs-warning {
+    background: hsl(48, 100%, 67%);
+    border-color: #999;
+}

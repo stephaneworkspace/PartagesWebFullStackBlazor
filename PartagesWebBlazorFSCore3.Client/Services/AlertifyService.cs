@@ -10,18 +10,16 @@ namespace PartagesWebBlazorFSCore3.Client.Services
     /// Javascript -> C#/Blazor with Alertify.js
     /// Nuget AlertifyJS
     /// </summary>
-    public class AlertifyService
+    public class AlertifyService: IAlertifyService
     {
         private readonly IJSRuntime _jsRuntime;
 
-        public enum Type
-        {
-            Success,
-            Error,
-            Warning,
-            Default
-        }
+        public Type TypeEnum { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="jsRuntime">Javascript runtime</param>
         public AlertifyService(IJSRuntime jsRuntime)
         {
             _jsRuntime = jsRuntime;
