@@ -57,7 +57,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
                 ForumCategorieForListDto Dto = new ForumCategorieForListDto
                 {
                     Id = unite.Id,
-                    Name = unite.Nom
+                    Name = unite.Name
                 };
                 Dto.CountForumTopic = await _repo.GetCountForumTopic(unite.Id);
                 Dto.CountForumPost = await _repo.GetCountForumPostFromForumCategorie(unite.Id);

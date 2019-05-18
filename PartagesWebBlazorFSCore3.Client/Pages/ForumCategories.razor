@@ -1,4 +1,4 @@
-﻿@page "/forumCategorie"
+﻿@page "/forumCategories"
 @inject IJSRuntime JsRuntime
 @inject IUriHelper UriHelper
 @inject LocalStorage Storage
@@ -33,7 +33,7 @@ else
         @foreach (var item in items)
             {
         <tr>
-            <td>@item.Name</td>
+            <td><a href="forumTopics/@item.Id">@item.Name</a></td>
             <td>@item.CountForumTopic</td>
             <td>@item.CountForumPost</td>
             <td>A faire</td>

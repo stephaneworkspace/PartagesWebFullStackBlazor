@@ -32,6 +32,7 @@ namespace PartagesWebBlazorFSCore3.Client
               // Http services
               .AddSingleton<IHttpAuthService, HttpAuthService>()
               .AddSingleton<IHttpForumCategorieService, HttpForumCategorieService>()
+              .AddSingleton<IHttpForumTopicService, HttpForumTopicService>()
               .AddStorage();
         }
 

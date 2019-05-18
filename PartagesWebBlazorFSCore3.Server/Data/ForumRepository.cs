@@ -69,7 +69,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         /// <returns></returns> 
         public async Task<List<ForumCategorie>> GetForumCategories()
         {
-            var items = await _context.ForumCategories.OrderBy(u => u.Nom).ToListAsync();
+            var items = await _context.ForumCategories.OrderBy(u => u.Name).ToListAsync();
             return items;
         }
         /// <summary>  

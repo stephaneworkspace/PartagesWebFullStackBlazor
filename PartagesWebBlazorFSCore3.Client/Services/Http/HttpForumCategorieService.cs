@@ -14,16 +14,14 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         /// HttpClient
         /// </summary>
         private readonly HttpClient _httpClient;
-        private readonly LocalStorage _storage;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="httpClient">Http client</param>
-        public HttpForumCategorieService(HttpClient httpClient, LocalStorage storage)
+        public HttpForumCategorieService(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _storage = storage;
         }
 
         /// <summary>

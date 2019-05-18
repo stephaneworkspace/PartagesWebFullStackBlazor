@@ -53,7 +53,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         /// <param name="id">ForumCategorie primary key</param>
         [HttpGet("{id}")]
         [SwaggerResponse(HttpStatusCode.OK, typeof(ForumTopicForListDto[]), Description = "Ok")]
-        public async Task<IActionResult> GetForumSujets([FromQuery] ForumTopicParams forumTopicParams, int id)
+        public async Task<IActionResult> GetForumTopics([FromQuery] ForumTopicParams forumTopicParams, int id)
         {
             var items = await _repo.GetForumTopics(forumTopicParams, id);
             List<ForumTopicForListDto> newDto = new List<ForumTopicForListDto>();
@@ -80,7 +80,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         /// <param name="id">ForumTopic primary key</param>
         [HttpGet("ForumTopicId/{id}")]
         [SwaggerResponse(HttpStatusCode.OK, typeof(ForumTopicForSelectDto), Description = "Ok")]
-        public async Task<IActionResult> GetForumSujet(int id)
+        public async Task<IActionResult> GetForumTopic(int id)
         {
             var item = await _repo.GetForumTopic(id);
             ForumTopicForSelectDto newDto = new ForumTopicForSelectDto();

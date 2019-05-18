@@ -86,7 +86,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
             var items = JsonConvert.DeserializeObject<List<ForumCategorie>>(itemData);
             foreach (var item in items)
             {
-                if (!_context.ForumCategories.Any(x => x.Nom.ToLower() == item.Nom.ToLower()))
+                if (!_context.ForumCategories.Any(x => x.Name.ToLower() == item.Name.ToLower()))
                 {
                     _context.ForumCategories.Add(item);
                 }
@@ -104,7 +104,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
             {
                 if (!_context.ForumTopics.Any(x => x.Name.ToLower() == item.Name.ToLower()))
                 {
-                    ForumCategorie forumCategorie = _context.ForumCategories.Where(x => x.Nom == item.NameForumCategorie).First();
+                    ForumCategorie forumCategorie = _context.ForumCategories.Where(x => x.Name == item.NameForumCategorie).First();
                     ForumTopic forumTopic = new ForumTopic
                     {
                         ForumCategorieId = forumCategorie.Id,

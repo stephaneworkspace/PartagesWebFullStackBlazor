@@ -20,7 +20,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Models
         /// <summary>
         /// Categorie name
         /// </summary>
-        public string Nom { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// List of topics
         /// </summary>
