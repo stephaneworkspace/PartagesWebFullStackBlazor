@@ -11,6 +11,9 @@ using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
 
 namespace PartagesWebBlazorFSCore3.Client.Services.Http
 {
+    /// <summary>
+    /// Auth service
+    /// </summary>
     public class HttpAuthService: IHttpAuthService
     {
         /// <summary>

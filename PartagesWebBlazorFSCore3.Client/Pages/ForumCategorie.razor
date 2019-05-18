@@ -1,0 +1,71 @@
+﻿@page "/forumCategorie"
+@inject IJSRuntime JsRuntime
+@inject IUriHelper UriHelper
+@inject LocalStorage Storage
+@inject IAlertifyService AlertifyService
+@inject IHttpForumCategorieService HttpForumCategorieService
+@using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
+@using PartagesWebBlazorFSCore3.Client.Helpers;
+@using PartagesWebBlazorFSCore3.Client.Services;
+@using PartagesWebBlazorFSCore3.Client.Services.Http;
+@using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForList
+
+<h1>Forum</h1>
+
+<p>Voici la liste des catégories du forum</p>
+
+@if (items == null)
+{
+<p><em>Loading...</em></p>
+}
+else
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Nombres de sujets</th>
+            <th>Nombres de postes</th>
+            <th>Dernier poste</th>
+            <th>Nombre dernier poste</th>
+            <th>Page dernier poste</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in items)
+            {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.CountForumTopic</td>
+            <td>@item.CountForumPost</td>
+            <td>A faire</td>
+            <td>@item.CountLastForumPost</td>
+            <td>@item.PageLastForumPost</td>
+        </tr>
+            }
+    </tbody>
+</table>
+}
+
+@functions {
+    ForumCategorieForListDto[] items;
+
+    protected override async Task OnInitAsync()
+    {
+        var response = await HttpForumCategorieService.GetForumCategories();
+        switch (response.StatusCode)
+        {
+            case System.Net.HttpStatusCode.Created:
+                string content = await response.Content.ReadAsStringAsync();
+                items = Json.Deserialize<ForumCategorieForListDto[]>(content);
+                break;
+            default:
+                // await response.Content.ReadAsStringAsync();
+                AlertifyService = new AlertifyService(JsRuntime);
+                AlertifyService.Open("Erreur lors du chargement des catégories du forum", TypeAlertify.Error);
+                UriHelper.NavigateTo("/");
+                break;
+        };
+        // forecasts = await Http.GetJsonAsync<WeatherForecast[]>("api/SampleData/WeatherForecasts");
+    }
+}

@@ -7,6 +7,9 @@ using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth;
 
 namespace PartagesWebBlazorFSCore3.Client.Services.Http
 {
+    /// <summary>
+    /// Interface Auth service
+    /// </summary>
     public interface IHttpAuthService
     {
         /// <summary>
