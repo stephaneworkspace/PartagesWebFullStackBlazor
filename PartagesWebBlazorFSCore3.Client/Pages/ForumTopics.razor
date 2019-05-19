@@ -89,7 +89,7 @@ else
                 forumCategorie = Json.Deserialize<ForumCategorieForSingleSelectDto>(content);
                 break;
             default:
-                AlertifyService.Open("Erreur lors du chargement de la catégorie du forum", TypeAlertify.Error);
+                AlertifyService.Open($"Erreur lors du chargement de la catégorie {id} du forum", TypeAlertify.Error);
                 UriHelper.NavigateTo("/");
                 break;
         }

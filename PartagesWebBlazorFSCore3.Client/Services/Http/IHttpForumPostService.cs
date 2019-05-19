@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Forum.ForumPost.ForReply;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -17,5 +18,12 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         /// <param name="id">ForumSujetId</param>
         /// <returns></returns>
         Task<HttpResponseMessage> GetForumPosts(int id, int page);
+
+        /// <summary>
+        /// Post a replay to ForumPosts
+        /// </summary>
+        /// <param name="dto">Dto</param>
+        /// <returns></returns>
+        Task<HttpResponseMessage> PostReplyForumPoste(ForumPostForReplyDto dto);
     }
 }

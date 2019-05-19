@@ -16,6 +16,8 @@ using System.Linq;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using PartagesWebBlazorFSCore3.Server.Helpers;
+using Microsoft.Extensions.Logging;
 
 namespace PartagesWebBlazorFSCore3.Server
 {
@@ -75,7 +77,7 @@ namespace PartagesWebBlazorFSCore3.Server
         /// <param name="app">Application Builder</param>
         /// <param name="env">Host Environment</param>
         /// <remarks>This method gets called by the runtime. Use this method to configure the HTTP request pipeline.</remarks>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Seed seeder)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Seed seeder, ILoggerFactory loggerFactory)
         {
             app.UseResponseCompression();
 
@@ -83,6 +85,11 @@ namespace PartagesWebBlazorFSCore3.Server
             {
                 app.UseDeveloperExceptionPage();
                 app.UseBlazorDebugging();
+                /*
+                app.UseExceptionHandler(new ExceptionHandlerOptions
+                {
+                    ExceptionHandler = new ExceptionHandlerMiddleware(loggerFactory.CreateLogger("SystemErrors")).Invoke
+                });*/
             }
 
             app.UseRouting();

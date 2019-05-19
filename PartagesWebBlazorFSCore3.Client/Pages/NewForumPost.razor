@@ -1,42 +1,35 @@
-﻿@page "/newForumTopic/{id:int}"
+﻿@page "/newForumPost/{id:int}"
 @inject IJSRuntime JsRuntime
 @inject IUriHelper UriHelper
 @inject LocalStorage Storage
 @inject IAlertifyService AlertifyService
-@inject IHttpForumCategorieService HttpForumCategorieService
 @inject IHttpForumTopicService HttpForumTopicService
+@inject IHttpForumPostService HttpForumPostService
 @using Cloudcrate.AspNetCore.Blazor.Browser.Storage
 @using PartagesWebBlazorFSCore3.Client.Helpers
 @using PartagesWebBlazorFSCore3.Client.Services
 @using PartagesWebBlazorFSCore3.Client.Services.Http
-@using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForSingleSelect
-@using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Forum.ForumTopic.ForNewTopic
+@using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumTopic.ForSingleSelect
+@using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Forum.ForumPost.ForReply
 @using PartagesWebBlazorFSCore3.Shared.Helpers
 <h1>Forum</h1>
 
-@if (forumCategorie == null)
+@if (forumTopic == null)
 {
     <p><em>Chargement...</em></p>
 }
 else
 {
-    <p><a href="forumCategories">Index du forum</a> » <a href="forumTopics/@id">@forumCategorie.Name</a> » <a href="newForumTopic/@id">Nouveau sujet</a></p>
+<p><a href="forumCategories">Index du forum</a> » <a href="forumTopics/@forumTopic.ForumCategorieId">@forumTopic.ForumCategorie.Name</a> » <a href="forumTopics/@forumTopic.Id">@forumTopic.Name</a> » <a href="newForumReply/@id">Réponse</a></p>
     <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit">
         <DataAnnotationsValidator />
         <ValidationSummary />
-        @if (CantCreateTopic != "")
+        @if (CantCreatePost != "")
         {
             <ul class="validation-errors">
-                <li class="validation-message">@CantCreateTopic</li>
+                <li class="validation-message">@CantCreatePost</li>
             </ul>
         }
-        <div class="field">
-            <label class="label">Titre du sujet</label>
-            <p class="control">
-                <InputText id="nametopic" bind-Value="@model.NameTopic" class="input" />
-                <span class="help is-danger"><ValidationMessage For="@(() => model.NameTopic)" /></span>
-            </p>
-        </div>
         <div class="field">
             <label class="label">Contenu</label>
             <p class="control">
@@ -49,11 +42,11 @@ else
 }
 
 @functions {
-    // ForumCategorie id
+    // ForumTopic id
     [Parameter] int id { get; set; }
-    ForumCategorieForSingleSelectDto forumCategorie;
-    ForumPostForNewForumTopicDto model = new ForumPostForNewForumTopicDto();
-    string CantCreateTopic = "";
+    ForumTopicForSelectDto forumTopic;
+    ForumPostForReplyDto model = new ForumPostForReplyDto();
+    string CantCreatePost = "";
 
     protected override async Task OnInitAsync()
     {
@@ -66,16 +59,16 @@ else
     {
         HttpResponseMessage response;
 
-        response = await HttpForumCategorieService.GetForumCategorie(id);
+        response = await HttpForumTopicService.GetForumTopic(id);
         switch (response.StatusCode)
         {
             case System.Net.HttpStatusCode.OK:
-                model.ForumCategorieId = id;
+                model.ForumTopicId = id;
                 string content = await response.Content.ReadAsStringAsync();
-                forumCategorie = Json.Deserialize<ForumCategorieForSingleSelectDto>(content);
+                forumTopic = Json.Deserialize<ForumTopicForSelectDto>(content);
                 break;
             default:
-                AlertifyService.Open($"Erreur lors du chargement de la catégorie {id} du forum", TypeAlertify.Error);
+                AlertifyService.Open($"Erreur lors du chargement du sujet {id} du forum", TypeAlertify.Error);
                 UriHelper.NavigateTo("/");
                 break;
         }
@@ -83,17 +76,17 @@ else
 
     private async Task HandleValidSubmit()
     {
-        CantCreateTopic = "";
-        var response = await HttpForumTopicService.PostForumTopic(model);
+        CantCreatePost = "";
+        var response = await HttpForumPostService.PostReplyForumPoste(model);
         switch (response.StatusCode)
         {
             case System.Net.HttpStatusCode.OK:
-                AlertifyService.Open($"Sujet « {model.NameTopic.CapitalizeFirst()} » crée", TypeAlertify.Success);
-                UriHelper.NavigateTo($"/forumTopics/{id}");
+                AlertifyService.Open($"Réponse postée au sujet « {forumTopic.Name.CapitalizeFirst()} »", TypeAlertify.Success);
+                UriHelper.NavigateTo($"/forumTopics/{forumTopic.ForumCategorieId}");
                 break;
             case System.Net.HttpStatusCode.BadRequest:
-                CantCreateTopic = await response.Content.ReadAsStringAsync();
-                AlertifyService.Open(CantCreateTopic, TypeAlertify.Error);
+                CantCreatePost = await response.Content.ReadAsStringAsync();
+                AlertifyService.Open(CantCreatePost, TypeAlertify.Error);
                 break;
         };
     }

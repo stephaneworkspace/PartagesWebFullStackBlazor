@@ -115,7 +115,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         public async Task<IActionResult> ReplyForumPoste(ForumPostForReplyDto Dto)
         {
             // Trouver l'utilisateur actuel
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             // Préparation du model
             var Item = new ForumPost

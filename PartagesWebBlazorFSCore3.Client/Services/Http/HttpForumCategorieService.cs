@@ -14,7 +14,7 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
     public class HttpForumCategorieService : IHttpForumCategorieService
     {
         /// <summary>
-        /// HttpClient
+        /// Http client
         /// </summary>
         private readonly HttpClient _httpClient;
 
