@@ -1,10 +1,12 @@
 ﻿@page "/forumPosts/{id:int}"
 @inject IUriHelper UriHelper
 @inject IAlertifyService AlertifyService
+@inject IMomentService MomentService
 @inject IHttpForumTopicService HttpForumTopicService
 @inject IHttpForumPostService HttpForumPostService
 @implements IDisposable
 @using Microsoft.AspNetCore.WebUtilities
+@using System.Text.RegularExpressions
 @using PartagesWebBlazorFSCore3.Client.Helpers
 @using PartagesWebBlazorFSCore3.Client.Services
 @using PartagesWebBlazorFSCore3.Client.Services.Http
@@ -33,7 +35,40 @@ else
     </div>
     @foreach (var item in items)
     {
-        <DivRowPostHtml item="item" />
+        <div class="columns">
+            <div class="column is-6">
+                <p>
+                    <b>Re: @item.ForumTopic.Name</b>
+                </p>
+                <p>
+                    par @item.User.Username.CapitalizeFirst() @(MomentService.FromNow(item.Date.ToString()))
+                </p>
+                <p>@((MarkupString)(Regex.Replace(item.Content, @"(\r\n)|\n|\r", "<br />")))</p>
+            </div>
+            <div class="column is-2">
+                <p>
+                    <a href="/newForumPost/@item.ForumTopicId/@item.Id" class="button is-primary is-outlined is-small">
+                        <span class="icon is-small">
+                            <i class="fas fa-quote-right"></i>
+                        </span>
+                    </a>
+                </p>
+            </div>
+            <div class="column is-4">
+                <p>
+                    @item.User.Username.CapitalizeFirst()<br />
+                    Postes : item.user.messageCount<br />
+                    Membre depuis : @(MomentService.Format(item.User.Created.ToString()))<br />
+                    <!--if"loggedIn && !item.swCurrentUser">
+                    Contact
+                    <a href="some/link" class="button is-primary is-outlined is-small">
+                        <span class="icon is-small">
+                            <i class="far fa-envelope"></i>
+                        </span>
+                    </a>-->
+                </p>
+            </div>
+        </div>
     }
     <button class="button is-primary" onclick="@NewReply">Réponse</button>
     <BulmaPagination PageCount="@pagination.TotalPages" CurrentPage="@pagination.CurrentPage" OnPageChanged="OnPageChange"></BulmaPagination>
@@ -94,7 +129,6 @@ else
 
     private async Task OnPageChange(int page)
     {
-        // UriHelper.NavigateTo($"/forumPosts/{id}?page={page}");
         await LoadDatas(page);
         StateHasChanged();
     }
