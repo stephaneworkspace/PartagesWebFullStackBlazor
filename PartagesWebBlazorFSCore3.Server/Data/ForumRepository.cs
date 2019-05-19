@@ -145,7 +145,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         public async Task<PagedList<ForumTopic>> GetForumTopics(ForumTopicParams forumTopicParams, int id)
         {
             var items = _context.ForumTopics
-                .OrderBy(u => u.Date).Where(x => x.ForumCategorieId == id).AsQueryable();
+                .OrderByDescending(u => u.Date).Where(x => x.ForumCategorieId == id).AsQueryable();
             return await PagedList<ForumTopic>.CreateAsync(items, forumTopicParams.PageNumber, forumTopicParams.PageSize);
         }
         

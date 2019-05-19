@@ -6,16 +6,12 @@
 
 Welcome to your new app.
 
-@*JWT = @jwt;*@
-
-<NavLink class="nav-link" href="SignUp">S'inscrire</NavLink>
+@if (Storage["token"] == "")
+{
+    <NavLink class="nav-link" href="SignUp">S'inscrire</NavLink>
+}
 
 <SurveyPrompt Title="How is Blazor working for you?" />
 
 @functions {
-    string jwt = "";
-    protected override void OnInit()
-    {
-        jwt = Storage["token"];
-    }
 }
