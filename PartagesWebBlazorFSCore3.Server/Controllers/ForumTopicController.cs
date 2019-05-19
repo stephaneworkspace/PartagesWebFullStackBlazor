@@ -79,14 +79,13 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
                 Dto.LastForumPost = _mapper.Map<ForumPostForListForumTopicDto>(lastForumPost);
                 if (lastForumPost != null)
                 {
-                    var CountLastForumPost = await _repo.GetCountLastForumPostFromAForumTopic(lastForumPost.ForumTopicId);
+                    var countLastForumPost = await _repo.GetCountLastForumPostFromAForumTopic(lastForumPost.ForumTopicId);
                     var pageSize = new ForumPostParams();
-                    double calc = CountLastForumPost / pageSize.PageSize;
-                    Dto.PageLastForumPost = Convert.ToInt32(Math.Ceiling(calc)) + 1;
+                    double calc = ((countLastForumPost + pageSize.PageSize - 1) / pageSize.PageSize);
+                    Dto.PageLastForumPost = Convert.ToInt32(Math.Ceiling(calc));
                 }
                 else
                 {
-                    //Dto.CountLastForumPost = 0;
                     Dto.PageLastForumPost = 0;
                 }
 
