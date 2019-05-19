@@ -53,10 +53,6 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         /// </summary> 
         /// <param name="forumPostParams">Pagination param</param>
         /// <param name="id">ForumTopic Foreign key</param>
-        /// <remarks>
-        /// ForumPostForListDto => For Automap
-        /// ForumPostForListDtoWithVirtual => With extra field
-        /// </remarks>
         [HttpGet("{id}")]
         [SwaggerResponse(HttpStatusCode.OK, typeof(ForumPostForListDto[]), Description = "Ok")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Impossible de mettre à jour le nombre de vue du sujet")]
@@ -108,7 +104,6 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         /// </summary>
         /// <param name="Dto">Dto Input</param>
         /// <returns></returns>
-        /// 
         [Authorize]
         [HttpPost]
         [SwaggerResponse(HttpStatusCode.OK, typeof(ForumPost), Description = "Ok")]
