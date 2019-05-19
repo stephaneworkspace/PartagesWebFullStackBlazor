@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Forum.ForumTopic.ForNewTopic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -24,5 +25,12 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         /// <param name="id">ForumTopic primary key</param>
         /// <returns></returns>
         Task<HttpResponseMessage> GetForumTopic(int id);
+
+        /// <summary>
+        /// Post a new ForumTopic
+        /// </summary>
+        /// <param name="dto">Dto</param>
+        /// <returns></returns>
+        Task<HttpResponseMessage> PostForumTopic(ForumPostForNewForumTopicDto dto);
     }
 }

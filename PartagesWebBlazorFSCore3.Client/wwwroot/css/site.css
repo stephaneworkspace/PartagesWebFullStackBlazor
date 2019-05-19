@@ -10,6 +10,10 @@ html, body {
     list-style: none !important;
 }
 
+.textarea-height-define {
+    height: 150px;
+}
+
 /* End add for Bulma */
 
 app {

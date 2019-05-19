@@ -1,4 +1,6 @@
 ﻿using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
+using Microsoft.JSInterop;
+using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Forum.ForumTopic.ForNewTopic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,14 +19,16 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         /// HttpClient
         /// </summary>
         private readonly HttpClient _httpClient;
+        private readonly LocalStorage _storage;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="httpClient">Http client</param>
-        public HttpForumTopicService(HttpClient httpClient)
+        public HttpForumTopicService(HttpClient httpClient, LocalStorage storage)
         {
             _httpClient = httpClient;
+            _storage = storage;
         }
 
         /// <summary>
@@ -45,6 +49,20 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         public async Task<HttpResponseMessage> GetForumTopic(int id)
         {
             HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, $"{Constants.URL_BASE}api/ForumTopic/ForumTopicId/{id}");
+            return await _httpClient.SendAsync(req);
+        }
+
+        /// <summary>
+        /// Post a new ForumTopic
+        /// </summary>
+        /// <param name="dto">Dto</param>
+        /// <returns></returns>
+        public async Task<HttpResponseMessage> PostForumTopic(ForumPostForNewForumTopicDto dto)
+        {
+            var requestJson = Json.Serialize(dto);
+            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, $"{Constants.URL_BASE}api/ForumTopic");
+            req.Headers.Add("Authorization", $"Bearer {_storage["token"]}");
+            req.Content = new StringContent(requestJson, Encoding.Default, "application/json");
             return await _httpClient.SendAsync(req);
         }
     }

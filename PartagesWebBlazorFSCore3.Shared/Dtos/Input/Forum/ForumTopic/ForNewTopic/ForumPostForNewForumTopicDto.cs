@@ -19,21 +19,25 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Input.Forum.ForumTopic.ForNewTopi
         /***
          * ForumPost
          */
+
         /// <summary>
         /// Content
         /// </summary>
         [Required(ErrorMessage = "Le champ « {0} » est obligatoire.")]
         [DisplayName("Contenu")]
         public string Content { get; set; }
+
         /***
          * ForumTopic
          */
+
         /// <summary>
         /// Name of topic
         /// </summary>
         [Required(ErrorMessage = "Le champ « {0} » est obligatoire.")]
         [DisplayName("Nom du sujet")]
         public string NameTopic { get; set; }
+
         /// <summary>
         /// ForumCategorie Foreign key 
         /// </summary>

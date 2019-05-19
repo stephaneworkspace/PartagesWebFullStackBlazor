@@ -63,7 +63,6 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         {
             var requestJson = Json.Serialize(dto);
             HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, $"{Constants.URL_BASE}api/Auth/register");
-            // req.Headers.Add("Authorization", $"bearer {bearer}");
             req.Content = new StringContent(requestJson, Encoding.Default, "application/json");
             return await _httpClient.SendAsync(req);
         }

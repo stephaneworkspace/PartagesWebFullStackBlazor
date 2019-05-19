@@ -10,7 +10,8 @@
 @using PartagesWebBlazorFSCore3.Client.Services
 @using PartagesWebBlazorFSCore3.Client.Services.Http
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForSingleSelect
-
+@using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Forum.ForumTopic.ForNewTopic
+@using PartagesWebBlazorFSCore3.Shared.Helpers
 <h1>Forum</h1>
 
 @if (forumCategorie == null)
@@ -19,15 +20,40 @@
 }
 else
 {
-<p><a href="forumCategories">Index du forum</a> » <a href="forumTopics/@id">@forumCategorie.Name</a> » <a href="newForumTopic/@id">Nouveau sujet</a></p>
-    <p>à faire</p>
-    <button class="button is-primary" type="submit">Crée un nouveau sujet</button>
+    <p><a href="forumCategories">Index du forum</a> » <a href="forumTopics/@id">@forumCategorie.Name</a> » <a href="newForumTopic/@id">Nouveau sujet</a></p>
+    <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        @if (CantCreateTopic != "")
+        {
+            <ul class="validation-errors">
+                <li class="validation-message">@CantCreateTopic</li>
+            </ul>
+        }
+        <div class="field">
+            <label class="label">Titre du sujet</label>
+            <p class="control">
+                <InputText id="nametopic" bind-Value="@model.NameTopic" class="input" />
+                <span class="help is-danger"><ValidationMessage For="@(() => model.NameTopic)" /></span>
+            </p>
+        </div>
+        <div class="field">
+            <label class="label">Contenu</label>
+            <p class="control">
+                <InputTextArea id="content" bind-Value="@model.Content" class="textarea textarea-height-define" />
+                <span class="help is-danger"><ValidationMessage For="@(() => model.Content)" /></span>
+            </p>
+        </div>
+        <button class="button is-primary" type="submit">Crée un nouveau sujet</button>
+    </EditForm>
 }
 
 @functions {
     // ForumCategorie id
     [Parameter] int id { get; set; }
     ForumCategorieForSingleSelectDto forumCategorie;
+    ForumPostForNewForumTopicDto model = new ForumPostForNewForumTopicDto();
+    string CantCreateTopic = "";
 
     protected override async Task OnInitAsync()
     {
@@ -44,6 +70,7 @@ else
         switch (response.StatusCode)
         {
             case System.Net.HttpStatusCode.OK:
+                model.ForumCategorieId = id;
                 string content = await response.Content.ReadAsStringAsync();
                 forumCategorie = Json.Deserialize<ForumCategorieForSingleSelectDto>(content);
                 break;
@@ -52,5 +79,22 @@ else
                 UriHelper.NavigateTo("/");
                 break;
         }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        CantCreateTopic = "";
+        var response = await HttpForumTopicService.PostForumTopic(model);
+        switch (response.StatusCode)
+        {
+            case System.Net.HttpStatusCode.OK:
+                AlertifyService.Open($"Sujet « {model.NameTopic.CapitalizeFirst()} » crée", TypeAlertify.Success);
+                UriHelper.NavigateTo($"/forumCategorie/{id}");
+                break;
+            case System.Net.HttpStatusCode.BadRequest:
+                CantCreateTopic = await response.Content.ReadAsStringAsync();
+                AlertifyService.Open(CantCreateTopic, TypeAlertify.Error);
+                break;
+        };
     }
 }
