@@ -128,10 +128,17 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
 
             _repo.Add(Item);
 
-            if (await _repo.SaveAll())
-                return Ok(Item);
+            if (! await _repo.SaveAll())
+                return BadRequest("Impossible de répondre à ce poste");
 
-            return BadRequest("Impossible de répondre à ce poste");
+            var ItemTopic = await _repo.GetForumTopic(Dto.ForumTopicId);
+            ItemTopic.Date = Item.Date;
+            _repo.Update(ItemTopic);
+
+            if (!await _repo.SaveAll())
+                return BadRequest("Impossible de modifier la date du sujet");
+
+            return Ok(Item);
         }
 
         /// <summary>  

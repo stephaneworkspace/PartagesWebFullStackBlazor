@@ -21,9 +21,5 @@ namespace PartagesWebBlazorFSCore3.Shared.Models
         /// Categorie name
         /// </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// List of topics
-        /// </summary>
-        public virtual ICollection<ForumTopic> ForumTopics { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Models
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// Date du topic
+        /// Date from topic or last post
         /// </summary>
         public DateTime Date { get; set; }
         /// <summary>
