@@ -94,6 +94,7 @@ else
 
     private async Task OnPageChange(int page)
     {
+        // UriHelper.NavigateTo($"/forumPosts/{id}?page={page}");
         await LoadDatas(page);
         StateHasChanged();
     }
