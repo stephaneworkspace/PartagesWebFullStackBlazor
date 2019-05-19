@@ -1,6 +1,6 @@
 ﻿@page "/forumCategories"
 @inject IUriHelper UriHelper
-@inject IAlertifyService AlertifyService
+@inject IJsAlertifyService JsAlertifyService
 @inject IHttpForumCategorieService HttpForumCategorieService
 @using PartagesWebBlazorFSCore3.Client.Helpers
 @using PartagesWebBlazorFSCore3.Client.Services.Http
@@ -61,7 +61,7 @@ else
                 items = Json.Deserialize<ForumCategorieForListDto[]>(content);
                 break;
             default:
-                AlertifyService.Open("Erreur lors du chargement des catégories du forum", TypeAlertify.Error);
+                JsAlertifyService.Open("Erreur lors du chargement des catégories du forum", TypeAlertify.Error);
                 UriHelper.NavigateTo("/");
                 break;
         };

@@ -10,7 +10,7 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Js
     /// Moment javascript service
     /// https://momentjs.com/
     /// </summary>
-    public interface IMomentService
+    public interface IJsMomentService
     {
         /// <summary>
         /// Return date from now in french

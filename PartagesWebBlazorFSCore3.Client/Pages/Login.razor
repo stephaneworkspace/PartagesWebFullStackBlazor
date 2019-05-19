@@ -1,6 +1,6 @@
 ﻿@page "/login"
 @inject IUriHelper UriHelper
-@inject IAlertifyService AlertifyService
+@inject IJsAlertifyService JsAlertifyService
 @inject IHttpAuthService HttpAuthService
 @using PartagesWebBlazorFSCore3.Client.Helpers
 @using PartagesWebBlazorFSCore3.Client.Services.Http
@@ -58,12 +58,12 @@
         switch (response.StatusCode)
         {
             case System.Net.HttpStatusCode.OK:
-                AlertifyService.Open($"Utilisateur « {model.Username.CapitalizeFirst()} » connecté", TypeAlertify.Success);
+                JsAlertifyService.Open($"Utilisateur « {model.Username.CapitalizeFirst()} » connecté", TypeAlertify.Success);
                 UriHelper.NavigateTo("/");
                 break;
             case System.Net.HttpStatusCode.Unauthorized:
                 InvalidCredentialsText = await response.Content.ReadAsStringAsync();
-                AlertifyService.Open(InvalidCredentialsText, TypeAlertify.Error);
+                JsAlertifyService.Open(InvalidCredentialsText, TypeAlertify.Error);
                 break;
         };
     }

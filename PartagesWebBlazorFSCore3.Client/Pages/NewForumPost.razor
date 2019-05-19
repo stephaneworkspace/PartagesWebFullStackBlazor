@@ -1,6 +1,6 @@
 ﻿@page "/newForumPost/{id:int}/{idQuote:int}"
 @inject IUriHelper UriHelper
-@inject IAlertifyService AlertifyService
+@inject IJsAlertifyService JsAlertifyService
 @inject IHttpForumTopicService HttpForumTopicService
 @inject IHttpForumPostService HttpForumPostService
 @using PartagesWebBlazorFSCore3.Client.Helpers
@@ -68,7 +68,7 @@ else
                 forumTopic = Json.Deserialize<ForumTopicForSelectDto>(content);
                 break;
             default:
-                AlertifyService.Open($"Erreur lors du chargement du sujet {id} du forum", TypeAlertify.Error);
+                JsAlertifyService.Open($"Erreur lors du chargement du sujet {id} du forum", TypeAlertify.Error);
                 UriHelper.NavigateTo("/");
                 break;
         }
@@ -85,7 +85,7 @@ else
                     model.Content = $"{forumPostQuote.User.Username} : “{forumPostQuote.Content}”";
                     break;
                 default:
-                    AlertifyService.Open($"Erreur lors du chargement de la citation du poste {id} / {forumTopic.Name} du forum", TypeAlertify.Error);
+                    JsAlertifyService.Open($"Erreur lors du chargement de la citation du poste {id} / {forumTopic.Name} du forum", TypeAlertify.Error);
                     break;
             }
         }
@@ -98,12 +98,12 @@ else
         switch (response.StatusCode)
         {
             case System.Net.HttpStatusCode.OK:
-                AlertifyService.Open($"Réponse postée au sujet « {forumTopic.Name.CapitalizeFirst()} »", TypeAlertify.Success);
+                JsAlertifyService.Open($"Réponse postée au sujet « {forumTopic.Name.CapitalizeFirst()} »", TypeAlertify.Success);
                 UriHelper.NavigateTo($"/forumTopics/{forumTopic.ForumCategorieId}");
                 break;
             case System.Net.HttpStatusCode.BadRequest:
                 CantCreatePost = await response.Content.ReadAsStringAsync();
-                AlertifyService.Open(CantCreatePost, TypeAlertify.Error);
+                JsAlertifyService.Open(CantCreatePost, TypeAlertify.Error);
                 break;
         };
     }

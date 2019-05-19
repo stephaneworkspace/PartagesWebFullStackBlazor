@@ -10,7 +10,7 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Js
     /// Moment javascript service
     /// https://momentjs.com/
     /// </summary>
-    public class MomentService : IMomentService
+    public class JsMomentService : IJsMomentService
     {
         /// <summary>
         /// Javascript runtime
@@ -21,7 +21,7 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Js
         /// Constructor
         /// </summary>
         /// <param name="jsRuntime">Javascript runtime</param>
-        public MomentService(IJSRuntime jsRuntime)
+        public JsMomentService(IJSRuntime jsRuntime)
         {
             _jsRuntime = jsRuntime;
         }

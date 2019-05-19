@@ -10,7 +10,7 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Js
     /// Alertify javascript service
     /// https://alertifyjs.com
     /// </summary>
-    public interface IAlertifyService
+    public interface IJsAlertifyService
     {
         /// <summary>
         /// Type of toast

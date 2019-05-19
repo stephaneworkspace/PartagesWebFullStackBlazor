@@ -1,7 +1,7 @@
 ﻿@page "/forumTopics/{id:int}"
 @inject IUriHelper UriHelper
-@inject IAlertifyService AlertifyService
-@inject IMomentService MomentService
+@inject IJsAlertifyService JsAlertifyService
+@inject IJsMomentService JsMomentService
 @inject IHttpForumCategorieService HttpForumCategorieService
 @inject IHttpForumTopicService HttpForumTopicService
 @implements IDisposable
@@ -92,7 +92,7 @@ else
                 forumCategorie = Json.Deserialize<ForumCategorieForSingleSelectDto>(content);
                 break;
             default:
-                AlertifyService.Open($"Erreur lors du chargement de la catégorie {id} du forum", TypeAlertify.Error);
+                JsAlertifyService.Open($"Erreur lors du chargement de la catégorie {id} du forum", TypeAlertify.Error);
                 UriHelper.NavigateTo("/");
                 break;
         }
@@ -110,11 +110,11 @@ else
                 itemsDate = new Hashtable();
                 foreach (var item in items)
                 {
-                    itemsDate.Add(item.Id, await MomentService.FromNow(item.LastForumPost.Date.ToString()));
+                    itemsDate.Add(item.Id, await JsMomentService.FromNow(item.LastForumPost.Date.ToString()));
                 }
                 break;
             default:
-                AlertifyService.Open($"Erreur lors du chargement des sujets du forum de la catégorie {forumCategorie.Name}", TypeAlertify.Error);
+                JsAlertifyService.Open($"Erreur lors du chargement des sujets du forum de la catégorie {forumCategorie.Name}", TypeAlertify.Error);
                 UriHelper.NavigateTo("/");
                 break;
         };

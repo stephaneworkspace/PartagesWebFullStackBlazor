@@ -1,7 +1,7 @@
 ﻿@page "/signUp"
 @*inject HttpClient Http // For Udemy*@
 @inject IUriHelper UriHelper
-@inject IAlertifyService AlertifyService
+@inject IJsAlertifyService JsAlertifyService
 @inject IHttpAuthService HttpAuthService
 @using PartagesWebBlazorFSCore3.Client.Helpers
 @using PartagesWebBlazorFSCore3.Client.Services.Http
@@ -90,12 +90,12 @@
         switch (response.StatusCode)
         {
             case System.Net.HttpStatusCode.Created:
-                AlertifyService.Open($"Utilisateur « {model.Username.CapitalizeFirst()} » crée", TypeAlertify.Success);
+                JsAlertifyService.Open($"Utilisateur « {model.Username.CapitalizeFirst()} » crée", TypeAlertify.Success);
                 UriHelper.NavigateTo("/");
                 break;
             case System.Net.HttpStatusCode.BadRequest:
                 UserExistText = await response.Content.ReadAsStringAsync();
-                AlertifyService.Open(UserExistText, TypeAlertify.Error);
+                JsAlertifyService.Open(UserExistText, TypeAlertify.Error);
                 break;
         };
     }

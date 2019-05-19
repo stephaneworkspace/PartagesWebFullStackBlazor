@@ -11,7 +11,7 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Js
     /// Alertify javascript service
     /// https://alertifyjs.com
     /// </summary>
-    public class AlertifyService: IAlertifyService
+    public class JsAlertifyService: IJsAlertifyService
     {
         /// <summary>
         /// Javascript runtime
@@ -27,7 +27,7 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Js
         /// Constructor
         /// </summary>
         /// <param name="jsRuntime">Javascript runtime</param>
-        public AlertifyService(IJSRuntime jsRuntime)
+        public JsAlertifyService(IJSRuntime jsRuntime)
         {
             _jsRuntime = jsRuntime;
         }

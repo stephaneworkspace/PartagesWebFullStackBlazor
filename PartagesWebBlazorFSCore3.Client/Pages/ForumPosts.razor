@@ -1,8 +1,8 @@
 ﻿@page "/forumPosts/{id:int}"
 @inject LocalStorage Storage
 @inject IUriHelper UriHelper
-@inject IAlertifyService AlertifyService
-@inject IMomentService MomentService
+@inject IJsAlertifyService JsAlertifyService
+@inject IJsMomentService JsMomentService
 @inject IHttpForumTopicService HttpForumTopicService
 @inject IHttpForumPostService HttpForumPostService
 @implements IDisposable
@@ -121,7 +121,7 @@ else
                 forumTopic = Json.Deserialize<ForumTopicForSelectDto>(content);
                 break;
             default:
-                AlertifyService.Open($"Erreur lors du chargement du sujet n° {id} du forum", TypeAlertify.Error);
+                JsAlertifyService.Open($"Erreur lors du chargement du sujet n° {id} du forum", TypeAlertify.Error);
                 UriHelper.NavigateTo("/forumCategories");
                 break;
         }
@@ -141,12 +141,12 @@ else
                 itemsUserDateCreated = new Hashtable();
                 foreach (var item in items)
                 {
-                    itemsDate.Add(item.Id, await MomentService.FromNow(item.Date.ToString()));
-                    itemsUserDateCreated.Add(item.Id, await MomentService.Format(item.User.Created.ToString()));
+                    itemsDate.Add(item.Id, await JsMomentService.FromNow(item.Date.ToString()));
+                    itemsUserDateCreated.Add(item.Id, await JsMomentService.Format(item.User.Created.ToString()));
                 }
                 break;
             default:
-                AlertifyService.Open($"Erreur lors du chargement des sujets du forum de la catégorie {forumTopic.ForumCategorie.Name}, sujet {forumTopic.Name}", TypeAlertify.Error);
+                JsAlertifyService.Open($"Erreur lors du chargement des sujets du forum de la catégorie {forumTopic.ForumCategorie.Name}, sujet {forumTopic.Name}", TypeAlertify.Error);
                 UriHelper.NavigateTo("/forumCategories");
                 break;
         };
