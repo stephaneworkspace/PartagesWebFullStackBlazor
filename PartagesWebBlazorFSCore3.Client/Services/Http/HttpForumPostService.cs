@@ -42,6 +42,8 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         public async Task<HttpResponseMessage> GetForumPosts(int id, int page)
         {
             HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, $"{Constants.URL_BASE}api/ForumPost/{id}?pageNumber={page}");
+            // Important for User.SwCurrentUser
+            req.Headers.Add("Authorization", $"Bearer {_storage["token"]}");
             return await _httpClient.SendAsync(req);
         }
 
