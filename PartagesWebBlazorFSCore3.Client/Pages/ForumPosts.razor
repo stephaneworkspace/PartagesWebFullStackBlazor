@@ -86,11 +86,14 @@ else
             </div>
         </div>
     }
-    <button class="button is-primary" onclick="@NewReply">Réponse</button>
+    @if (Storage["token"] == null)
+    {
+        <button class="button is-primary" onclick="@NewReply">Réponse</button>
+    }
     <BulmaPagination PageCount="@pagination.TotalPages" CurrentPage="@pagination.CurrentPage" OnPageChanged="OnPageChange"></BulmaPagination>
-}
-@functions {
-    // ForumTopic id
+    }
+    @functions {
+        // ForumTopic id
     [Parameter] int id { get; set; }
     ForumPostForListDto[] items;
     Hashtable itemsDate = new Hashtable();
@@ -183,4 +186,4 @@ else
         //{ForumTopicId}/{No quote == 0}
         UriHelper.NavigateTo($"/newForumPost/{id}/0");
     }
-}
+    }

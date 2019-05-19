@@ -22,6 +22,6 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumPost.ForSelect
         /// <summary>
         /// Name of categorie
         /// </summary>
-        public string Nom { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿@page "/forumTopics/{id:int}"
+@inject LocalStorage Storage
 @inject IUriHelper UriHelper
 @inject IJsAlertifyService JsAlertifyService
 @inject IJsMomentService JsMomentService
@@ -7,6 +8,7 @@
 @implements IDisposable
 @using Microsoft.AspNetCore.WebUtilities
 @using System.Collections
+@using Cloudcrate.AspNetCore.Blazor.Browser.Storage
 @using PartagesWebBlazorFSCore3.Client.Helpers
 @using PartagesWebBlazorFSCore3.Client.Services.Http
 @using PartagesWebBlazorFSCore3.Client.Services.Js
@@ -58,11 +60,14 @@ else
             }
         </tbody>
     </table>
-    <button class="button is-primary" onclick="@NewTopic">Nouveau sujet</button>
+    @if (Storage["token"] == null)
+    {
+        <button class="button is-primary" onclick="@NewTopic">Nouveau sujet</button>
+    }
     <BulmaPagination PageCount="@pagination.TotalPages" CurrentPage="@pagination.CurrentPage" OnPageChanged="OnPageChange"></BulmaPagination>
-}
+    }
 
-@functions {
+    @functions {
     // ForumCategorie id
     [Parameter] int id { get; set; }
     ForumTopicForListDto[] items;
@@ -150,4 +155,4 @@ else
     {
         UriHelper.OnLocationChanged -= OnLocationChanges;
     }
-}
+    }

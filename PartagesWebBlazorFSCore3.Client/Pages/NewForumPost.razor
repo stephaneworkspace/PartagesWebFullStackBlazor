@@ -85,9 +85,10 @@ else
                     string content = await response.Content.ReadAsStringAsync();
                     ForumPostForSelectDto forumPostQuote = Json.Deserialize<ForumPostForSelectDto>(content);
                     model.Content = $"{forumPostQuote.User.Username} : “{forumPostQuote.Content}”";
+                    StateHasChanged();
                     break;
                 default:
-                    JsAlertifyService.Open($"Erreur lors du chargement de la citation du poste {id} / {forumTopic.Name} du forum", TypeAlertify.Error);
+                    JsAlertifyService.Open($"Erreur lors du chargement de la citation du poste dans le sujet « {forumTopic.Name} » du forum", TypeAlertify.Error);
                     break;
             }
         }
