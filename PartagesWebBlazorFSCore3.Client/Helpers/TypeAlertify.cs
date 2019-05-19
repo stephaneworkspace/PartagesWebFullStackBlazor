@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace PartagesWebBlazorFSCore3.Client.Helpers
 {
+    /// <summary>
+    /// Enum for JsAlertifyService
+    /// </summary>
     public enum TypeAlertify
     {
         Success,

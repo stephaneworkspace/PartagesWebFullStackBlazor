@@ -20,6 +20,7 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         /// Http client
         /// </summary>
         private readonly HttpClient _httpClient;
+
         /// <summary>
         /// Local storage
         /// </summary>
@@ -38,7 +39,7 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         /// <summary>
         /// Check if dto.Username is available
         /// </summary>
-        /// <param name="dto"></param>
+        /// <param name="dto">Dto</param>
         /// <returns></returns>
         public async Task<Boolean> PostIsAvailable(UserForRegisterAvailableInputDto dto)
         {
@@ -77,6 +78,9 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         /// <returns></returns>
         public async Task<HttpResponseMessage> PostLogin(UserForLoginInputDto dto)
         {
+            _storage.RemoveItem("token");
+            _storage.RemoveItem("username");
+            _storage.RemoveItem("messages-unread");
             var requestJson = Json.Serialize(dto);
             HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, $"{Constants.URL_BASE}api/Auth/login");
             req.Content = new StringContent(requestJson, Encoding.Default, "application/json");
@@ -87,8 +91,8 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
                 string content = await response.Content.ReadAsStringAsync();
                 LoginDto _dto = Json.Deserialize<LoginDto>(content);
                 _storage["token"] = _dto.Token;
-                // await _localStorage.SetItemAsync("token", _dto.token);
-                //    messagesUnread
+                _storage["username"] = _dto.User.Username;
+                _storage["messages-unread"] = _dto.MessagesUnread.ToString();
             }
             return response;
         }
