@@ -1,4 +1,4 @@
-﻿@page "/newForumPost/{id:int}"
+﻿@page "/newForumPost/{id:int}/{idQuote:int}"
 @inject IJSRuntime JsRuntime
 @inject IUriHelper UriHelper
 @inject LocalStorage Storage
@@ -10,6 +10,7 @@
 @using PartagesWebBlazorFSCore3.Client.Services
 @using PartagesWebBlazorFSCore3.Client.Services.Http
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumTopic.ForSingleSelect
+@using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumPost.ForSelect
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Forum.ForumPost.ForReply
 @using PartagesWebBlazorFSCore3.Shared.Helpers
 <h1>Forum</h1>
@@ -42,8 +43,10 @@ else
 }
 
 @functions {
-    // ForumTopic id
+        // ForumTopic id
     [Parameter] int id { get; set; }
+    // Quote id, 0 = no quote
+    [Parameter] int idQuote { get; set; }
     ForumTopicForSelectDto forumTopic;
     ForumPostForReplyDto model = new ForumPostForReplyDto();
     string CantCreatePost = "";
@@ -71,6 +74,23 @@ else
                 AlertifyService.Open($"Erreur lors du chargement du sujet {id} du forum", TypeAlertify.Error);
                 UriHelper.NavigateTo("/");
                 break;
+        }
+
+        // Loading quote
+        if (idQuote > 0)
+        {
+            response = await HttpForumPostService.GetForumPost(idQuote);
+            switch (response.StatusCode)
+            {
+                case System.Net.HttpStatusCode.OK:
+                    string content = await response.Content.ReadAsStringAsync();
+                    ForumPostForSelectDto forumPostQuote = Json.Deserialize<ForumPostForSelectDto>(content);
+                    model.Content = $"{forumPostQuote.User.Username} : “{forumPostQuote.Content}”";
+                    break;
+                default:
+                    AlertifyService.Open($"Erreur lors du chargement de la citation du poste {id} / {forumTopic.Name} du forum", TypeAlertify.Error);
+                    break;
+            }
         }
     }
 

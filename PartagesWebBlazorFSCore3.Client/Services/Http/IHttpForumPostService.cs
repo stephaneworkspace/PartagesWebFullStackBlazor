@@ -25,5 +25,12 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         /// <param name="dto">Dto</param>
         /// <returns></returns>
         Task<HttpResponseMessage> PostReplyForumPoste(ForumPostForReplyDto dto);
+
+        /// <summary>
+        /// Get a ForumPost from primary key
+        /// </summary>
+        /// <param name="id">ForumPost primary key</param>
+        /// <returns></returns>
+        Task<HttpResponseMessage> GetForumPost(int id);
     }
 }

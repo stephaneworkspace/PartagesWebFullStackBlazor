@@ -58,5 +58,16 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
             req.Content = new StringContent(requestJson, Encoding.Default, "application/json");
             return await _httpClient.SendAsync(req);
         }
+
+        /// <summary>
+        /// Get a ForumPost from primary key
+        /// </summary>
+        /// <param name="id">ForumPost primary key</param>
+        /// <returns></returns>
+        public async Task<HttpResponseMessage> GetForumPost(int id)
+        {
+            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, $"{Constants.URL_BASE}api/ForumPost/ForumPostId/{id}");
+            return await _httpClient.SendAsync(req);
+        }
     }
 }

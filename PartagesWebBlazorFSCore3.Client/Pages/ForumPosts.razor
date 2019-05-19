@@ -18,6 +18,68 @@
 
 <h1>Forum</h1>
 
+<div class="columns">
+    <div class="column is-6">
+        <p class="bd-notification is-info">Contenu</p>
+    </div>
+    <div class="column is-2">
+        <p class="bd-notification is-info">Citation</p>
+    </div>
+    <div class="column is-4">
+        <p class="bd-notification is-danger">Par</p>
+    </div>
+</div>
+
+<div class="columns">
+    <div class="column is-6">
+        <p class="bd-notification is-info">Contenu</p>
+        <div class="columns is-mobile">
+            <div class="column">
+                <p class="bd-notification is-info">
+                    <b>Re: item.forumSujet.nom</b>
+                </p>
+                <p class="bd-notification is-info">
+                    par item.user.username | titlecase dateFormatLLLL(item.date)
+                </p>
+                <p class="bd-notification is-info">item.contenu }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="column is-2">
+        <p class="bd-notification is-info">Citation</p>
+        <div class="columns is-mobile">
+            <div class="column">
+                <p class="bd-notification is-info">
+                    <a href="some/link" class="button is-primary is-outlined is-small">
+                        <span class="icon is-small">
+                            <i class="fas fa-quote-right"></i>
+                        </span>
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="column is-4">
+        <p class="bd-notification is-danger">Second column</p>
+        <div class="columns is-mobile">
+            <div class="column">
+                <p>
+                    item.user.username | titlecase<br />
+                    Postes : item.user.messageCount<br />
+                    Membre depuis : {{ dateFormatLL(item.user.created) }}br/>
+                    <!--if"loggedIn && !item.swCurrentUser">-->
+                    Contact 
+                    <a href="some/link" class="button is-primary is-outlined is-small">
+                        <span class="icon is-small">
+                            <i class="far fa-envelope"></i>
+                        </span>
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
 @if (items == null || forumTopic == null)
 {
     <p><em>Chargement...</em></p>
@@ -139,6 +201,7 @@ else
 
     private void NewReply()
     {
-        UriHelper.NavigateTo($"/newForumPost/{id}");
+        //{ForumTopicId}/{No quote == 0}
+        UriHelper.NavigateTo($"/newForumPost/{id}/0");
     }
 }
