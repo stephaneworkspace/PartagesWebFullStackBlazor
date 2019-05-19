@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumTopic.ForSingleSelect
 {
     /// <summary>
-    /// Dto
+    /// Dto for model ForumCategorie
     /// </summary>
     public class ForumCategorieForSelectForumTopicDto
     {
@@ -18,6 +18,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumTopic.ForSingle
         /// Primary key
         /// </summary>
         public int Id { get; set; }
+
         /// <summary>
         /// Name of categorie
         /// </summary>

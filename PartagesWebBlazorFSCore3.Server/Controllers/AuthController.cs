@@ -107,9 +107,9 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             LoginDto loginDto = new LoginDto
             {
-                token = tokenHandler.WriteToken(token),
-                user = _mapper.Map<UserForLoginDto>(userFromRepo),
-                messagesUnread = await _repoMessage.GetCountMessagesUnread(userFromRepo.Id)
+                Token = tokenHandler.WriteToken(token),
+                User = _mapper.Map<UserForLoginDto>(userFromRepo),
+                MessagesUnread = await _repoMessage.GetCountMessagesUnread(userFromRepo.Id)
             };
             return Ok(loginDto);
         }

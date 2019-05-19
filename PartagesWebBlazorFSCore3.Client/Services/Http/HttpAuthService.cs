@@ -86,7 +86,7 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
                 // Set local storage
                 string content = await response.Content.ReadAsStringAsync();
                 LoginDto _dto = Json.Deserialize<LoginDto>(content);
-                _storage["token"] = _dto.token;
+                _storage["token"] = _dto.Token;
                 // await _localStorage.SetItemAsync("token", _dto.token);
                 //    messagesUnread
             }

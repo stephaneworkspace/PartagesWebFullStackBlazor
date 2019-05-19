@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumPost.ForList
 {
     /// <summary>
-    /// Dto
+    /// Dto from model ForumCategorie
     /// </summary>
     public class ForumCategorieForListForumPostDto
     {
@@ -18,6 +18,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumPost.ForList
         /// Primary key
         /// </summary>
         public int Id { get; set; }
+
         /// <summary>
         /// Categorie name
         /// </summary>

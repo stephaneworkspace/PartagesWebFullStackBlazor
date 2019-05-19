@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth
 {
     /// <summary>
-    /// Dto
+    /// Dto for model User
     /// </summary>
     public class UserForRegisterInputDto
     {

@@ -12,14 +12,16 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Auth.Login
         /// <summary>
         /// Jwt token
         /// </summary>
-        public string token { get; set; }
+        public string Token { get; set; }
+
         /// <summary>
         /// User
         /// </summary>
-        public UserForLoginDto user { get; set; }
+        public UserForLoginDto User { get; set; }
+
         /// <summary>
         /// Number of messages unread
         /// </summary>
-        public int messagesUnread { get; set; }
+        public int MessagesUnread { get; set; }
     }
 }

@@ -10,18 +10,20 @@ using System.Threading.Tasks;
 namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumPost.ForSelect
 {
     /// <summary>
-    /// Dto
+    /// Dto from model User
     /// </summary>
     public class UserForSelectForumPostDto
     {
         /// <summary>
         /// Primary key
         /// </summary>
-        public int Id;
+        public int Id { get; set; }
+
         /// <summary>
         /// Username
         /// </summary>
-        public string Username;
+        public string Username { get; set; }
+
         /// <summary>
         /// Date created
         /// </summary>

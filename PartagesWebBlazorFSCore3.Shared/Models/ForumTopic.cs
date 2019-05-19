@@ -17,22 +17,27 @@ namespace PartagesWebBlazorFSCore3.Shared.Models
         /// Primary Key
         /// </summary>
         public int Id { get; set; }
+
         /// <summary>
         /// FK ForumCategorie
         /// </summary>
         public int ForumCategorieId { get; set; }
+
         /// <summary>
         /// Relation with ForumCategorie
         /// </summary>
         public virtual ForumCategorie ForumCategorie { get; set; }
+
         /// <summary>
         /// Topic name
         /// </summary>
         public string Name { get; set; }
+
         /// <summary>
         /// Date from topic or last post
         /// </summary>
         public DateTime Date { get; set; }
+
         /// <summary>
         /// Number of view
         /// </summary>

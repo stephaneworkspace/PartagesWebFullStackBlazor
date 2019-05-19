@@ -17,6 +17,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Models
         /// Primary Key
         /// </summary>
         public int Id { get; set; }
+
         /// <summary>
         /// Categorie name
         /// </summary>

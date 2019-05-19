@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth
 {
     /// <summary>
-    /// Dto
+    /// Dto for model User
     /// </summary>
     public class UserForLoginInputDto
     {
@@ -21,6 +21,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth
         [Required(ErrorMessage = "Le champ « {0} » est obligatoire.")]
         [Display(Name = "Nom d'utilisateur")]
         public string Username { get; set; }
+
         /// <summary>
         /// Password
         /// </summary>

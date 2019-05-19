@@ -17,6 +17,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Models
         /// Primary Key
         /// </summary>
         public int Id { get; set; }
+
         /// <summary>
         /// ForeignKey User receiver
         /// </summary>
@@ -24,10 +25,12 @@ namespace PartagesWebBlazorFSCore3.Shared.Models
         /// By default DeleteCascade if the User is Deleted
         /// </remarks>
         public int UserId { get; set; }
+
         /// <summary>
         /// Relation User
         /// </summary>
         public virtual User User { get; set; }
+
         /// <summary>
         /// Clé de l'utilisateur qui envoie le message
         /// </summary>
@@ -35,18 +38,22 @@ namespace PartagesWebBlazorFSCore3.Shared.Models
         /// This can be null, if User is delete of the DB
         /// </remarks>
         public int? SendByUserId { get; set; }
+
         /// <summary>
         /// Date of the message
         /// </summary>
         public DateTime Date { get; set; }
+
         /// <summary>
         /// Subject
         /// </summary>
         public string Subject { get; set; }
+
         /// <summary>
         /// Content of the message
         /// </summary>
         public string Content { get; set; }
+
         /// <summary>
         /// Switch if message is read
         /// </summary>

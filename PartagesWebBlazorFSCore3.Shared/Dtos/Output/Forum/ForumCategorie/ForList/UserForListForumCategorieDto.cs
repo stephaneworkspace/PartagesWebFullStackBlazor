@@ -10,17 +10,18 @@ using System.Threading.Tasks;
 namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForList
 {
     /// <summary>
-    /// Dto
+    /// Dto from model User
     /// </summary>
-    public class UsersForListForumCategorieDto
+    public class UserForListForumCategorieDto
     {
         /// <summary>
         /// Primary key
         /// </summary>
-        public int Id;
+        public int Id { get; set; }
+
         /// <summary>
         /// Username
         /// </summary>
-        public string Username;
+        public string Username { get; set; }
     }
 }

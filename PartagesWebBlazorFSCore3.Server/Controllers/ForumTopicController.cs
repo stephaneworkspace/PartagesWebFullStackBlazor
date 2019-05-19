@@ -58,22 +58,23 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         public async Task<IActionResult> GetForumTopics([FromQuery] ForumTopicParams forumTopicParams, int id)
         {
             var items = await _repo.GetForumTopics(forumTopicParams, id);
+            /// No automapp because computed field
             List<ForumTopicForListDto> newDto = new List<ForumTopicForListDto>();
-            foreach (var unite in items)
+            foreach (var item in items)
             {
-                 var lastForumPost = await _repo.GetLastForumPostFromAForumTopic(unite.Id);
+                 var lastForumPost = await _repo.GetLastForumPostFromAForumTopic(item.Id);
                  ForumTopicForListDto Dto = new ForumTopicForListDto
                  {
-                     Id = unite.Id,
-                     Name = unite.Name,
-                     ForumCategorieId = unite.ForumCategorieId,
-                     ForumCategorie = _mapper.Map<ForumCategorieForListForumTopicDto>(unite.ForumCategorie),
-                     Date = unite.Date,
-                     View = unite.View,
-                     LastForumPost = null,
-                     PageLastForumPost = 10
+                     Id = item.Id,
+                     Name = item.Name,
+                     ForumCategorieId = item.ForumCategorieId,
+                     ForumCategorie = _mapper.Map<ForumCategorieForListForumTopicDto>(item.ForumCategorie),
+                     Date = item.Date,
+                     View = item.View,
+                     LastForumPost = null, // computed field
+                     PageLastForumPost = 0 // computed field
                  };
-                Dto.CountForumPost = await _repo.GetCountLastForumPostFromAForumTopic(unite.Id);
+                Dto.CountForumPost = await _repo.GetCountLastForumPostFromAForumTopic(item.Id); // computed field
 
                 // LastForumPost
                 Dto.LastForumPost = _mapper.Map<ForumPostForListForumTopicDto>(lastForumPost);

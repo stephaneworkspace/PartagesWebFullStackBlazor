@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace PartagesWebBlazorFSCore3.Shared.Dtos.Input.Forum.ForumTopic.ForNewTopic
 {
     /// <summary>
-    /// Dto
+    /// Dto for model ForumPost and ForumTopic
     /// </summary>
     public class ForumPostForNewForumTopicDto
     {

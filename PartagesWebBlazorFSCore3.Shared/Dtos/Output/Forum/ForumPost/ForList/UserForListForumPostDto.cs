@@ -10,22 +10,25 @@ using System.Threading.Tasks;
 namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumPost.ForList
 {
     /// <summary>
-    /// Dto
+    /// Dto from model User with a computed field, MessageCount
     /// </summary>
     public class UserForListForumPostDto
     {
         /// <summary>
         /// Primary key
         /// </summary>
-        public int Id;
+        public int Id { get; set; }
+
         /// <summary>
         /// Username
         /// </summary>
-        public string Username;
+        public string Username { get; set; }
+
         /// <summary>
         /// Date created account
         /// </summary>
         public DateTime Created { get; set; }
+
         /// <summary>
         /// Message count of user
         /// </summary>

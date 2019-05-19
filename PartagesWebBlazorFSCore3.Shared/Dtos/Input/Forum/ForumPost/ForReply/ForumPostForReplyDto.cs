@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace PartagesWebBlazorFSCore3.Shared.Dtos.Input.Forum.ForumPost.ForReply
 {
     /// <summary>
-    /// Dto
+    /// Dto for model ForumPost
     /// </summary>
     public class ForumPostForReplyDto
     {
@@ -20,6 +20,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Input.Forum.ForumPost.ForReply
         /// Primary key froum ForumTopic
         /// </summary>
         public int ForumTopicId { get; set; }
+
         /// <summary>
         /// Content of post
         /// </summary>

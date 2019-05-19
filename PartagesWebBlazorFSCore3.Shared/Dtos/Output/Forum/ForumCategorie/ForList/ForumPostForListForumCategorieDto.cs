@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForList
 {
     /// <summary>
-    /// Dto
+    /// Dto from model ForumPost
     /// </summary>
     public class ForumPostForListForumCategorieDto
     {
@@ -18,26 +18,32 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForLi
         /// Primary key
         /// </summary>
         public int Id { get; set; }
+
         /// <summary>
         /// Foreign key ForumTopic
         /// </summary>
         public int ForumTopicId { get; set; }
+
         /// <summary>
         /// Relation with ForumTopic
         /// </summary>
         public virtual ForumTopicForListForumCategorieDto ForumTopic { get; set; }
+
         /// <summary>
         /// Foreign key User
         /// </summary>
         public int UserId { get; set; }
+
         /// <summary>
         /// Relation with User
         /// </summary>
-        public virtual UsersForListForumCategorieDto User { get; set; }
+        public virtual UserForListForumCategorieDto User { get; set; }
+
         /// <summary>
         /// Date last ForumPost
         /// </summary>
         public DateTime Date { get; set; }
+
         /// <summary>
         /// Content
         /// </summary>

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Auth.Login
 {
     /// <summary>
-    /// Dto
+    /// Dto from model User
     /// </summary>
     public class UserForLoginDto
     {
