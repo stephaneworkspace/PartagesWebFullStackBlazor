@@ -90,7 +90,7 @@ else
 @functions {
     // ForumTopic id
     [Parameter] int id { get; set; }
-    ForumPostForListDtoWithVirtual[] items;
+    ForumPostForListDto[] items;
     Hashtable itemsDate = new Hashtable();
     Hashtable itemsUserDateCreated = new Hashtable();
     ForumTopicForSelectDto forumTopic;
@@ -132,7 +132,7 @@ else
         {
             case System.Net.HttpStatusCode.OK:
                 string content = await response.Content.ReadAsStringAsync();
-                items = Json.Deserialize<ForumPostForListDtoWithVirtual[]>(content);
+                items = Json.Deserialize<ForumPostForListDto[]>(content);
                 var head = response.Headers.GetValues("Pagination");
                 pagination = Json.Deserialize<PaginationHeader>(head.FirstOrDefault());
 

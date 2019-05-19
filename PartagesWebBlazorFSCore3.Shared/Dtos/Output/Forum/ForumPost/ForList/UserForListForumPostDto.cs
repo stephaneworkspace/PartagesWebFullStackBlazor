@@ -26,5 +26,10 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumPost.ForList
         /// Date created account
         /// </summary>
         public DateTime Created { get; set; }
+        /// <summary>
+        /// Message count of user
+        /// </summary>
+        /// <remarks>Computed DTO field</remarks>
+        public int MessageCount { get; set; }
     }
 }

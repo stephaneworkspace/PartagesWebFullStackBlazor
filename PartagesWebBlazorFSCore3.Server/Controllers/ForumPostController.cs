@@ -58,7 +58,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         /// ForumPostForListDtoWithVirtual => With extra field
         /// </remarks>
         [HttpGet("{id}")]
-        [SwaggerResponse(HttpStatusCode.OK, typeof(ForumPostForListDtoWithVirtual[]), Description = "Ok")]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(ForumPostForListDto[]), Description = "Ok")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Impossible de mettre à jour le nombre de vue du sujet")]
         public async Task<IActionResult> GetForumPosts([FromQuery] ForumPostParams forumPostParams, int id)
         {
@@ -68,36 +68,38 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
                 return BadRequest("Impossible de mettre à jour le nombre de vue du sujet");
             }
             var items = await _repo.GetForumPosts(forumPostParams, id);
-            var itemsDto = _mapper.Map<List<ForumPostForListDto>>(items);
-            Response.AddPagination(items.CurrentPage, items.PageSize, items.TotalCount, items.TotalPages);
-            var itemsDtoFinal = new List<ForumPostForListDtoWithVirtual>();
-            foreach (var itemDto in itemsDto)
+            /// No automapp because computed field
+            List<ForumPostForListDto> itemsDtoFinal = new List<ForumPostForListDto>();
+            foreach (var item in items)
             {
                 var UserIdCurrent = 0;
                 if (User.Identity.IsAuthenticated)
                 {
                     UserIdCurrent = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
                 }
-                var userWithVirtual = new UserForListForumPostDtoWithVirtual
+                /// No automapp because computed field
+                var userWithVirtual = new UserForListForumPostDto
                 {
-                    Id = itemDto.User.Id,
-                    Username = itemDto.User.Username,
-                    Created = itemDto.User.Created,
-                    MessageCount = await _repo.GetCountUserForumPost(itemDto.UserId)
+                    Id = item.User.Id,
+                    Username = item.User.Username,
+                    Created = item.User.Created,
+                    MessageCount = await _repo.GetCountUserForumPost(item.UserId)
                 };
-                var itemDtoWithVirtual = new ForumPostForListDtoWithVirtual
+                /// No automapp because computed field
+                var itemDtoWithVirtual = new ForumPostForListDto
                 {
-                    Id = itemDto.Id,
-                    ForumTopic = itemDto.ForumTopic,
-                    ForumTopicId = itemDto.ForumTopicId,
+                    Id = item.Id,
+                    ForumTopic = _mapper.Map<ForumTopicForListForumPostDto>(item.ForumTopic), // automapp, no change
+                    ForumTopicId = item.ForumTopicId,
                     User = userWithVirtual,
-                    UserId = itemDto.UserId,
-                    Content = itemDto.Content,
-                    Date = itemDto.Date,
-                    SwCurrentUser = UserIdCurrent == itemDto.UserId
+                    UserId = item.UserId,
+                    Content = item.Content,
+                    Date = item.Date,
+                    SwCurrentUser = UserIdCurrent == item.UserId
                 };
                 itemsDtoFinal.Add(itemDtoWithVirtual);
             }
+            Response.AddPagination(items.CurrentPage, items.PageSize, items.TotalCount, items.TotalPages);
             return Ok(itemsDtoFinal);
         }
         

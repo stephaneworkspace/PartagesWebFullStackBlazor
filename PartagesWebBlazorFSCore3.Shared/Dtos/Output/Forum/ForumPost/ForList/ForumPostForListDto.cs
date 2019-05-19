@@ -19,7 +19,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumPost.ForList
         /// </summary>
         public int Id { get; set; }
         /// <summary>
-        /// Foreign key ForumTopic
+        /// Foreign key with ForumTopic
         /// </summary>
         public int ForumTopicId { get; set; }
         /// <summary>
@@ -27,7 +27,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumPost.ForList
         /// </summary>
         public virtual ForumTopicForListForumPostDto ForumTopic { get; set; }
         /// <summary>
-        /// Foreign key User
+        /// Foreign key with User
         /// </summary>
         public int UserId { get; set; }
         /// <summary>
@@ -42,5 +42,10 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumPost.ForList
         /// Content of post
         /// </summary>
         public string Content { get; set; }
+        /// <summary>
+        /// Switch if current user in [Authorize]
+        /// </summary>
+        /// <remarks>Computed DTO field</remarks>
+        public bool? SwCurrentUser { get; set; }
     }
 }

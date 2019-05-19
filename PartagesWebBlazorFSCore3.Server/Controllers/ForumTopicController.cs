@@ -61,7 +61,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             List<ForumTopicForListDto> newDto = new List<ForumTopicForListDto>();
             foreach (var unite in items)
             {
-                var lastForumPost = await _repo.GetLastForumPostFromAForumTopic(unite.Id);
+                 var lastForumPost = await _repo.GetLastForumPostFromAForumTopic(unite.Id);
                  ForumTopicForListDto Dto = new ForumTopicForListDto
                  {
                      Id = unite.Id,
