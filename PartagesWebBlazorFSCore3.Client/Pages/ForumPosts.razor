@@ -28,28 +28,33 @@ else
 {
     <p><a href="forumCategories">Index du forum</a> » <a href="forumTopics/@forumTopic.ForumCategorieId">@forumTopic.ForumCategorie.Name</a> » <a href="forumPosts/@id">@forumTopic.Name</a></p>
     <div class="columns">
-        <div class="column is-6">
+        <div class="column @(Storage["token"] == null ? "is-6" : "is-8")">
             <p>Contenu</p>
         </div>
-        <div class="column is-2">
-            <p>Citation</p>
-        </div>
+        @if (Storage["token"] != null)
+        {
+            <div class="column is-2">
+                <p>Citation</p>
+            </div>
+        }
         <div class="column is-4">
             <p>Par</p>
         </div>
     </div>
     @foreach (var item in items)
     {
-        <div class="columns">
-            <div class="column is-6">
-                <p>
-                    <b>Re: @item.ForumTopic.Name</b>
-                </p>
-                <p>
-                    par @item.User.Username.CapitalizeFirst() @itemsDate[item.Id].ToString()
-                </p>
-                <p>@((MarkupString)(Regex.Replace(item.Content, @"(\r\n)|\n|\r", "<br />")))</p>
-            </div>
+    <div class="columns">
+        <div class="column @(Storage["token"] == null ? "is-6" : "is-8")">
+            <p>
+                <b>Re: @item.ForumTopic.Name</b>
+            </p>
+            <p>
+                par @item.User.Username.CapitalizeFirst() @itemsDate[item.Id].ToString()
+            </p>
+            <p>@((MarkupString)(Regex.Replace(item.Content, @"(\r\n)|\n|\r", "<br />")))</p>
+        </div>
+        @if (Storage["token"] != null)
+        {
             <div class="column is-2">
                 <p>
                     <a href="/newForumPost/@item.ForumTopicId/@item.Id" class="button is-primary is-outlined is-small">
@@ -59,32 +64,32 @@ else
                     </a>
                 </p>
             </div>
-            <div class="column is-4">
-                @if (Storage["token"] != "" && (!item.SwCurrentUser ?? false))
-                {
-                    <p>
-                        @item.User.Username.CapitalizeFirst()<br />
-                        Postes : @item.User.MessageCount<br />
-                        Membre depuis : @itemsUserDateCreated[item.Id].ToString()<br />
-                        Contact
-                        <a href="some/link" class="button is-primary is-outlined is-small">
-                            <span class="icon is-small">
-                                <i class="far fa-envelope"></i>
-                            </span>
-                        </a>
-                    </p>
-                }
-                else
-                {
-                    <p>
-                        @item.User.Username.CapitalizeFirst()<br />
-                        Postes : @item.User.MessageCount<br />
-                        Membre depuis : @itemsUserDateCreated[item.Id].ToString()<br />@*(MomentService.Format(item.User.Created.ToString()))<br />*@
-                    </p>
-                }
-
-            </div>
-        </div>
+        }
+        <div class="column is-4">
+            @if (Storage["token"] != "" && (!item.SwCurrentUser ?? false))
+            {
+                <p>
+                    @item.User.Username.CapitalizeFirst()<br />
+                    Postes : @item.User.MessageCount<br />
+                    Membre depuis : @itemsUserDateCreated[item.Id].ToString()<br />
+                    Contact
+                    <a href="some/link" class="button is-primary is-outlined is-small">
+                        <span class="icon is-small">
+                            <i class="far fa-envelope"></i>
+                        </span>
+                    </a>
+                </p>
+            }
+            else
+            {
+                <p>
+                    @item.User.Username.CapitalizeFirst()<br />
+                    Postes : @item.User.MessageCount<br />
+                    Membre depuis : @itemsUserDateCreated[item.Id].ToString()<br />@*(MomentService.Format(item.User.Created.ToString()))<br />*@
+                </p>
+            }
+         </div>
+    </div>
     }
     @if (Storage["token"] == null)
     {
@@ -92,8 +97,8 @@ else
     }
     <BulmaPagination PageCount="@pagination.TotalPages" CurrentPage="@pagination.CurrentPage" OnPageChanged="OnPageChange"></BulmaPagination>
     }
-    @functions {
-        // ForumTopic id
+@functions {
+    // ForumTopic id
     [Parameter] int id { get; set; }
     ForumPostForListDto[] items;
     Hashtable itemsDate = new Hashtable();
