@@ -2,6 +2,10 @@
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+h1 {
+    font-size: 1.3rem;
+}
+
 /* For forms */
 
 .textarea-height-define {
@@ -26,8 +30,11 @@
     list-style: none !important;
 }
 
-/* For alertify theme to Bulma */
+.small-user {
+    font-size: 0.9rem;
+}
 
+/* For alertify theme to Bulma */
 .alertify-notifier .ajs-message.ajs-success {
     color: #fff;
     background: hsl(171, 100%, 41%);
@@ -42,4 +49,3 @@
     background: hsl(48, 100%, 67%);
     border-color: #999;
 }
-

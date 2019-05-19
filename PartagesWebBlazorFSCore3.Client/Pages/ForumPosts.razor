@@ -28,7 +28,7 @@ else
 {
     <p><a href="forumCategories">Index du forum</a> » <a href="forumTopics/@forumTopic.ForumCategorieId">@forumTopic.ForumCategorie.Name</a> » <a href="forumPosts/@id">@forumTopic.Name</a></p>
     <div class="columns">
-        <div class="column @(Storage["token"] == null ? "is-6" : "is-8")">
+        <div class="column @(Storage["token"] == null ? "is-7" : "is-9")">
             <p>Contenu</p>
         </div>
         @if (Storage["token"] != null)
@@ -37,14 +37,14 @@ else
                 <p>Citation</p>
             </div>
         }
-        <div class="column is-4">
+        <div class="column is-3">
             <p>Par</p>
         </div>
     </div>
     @foreach (var item in items)
     {
     <div class="columns">
-        <div class="column @(Storage["token"] == null ? "is-6" : "is-8")">
+        <div class="column @(Storage["token"] == null ? "is-7" : "is-9")">
             <p>
                 <b>Re: @item.ForumTopic.Name</b>
             </p>
@@ -65,10 +65,10 @@ else
                 </p>
             </div>
         }
-        <div class="column is-4">
+        <div class="column is-3">
             @if (Storage["token"] != "" && (!item.SwCurrentUser ?? false))
             {
-                <p>
+                <p class="small-user">
                     @item.User.Username.CapitalizeFirst()<br />
                     Postes : @item.User.MessageCount<br />
                     Membre depuis : @itemsUserDateCreated[item.Id].ToString()<br />
@@ -82,7 +82,7 @@ else
             }
             else
             {
-                <p>
+                <p class="small-user">
                     @item.User.Username.CapitalizeFirst()<br />
                     Postes : @item.User.MessageCount<br />
                     Membre depuis : @itemsUserDateCreated[item.Id].ToString()<br />@*(MomentService.Format(item.User.Created.ToString()))<br />*@
@@ -91,9 +91,9 @@ else
          </div>
     </div>
     }
-    @if (Storage["token"] == null)
+    @if (Storage["token"] != null)
     {
-        <button class="button is-primary" onclick="@NewReply">Réponse</button>
+        <button class="button is-primary" onclick="@NewReply">Répondre</button>
     }
     <BulmaPagination PageCount="@pagination.TotalPages" CurrentPage="@pagination.CurrentPage" OnPageChanged="OnPageChange"></BulmaPagination>
     }
