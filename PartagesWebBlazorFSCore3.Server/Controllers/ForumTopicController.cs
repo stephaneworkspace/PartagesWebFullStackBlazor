@@ -63,7 +63,6 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             {
                 // A FAIRE
                 //LastForumPost = null,
-                //    CountLastForumPost = 10,
                 //    PageLastForumPost = 10
                 ForumTopicForListDto Dto = new ForumTopicForListDto
                 {
@@ -74,7 +73,6 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
                     Date = unite.Date,
                     View = unite.View,
                     LastForumPost = null,
-                    CountLastForumPost = 10,
                     PageLastForumPost = 10
     };
                 Dto.CountForumPost = await _repo.GetCountLastForumPostFromAForumTopic(unite.Id);
