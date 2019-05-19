@@ -4,13 +4,15 @@
 
 <NavBarTop />
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
+<h1 class="title is-3">Accueil</h1>
 
 @if (Storage["token"] == null)
 {
-    <NavLink class="nav-link" href="SignUp">S'inscrire</NavLink>
+    <p>Bienvenue, pour participer au forum tu peux t'inscrire <NavLink class="nav-link" href="SignUp">ici</NavLink></p>
+}
+else
+{
+    <p>Bienvenue @Storage["username"]</p>
 }
 
 @functions {
