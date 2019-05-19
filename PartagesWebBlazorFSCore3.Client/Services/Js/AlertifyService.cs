@@ -5,16 +5,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PartagesWebBlazorFSCore3.Client.Services
+namespace PartagesWebBlazorFSCore3.Client.Services.Js
 {
     /// <summary>
-    /// Javascript -> C#/Blazor with Alertify.js
-    /// Nuget AlertifyJS
+    /// Alertify javascript service
+    /// https://alertifyjs.com
     /// </summary>
     public class AlertifyService: IAlertifyService
     {
+        /// <summary>
+        /// Javascript runtime
+        /// </summary>
         private readonly IJSRuntime _jsRuntime;
 
+        /// <summary>
+        /// Type of toast
+        /// </summary>
         public TypeAlertify Type { get; set; }
 
         /// <summary>
@@ -26,6 +32,11 @@ namespace PartagesWebBlazorFSCore3.Client.Services
             _jsRuntime = jsRuntime;
         }
 
+        /// <summary>
+        /// Open alertify
+        /// </summary>
+        /// <param name="message">Message of toast</param>
+        /// <param name="type">Type of toast</param>
         public async void Open(string message, TypeAlertify type)
         {
             switch (type)

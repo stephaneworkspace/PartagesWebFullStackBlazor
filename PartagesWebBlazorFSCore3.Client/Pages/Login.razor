@@ -1,14 +1,10 @@
 ﻿@page "/login"
-@inject HttpClient Http
-@inject IJSRuntime JsRuntime
 @inject IUriHelper UriHelper
-@inject LocalStorage Storage
 @inject IAlertifyService AlertifyService
 @inject IHttpAuthService HttpAuthService
-@using Cloudcrate.AspNetCore.Blazor.Browser.Storage
 @using PartagesWebBlazorFSCore3.Client.Helpers
-@using PartagesWebBlazorFSCore3.Client.Services
 @using PartagesWebBlazorFSCore3.Client.Services.Http
+@using PartagesWebBlazorFSCore3.Client.Services.Js
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth
 @using PartagesWebBlazorFSCore3.Shared.Helpers
 <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit">

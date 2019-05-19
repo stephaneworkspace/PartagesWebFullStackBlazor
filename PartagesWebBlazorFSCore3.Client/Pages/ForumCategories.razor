@@ -1,13 +1,10 @@
 ﻿@page "/forumCategories"
-@inject IJSRuntime JsRuntime
 @inject IUriHelper UriHelper
-@inject LocalStorage Storage
 @inject IAlertifyService AlertifyService
 @inject IHttpForumCategorieService HttpForumCategorieService
-@using Cloudcrate.AspNetCore.Blazor.Browser.Storage
 @using PartagesWebBlazorFSCore3.Client.Helpers
-@using PartagesWebBlazorFSCore3.Client.Services
 @using PartagesWebBlazorFSCore3.Client.Services.Http
+@using PartagesWebBlazorFSCore3.Client.Services.Js
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForList
 @using PartagesWebBlazorFSCore3.Shared.Helpers
 
@@ -17,38 +14,38 @@
 
 @if (items == null)
 {
-<p><em>Chargement...</em></p>
+    <p><em>Chargement...</em></p>
 }
 else
 {
-<table class="table">
-    <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Nombres de sujets</th>
-            <th>Nombres de postes</th>
-            <th>Dernier poste</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in items)
-        {
-        <tr>
-            <td><a href="forumTopics/@item.Id">@item.Name</a></td>
-            <td>@item.CountForumTopic</td>
-            <td>@item.CountForumPost</td>
-            @if (item.LastForumPost == null)
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Nombres de sujets</th>
+                <th>Nombres de postes</th>
+                <th>Dernier poste</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in items)
             {
-                <td></td>
+                <tr>
+                    <td><a href="forumTopics/@item.Id">@item.Name</a></td>
+                    <td>@item.CountForumTopic</td>
+                    <td>@item.CountForumPost</td>
+                    @if (item.LastForumPost == null)
+                    {
+                        <td></td>
+                    }
+                    else
+                    {
+                        <td><a href="forumPosts/@item.LastForumPost.ForumTopic.Id?page=@item.PageLastForumPost">@item.LastForumPost.ForumTopic.Name</a> par @item.LastForumPost.User.Username.CapitalizeFirst()</td>
+                    }
+                </tr>
             }
-            else
-            {
-                <td><a href="forumPosts/@item.LastForumPost.ForumTopic.Id?page=@item.PageLastForumPost">@item.LastForumPost.ForumTopic.Name</a> par @item.LastForumPost.User.Username.CapitalizeFirst()</td>
-            }
-        </tr>
-         }
-    </tbody>
-</table>
+        </tbody>
+    </table>
 }
 
 @functions {

@@ -4,10 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PartagesWebBlazorFSCore3.Client.Services
+namespace PartagesWebBlazorFSCore3.Client.Services.Js
 {
+    /// <summary>
+    /// Moment javascript service
+    /// https://momentjs.com/
+    /// </summary>
     public class MomentService : IMomentService
     {
+        /// <summary>
+        /// Javascript runtime
+        /// </summary>
         private readonly IJSRuntime _jsRuntime;
 
         /// <summary>
@@ -22,7 +29,7 @@ namespace PartagesWebBlazorFSCore3.Client.Services
         /// <summary>
         /// Return date from now in french
         /// </summary>
-        /// <param name="date">Date format c# entity</param>
+        /// <param name="date">Date string</param>
         /// <returns></returns>
         public async Task<string> FromNow(string date)
         {
@@ -32,7 +39,7 @@ namespace PartagesWebBlazorFSCore3.Client.Services
         /// <summary>
         /// Return date formated in french
         /// </summary>
-        /// <param name="date">Date format c# entity</param>
+        /// <param name="date">Date string</param>
         /// <returns></returns>
         public async Task<string> Format(string date)
         {

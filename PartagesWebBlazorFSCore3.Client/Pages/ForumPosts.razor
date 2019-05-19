@@ -6,15 +6,15 @@
 @inject IHttpForumTopicService HttpForumTopicService
 @inject IHttpForumPostService HttpForumPostService
 @implements IDisposable
-@using Cloudcrate.AspNetCore.Blazor.Browser.Storage
 @using Microsoft.AspNetCore.WebUtilities
 @using System.Text.RegularExpressions
 @using System.Collections
+@using Cloudcrate.AspNetCore.Blazor.Browser.Storage
 @using PartagesWebBlazorFSCore3.Client.Helpers
-@using PartagesWebBlazorFSCore3.Client.Services
 @using PartagesWebBlazorFSCore3.Client.Services.Http
-@using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumTopic.ForSingleSelect
+@using PartagesWebBlazorFSCore3.Client.Services.Js
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumPost.ForList
+@using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumTopic.ForSingleSelect
 @using PartagesWebBlazorFSCore3.Shared.Helpers
 
 <h1>Forum</h1>
@@ -60,25 +60,25 @@ else
             <div class="column is-4">
                 @if (Storage["token"] != "" && (!item.SwCurrentUser ?? false))
                 {
-                <p>
-                    @item.User.Username.CapitalizeFirst()<br />
-                    Postes : @item.User.MessageCount<br />
-                    Membre depuis : @itemsUserDateCreated[item.Id].ToString()<br />
-                    Contact
-                    <a href="some/link" class="button is-primary is-outlined is-small">
-                        <span class="icon is-small">
-                            <i class="far fa-envelope"></i>
-                        </span>
-                    </a>
-                </p>
+                    <p>
+                        @item.User.Username.CapitalizeFirst()<br />
+                        Postes : @item.User.MessageCount<br />
+                        Membre depuis : @itemsUserDateCreated[item.Id].ToString()<br />
+                        Contact
+                        <a href="some/link" class="button is-primary is-outlined is-small">
+                            <span class="icon is-small">
+                                <i class="far fa-envelope"></i>
+                            </span>
+                        </a>
+                    </p>
                 }
                 else
                 {
-            <p>
-                @item.User.Username.CapitalizeFirst()<br />
-                Postes : @item.User.MessageCount<br />
-                Membre depuis : @itemsUserDateCreated[item.Id].ToString()<br />@*(MomentService.Format(item.User.Created.ToString()))<br />*@
-            </p>
+                    <p>
+                        @item.User.Username.CapitalizeFirst()<br />
+                        Postes : @item.User.MessageCount<br />
+                        Membre depuis : @itemsUserDateCreated[item.Id].ToString()<br />@*(MomentService.Format(item.User.Created.ToString()))<br />*@
+                    </p>
                 }
 
             </div>
@@ -139,11 +139,11 @@ else
                 // Hashtable for date async
                 itemsDate = new Hashtable();
                 itemsUserDateCreated = new Hashtable();
-                foreach(var item in items)
+                foreach (var item in items)
                 {
                     itemsDate.Add(item.Id, await MomentService.FromNow(item.Date.ToString()));
                     itemsUserDateCreated.Add(item.Id, await MomentService.Format(item.User.Created.ToString()));
-                }  
+                }
                 break;
             default:
                 AlertifyService.Open($"Erreur lors du chargement des sujets du forum de la catégorie {forumTopic.ForumCategorie.Name}, sujet {forumTopic.Name}", TypeAlertify.Error);

@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using PartagesWebBlazorFSCore3.Client.Services;
-using PartagesWebBlazorFSCore3.Client.Services.Http;
 using Microsoft.AspNetCore.Blazor.Services;
 using Microsoft.AspNetCore.Components;
 using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
+using PartagesWebBlazorFSCore3.Client.Services.Http;
+using PartagesWebBlazorFSCore3.Client.Services.Js;
 
 namespace PartagesWebBlazorFSCore3.Client
 {
@@ -14,14 +14,14 @@ namespace PartagesWebBlazorFSCore3.Client
         {
             services
               .AddSingleton<IUriHelper>(sp => WebAssemblyUriHelper.Instance)
-              // Services
-              .AddSingleton<IAlertifyService, AlertifyService>()
-              .AddSingleton<IMomentService, MomentService>()
               // Http services
               .AddSingleton<IHttpAuthService, HttpAuthService>()
               .AddSingleton<IHttpForumCategorieService, HttpForumCategorieService>()
               .AddSingleton<IHttpForumTopicService, HttpForumTopicService>()
               .AddSingleton<IHttpForumPostService, HttpForumPostService>()
+              // Javascript Services
+              .AddSingleton<IAlertifyService, AlertifyService>()
+              .AddSingleton<IMomentService, MomentService>()
               .AddStorage();
         }
 

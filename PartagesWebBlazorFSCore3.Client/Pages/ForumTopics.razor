@@ -1,18 +1,15 @@
 ﻿@page "/forumTopics/{id:int}"
-@inject IJSRuntime JsRuntime
 @inject IUriHelper UriHelper
-@inject LocalStorage Storage
 @inject IAlertifyService AlertifyService
 @inject IMomentService MomentService
 @inject IHttpForumCategorieService HttpForumCategorieService
 @inject IHttpForumTopicService HttpForumTopicService
 @implements IDisposable
-@using Cloudcrate.AspNetCore.Blazor.Browser.Storage
 @using Microsoft.AspNetCore.WebUtilities
 @using System.Collections
 @using PartagesWebBlazorFSCore3.Client.Helpers
-@using PartagesWebBlazorFSCore3.Client.Services
 @using PartagesWebBlazorFSCore3.Client.Services.Http
+@using PartagesWebBlazorFSCore3.Client.Services.Js
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForSingleSelect
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumTopic.ForList
 @using PartagesWebBlazorFSCore3.Shared.Helpers
