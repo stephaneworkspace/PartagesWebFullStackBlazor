@@ -12,7 +12,7 @@
         <p>
             par @item.User.Username.CapitalizeFirst() @messageDateFromNow
         </p>
-        <PContentHtml UniqueId="@item.Id" Content="@Regex.Replace(@item.Content, @"(\r\n)|\n|\r", "<br />")" />
+        <p>@((MarkupString)content)</p>
     </div>
     <div class="column is-2">
         <p>
@@ -42,10 +42,12 @@
     [Parameter] ForumPostForListDto item { get; set; }
     string messageDateFromNow = "";
     string membreFromDateFormat = "";
+    string content = "";
 
     protected override async Task OnInitAsync()
     {
         membreFromDateFormat = await MomentService.Format(item.User.Created.ToString());
         messageDateFromNow = await MomentService.FromNow(item.Date.ToString());
+        content = Regex.Replace(item.Content, @"(\r\n)|\n|\r", "<br />");
     }
 }
