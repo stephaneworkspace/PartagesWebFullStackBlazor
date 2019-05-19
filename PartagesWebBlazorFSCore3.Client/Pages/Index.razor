@@ -2,11 +2,13 @@
 @inject LocalStorage Storage
 @using Cloudcrate.AspNetCore.Blazor.Browser.Storage
 
+<NavBarTop />
+
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
 
-@if (Storage["token"] == "")
+@if (Storage["token"] == null)
 {
     <NavLink class="nav-link" href="SignUp">S'inscrire</NavLink>
 }

@@ -22,6 +22,7 @@ namespace PartagesWebBlazorFSCore3.Client
               // Javascript Services
               .AddSingleton<IJsAlertifyService, JsAlertifyService>()
               .AddSingleton<IJsMomentService, JsMomentService>()
+              // Nuget librarys
               .AddStorage();
         }
 

@@ -1,4 +1,6 @@
 ﻿@inject LocalStorage Storage
+@inject IUriHelper UriHelper
+@inject IJSRuntime JSRuntime
 @using Cloudcrate.AspNetCore.Blazor.Browser.Storage
 @using PartagesWebBlazorFSCore3.Shared.Helpers
 <nav class="navbar" role="navigation" aria-label="main navigation">
@@ -62,6 +64,7 @@
 </nav>
 @functions {
     string toogleClass = "";
+
     private void ToogleNavbar()
     {
         if (toogleClass == "")
@@ -73,10 +76,19 @@
             toogleClass = "";
         }
     }
-    private void LogOut()
+
+    private async void LogOut()
     {
         Storage.RemoveItem("token");
         Storage.RemoveItem("username");
         Storage.RemoveItem("messages-unread");
+        if (UriHelper.GetBaseUri() == "/")
+        {
+            UriHelper.NavigateTo("/");
+            await JSRuntime.InvokeAsync<bool>("Refresh");
+        } else
+        {
+            await JSRuntime.InvokeAsync<bool>("Refresh");
+        }
     }
 }

@@ -18,6 +18,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/fr.js"></script>
     <script>
+        window.Refresh = () => {
+            location.reload();
+            return true;
+        }
         window.Alertify = (text, type, sec) => {
             alertify.notify(text, type, sec, function () { /* console.log('dismissed'); */ });
             return true;
