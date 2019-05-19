@@ -2,10 +2,44 @@
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-.pagination-list {
-    list-style: none !important;
-}
+/* For forms */
 
 .textarea-height-define {
     height: 150px;
 }
+
+/* For Bulma */
+
+.valid.modified:not([type=checkbox]) {
+    border-color: #23d160;
+}
+
+.invalid {
+    border-color: #ff3860;
+}
+
+.validation-message {
+    color: #ff3860;
+}
+
+.pagination-list {
+    list-style: none !important;
+}
+
+/* For alertify theme to Bulma */
+
+.alertify-notifier .ajs-message.ajs-success {
+    color: #fff;
+    background: hsl(171, 100%, 41%);
+}
+
+.alertify-notifier .ajs-message.ajs-error {
+    color: #fff;
+    background: hsl(348, 100%, 61%);
+}
+
+.alertify-notifier .ajs-message.ajs-warning {
+    background: hsl(48, 100%, 67%);
+    border-color: #999;
+}
+

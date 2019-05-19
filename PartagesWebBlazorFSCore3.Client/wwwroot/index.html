@@ -1,40 +1,39 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Cours pour udemy</title>
-    <base href="/" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.css" integrity="sha256-aan9tQnm7lVach/6JxYyrQRlheajRD+UBDwwWo3tAHQ=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/css/alertify.min.css" />
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/css/themes/default.min.css" />
-    <link rel="stylesheet" href="css/alertify-bulma.css" />
-    <link href="css/site.css" rel="stylesheet" />
-</head>
-<body>
-    <app>Chargement...</app>
-    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/alertify.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/fr.js"></script>
-    <script>
-        window.Refresh = () => {
-            location.reload();
-            return true;
-        }
-        window.Alertify = (text, type, sec) => {
-            alertify.notify(text, type, sec, function () { /* console.log('dismissed'); */ });
-            return true;
-        }
-        window.MomentJsFormNow = (date) => {
-            moment.locale('fr');
-            return moment(new Date(date)).fromNow();
-        }
-        window.MomentJsFormat = (date) => {
-            moment.locale('fr');
-            return moment(new Date(date)).format('LL');
-        }
-    </script>
-    <script src="_framework/blazor.webassembly.js"></script>
-</body>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>Cours pour udemy</title>
+        <base href="/" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.css" integrity="sha256-aan9tQnm7lVach/6JxYyrQRlheajRD+UBDwwWo3tAHQ=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/css/alertify.min.css" />
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/css/themes/default.min.css" />
+        <link href="css/site.css" rel="stylesheet" />
+    </head>
+    <body>
+        <app>Chargement...</app>
+        <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/alertify.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/fr.js"></script>
+        <script>
+            window.Refresh = () => {
+                location.reload();
+                return true;
+            }
+            window.Alertify = (text, type, sec) => {
+                alertify.notify(text, type, sec, function () { /* console.log('dismissed'); */ });
+                return true;
+            }
+            window.MomentJsFormNow = (date) => {
+                moment.locale('fr');
+                return moment(new Date(date)).fromNow();
+            }
+            window.MomentJsFormat = (date) => {
+                moment.locale('fr');
+                return moment(new Date(date)).format('LL');
+            }
+        </script>
+        <script src="_framework/blazor.webassembly.js"></script>
+    </body>
 </html>
