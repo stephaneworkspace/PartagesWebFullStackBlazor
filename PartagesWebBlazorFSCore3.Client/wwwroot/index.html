@@ -16,6 +16,7 @@
 
     <app>Loading...</app>
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/alertify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/fr.js"></script>
     <script>
         window.ToogleNavbar = () => {
             let navbarBurgerEl = document.getElementById('navbar-burger');
@@ -38,6 +39,9 @@
             element.parentNode.removeChild(element);
             return true;
         };
+        window.MomentJs = () => {
+            return "test";
+        }
     </script>
     <script src="_framework/blazor.webassembly.js"></script>
 </body>
