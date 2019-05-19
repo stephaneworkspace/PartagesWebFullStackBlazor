@@ -1,7 +1,9 @@
 ﻿@page "/forumCategories"
 @inject IUriHelper UriHelper
 @inject IJsAlertifyService JsAlertifyService
+@inject IJsMomentService JsMomentService
 @inject IHttpForumCategorieService HttpForumCategorieService
+@using System.Collections
 @using PartagesWebBlazorFSCore3.Client.Helpers
 @using PartagesWebBlazorFSCore3.Client.Services.Http
 @using PartagesWebBlazorFSCore3.Client.Services.Js
@@ -42,7 +44,7 @@ else
                     }
                     else
                     {
-                        <td><a href="forumPosts/@item.LastForumPost.ForumTopic.Id?page=@item.PageLastForumPost">@item.LastForumPost.ForumTopic.Name</a> par @item.LastForumPost.User.Username.CapitalizeFirst()</td>
+                        <td><a href="forumPosts/@item.LastForumPost.ForumTopic.Id?page=@item.PageLastForumPost">@item.LastForumPost.ForumTopic.Name</a> par @item.LastForumPost.User.Username.CapitalizeFirst() @itemsDate[item.Id].ToString()</td>
                     }
                 </tr>
             }
@@ -51,7 +53,8 @@ else
 }
 
 @functions {
-    ForumCategorieForListDto[] items;
+        ForumCategorieForListDto[] items;
+        Hashtable itemsDate = new Hashtable();
 
     protected override async Task OnInitAsync()
     {
@@ -61,6 +64,16 @@ else
             case System.Net.HttpStatusCode.OK:
                 string content = await response.Content.ReadAsStringAsync();
                 items = Json.Deserialize<ForumCategorieForListDto[]>(content);
+
+                // Hashtable for date async
+                itemsDate = new Hashtable();
+                foreach (var item in items)
+                {
+                    if (item.LastForumPost != null)
+                    {
+                        itemsDate.Add(item.Id, await JsMomentService.FromNow(item.LastForumPost.Date.ToString()));
+                    }
+                }
                 break;
             default:
                 JsAlertifyService.Open("Erreur lors du chargement des catégories du forum", TypeAlertify.Error);
