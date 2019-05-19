@@ -16,6 +16,7 @@ namespace PartagesWebBlazorFSCore3.Client
               .AddSingleton<IUriHelper>(sp => WebAssemblyUriHelper.Instance)
               // Services
               .AddSingleton<IAlertifyService, AlertifyService>()
+              .AddSingleton<IMomentService, MomentService>()
               // Http services
               .AddSingleton<IHttpAuthService, HttpAuthService>()
               .AddSingleton<IHttpForumCategorieService, HttpForumCategorieService>()
