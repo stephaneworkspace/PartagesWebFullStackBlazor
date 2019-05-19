@@ -42,5 +42,17 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumTopic.ForList
         /// Count of ForumPost
         /// </summary>
         public int CountForumPost { get; set; }
+        /// <summary>
+        /// Last ForumPost
+        /// </summary>
+        public ForumPostForListForumTopicDto LastForumPost { get; set; }
+        /// <summary>
+        /// Number of ForumPost in last ForumPost
+        /// </summary>
+        public int CountLastForumPost { get; set; }
+        /// <summary>
+        /// Page of last ForumPost
+        /// </summary>
+        public int PageLastForumPost { get; set; }
     }
 }

@@ -61,6 +61,10 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             List<ForumTopicForListDto> newDto = new List<ForumTopicForListDto>();
             foreach (var unite in items)
             {
+                // A FAIRE
+                //LastForumPost = null,
+                //    CountLastForumPost = 10,
+                //    PageLastForumPost = 10
                 ForumTopicForListDto Dto = new ForumTopicForListDto
                 {
                     Id = unite.Id,
@@ -68,8 +72,11 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
                     ForumCategorieId = unite.ForumCategorieId,
                     ForumCategorie = _mapper.Map<ForumCategorieForListForumTopicDto>(unite.ForumCategorie),
                     Date = unite.Date,
-                    View = unite.View
-                };
+                    View = unite.View,
+                    LastForumPost = null,
+                    CountLastForumPost = 10,
+                    PageLastForumPost = 10
+    };
                 Dto.CountForumPost = await _repo.GetCountLastForumPostFromAForumTopic(unite.Id);
                 newDto.Add(Dto);
             }
