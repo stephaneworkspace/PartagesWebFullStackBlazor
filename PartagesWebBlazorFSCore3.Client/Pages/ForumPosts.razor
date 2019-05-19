@@ -1,15 +1,10 @@
 ﻿@page "/forumPosts/{id:int}"
-@inject IJSRuntime JsRuntime
 @inject IUriHelper UriHelper
-@inject LocalStorage Storage
 @inject IAlertifyService AlertifyService
-@inject IMomentService MomentService
 @inject IHttpForumTopicService HttpForumTopicService
 @inject IHttpForumPostService HttpForumPostService
 @implements IDisposable
-@using Cloudcrate.AspNetCore.Blazor.Browser.Storage
 @using Microsoft.AspNetCore.WebUtilities
-@using System.Text.RegularExpressions
 @using PartagesWebBlazorFSCore3.Client.Helpers
 @using PartagesWebBlazorFSCore3.Client.Services
 @using PartagesWebBlazorFSCore3.Client.Services.Http
@@ -17,111 +12,31 @@
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumPost.ForList
 @using PartagesWebBlazorFSCore3.Shared.Helpers
 
-<h1>Forum @str</h1>
-
-<div class="columns">
-    <div class="column is-6">
-        <p class="bd-notification is-info">Contenu</p>
-    </div>
-    <div class="column is-2">
-        <p class="bd-notification is-info">Citation</p>
-    </div>
-    <div class="column is-4">
-        <p class="bd-notification is-danger">Par</p>
-    </div>
-</div>
-
-<div class="columns">
-    <div class="column is-6">
-        <p class="bd-notification is-info">Contenu</p>
-        <div class="columns is-mobile">
-            <div class="column">
-                <p class="bd-notification is-info">
-                    <b>Re: item.forumSujet.nom</b>
-                </p>
-                <p class="bd-notification is-info">
-                    par item.user.username | titlecase dateFormatLLLL(item.date)
-                </p>
-                <p class="bd-notification is-info">item.contenu }}</p>
-            </div>
-        </div>
-    </div>
-    <div class="column is-2">
-        <p class="bd-notification is-info">Citation</p>
-        <div class="columns is-mobile">
-            <div class="column">
-                <p class="bd-notification is-info">
-                    <a href="some/link" class="button is-primary is-outlined is-small">
-                        <span class="icon is-small">
-                            <i class="fas fa-quote-right"></i>
-                        </span>
-                    </a>
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="column is-4">
-        <p class="bd-notification is-danger">Second column</p>
-        <div class="columns is-mobile">
-            <div class="column">
-                <p>
-                    item.user.username | titlecase<br />
-                    Postes : item.user.messageCount<br />
-                    Membre depuis : {{ dateFormatLL(item.user.created) }}br/>
-                    <!--if"loggedIn && !item.swCurrentUser">-->
-                    Contact 
-                    <a href="some/link" class="button is-primary is-outlined is-small">
-                        <span class="icon is-small">
-                            <i class="far fa-envelope"></i>
-                        </span>
-                    </a>
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
-
+<h1>Forum</h1>
 @if (items == null || forumTopic == null)
 {
     <p><em>Chargement...</em></p>
 }
 else
 {
-    <p><a href="forumCategories">Index du forum</a> » <a href="forumTopics/@forumTopic.ForumCategorieId">@forumTopic.ForumCategorie.Name</a> » <a href="forumPosts/@id">@forumTopic.Name</a></p>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Nom</th>
-                <th>Utilisateur</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (items.Length == 0)
-            {
-                <tr>
-                    <td>Aucun poste</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            }
-            else
-            {
-                @foreach (var item in items)
-                {
-                    <tr>
-                        <td>@item.Date</td>
-                        <TdContentHtml Content="@Regex.Replace(@item.Content, @"(\r\n)|\n|\r", "<br />")"></TdContentHtml>
-                        <td>@item.User.Username</td>
-                    </tr>
-                }
-            }
-        </tbody>
-    </table>
+    <div class="columns">
+        <div class="column is-6">
+            <p>Contenu</p>
+        </div>
+        <div class="column is-2">
+            <p>Citation</p>
+        </div>
+        <div class="column is-4">
+            <p>Par</p>
+        </div>
+    </div>
+    @foreach (var item in items)
+    {
+        <DivRowPostHtml item="item" />
+    }
     <button class="button is-primary" onclick="@NewReply">Réponse</button>
     <BulmaPagination PageCount="@pagination.TotalPages" CurrentPage="@pagination.CurrentPage" OnPageChanged="OnPageChange"></BulmaPagination>
 }
-
 @functions {
     // ForumTopic id
     [Parameter] int id { get; set; }
@@ -130,15 +45,11 @@ else
     PaginationHeader pagination = new PaginationHeader();
     string PageQuery { get; set; }
 
-    string str { get; set; }
-
     protected override async Task OnInitAsync()
     {
         // Query param detection
         RefreshType();
         UriHelper.OnLocationChanged += OnLocationChanges;
-
-        str = await MomentService.FromNow("05/19/2019 01:59:39");
 
         // Load data with query on load page
         await LoadDatas(Int32.Parse(PageQuery) > 0 ? Int32.Parse(PageQuery) : 1);

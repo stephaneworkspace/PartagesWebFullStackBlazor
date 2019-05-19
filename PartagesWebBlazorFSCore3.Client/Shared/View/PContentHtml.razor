@@ -1,12 +1,13 @@
 ﻿@inject IJSRuntime JsRuntime
-<td id="content-html-0"></td>
+<p id="content-html-@UniqueId"></p>
 @functions {
+    [Parameter] int UniqueId { get; set; }
     [Parameter] string Content { get; set; }
     //[Parameter] protected RenderFragment ChildContent { get ; set ; }
     // https://github.com/aspnet/AspNetCore/issues/9493
 
     protected override async void OnAfterRender()
     {
-        await JsRuntime.InvokeAsync<bool>("RawHtmlContent", Content, 0);
+        await JsRuntime.InvokeAsync<bool>("RawHtmlContent", Content, UniqueId);
     }
 }

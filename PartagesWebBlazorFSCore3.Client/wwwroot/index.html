@@ -30,8 +30,8 @@
             alertify.notify(text, type, sec, function () { /* console.log('dismissed'); */ });
             return true;
         }
-        window.RawHtmlContent = (value) => {
-            let element = document.getElementById('content-html');
+        window.RawHtmlContent = (value, id) => {
+            let element = document.getElementById('content-html-' + id);
             element.innerHTML = value;
             for (var i = element.childNodes.length - 1; i >= 0; i--) {
                 var childNode = element.childNodes[i];

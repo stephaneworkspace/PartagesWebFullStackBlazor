@@ -1,0 +1,63 @@
+﻿@inject IJSRuntime JsRuntime
+@inject IMomentService MomentService
+@using System.Text.RegularExpressions
+@using PartagesWebBlazorFSCore3.Client.Services
+@using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumPost.ForList
+@using PartagesWebBlazorFSCore3.Shared.Helpers
+<div class="columns">
+    <div class="column is-6">
+        <div class="columns is-mobile">
+            <div class="column">
+                <p>
+                    <b>Re: @item.ForumTopic.Name</b>
+                </p>
+                <p>
+                    par @item.User.Username.CapitalizeFirst() @messageDateFromNow
+                </p>
+                <PContentHtml UniqueId="@item.Id" Content="@Regex.Replace(@item.Content, @"(\r\n)|\n|\r", "<br />")"></PContentHtml>
+            </div>
+        </div>
+    </div>
+    <div class="column is-2">
+        <div class="columns is-mobile">
+            <div class="column">
+                <p class="bd-notification is-info">
+                    <a href="some/link" class="button is-primary is-outlined is-small">
+                        <span class="icon is-small">
+                            <i class="fas fa-quote-right"></i>
+                        </span>
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="column is-4">
+        <div class="columns is-mobile">
+            <div class="column">
+                <p>
+                    @item.User.Username.CapitalizeFirst()<br />
+                    Postes : item.user.messageCount<br />
+                    Membre depuis : @membreFromDateFormat<br />
+                    <!--if"loggedIn && !item.swCurrentUser">
+                    Contact
+                    <a href="some/link" class="button is-primary is-outlined is-small">
+                        <span class="icon is-small">
+                            <i class="far fa-envelope"></i>
+                        </span>
+                    </a>-->
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+@functions {
+    [Parameter] ForumPostForListDto item { get; set; }
+    string messageDateFromNow = "";
+    string membreFromDateFormat = "";
+
+    protected override async Task OnInitAsync()
+    {
+        membreFromDateFormat = await MomentService.Format(item.User.Created.ToString());
+        messageDateFromNow = await MomentService.FromNow(item.Date.ToString());
+    }
+}
