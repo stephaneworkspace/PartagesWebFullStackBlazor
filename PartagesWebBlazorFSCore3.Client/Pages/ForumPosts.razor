@@ -8,6 +8,7 @@
 @implements IDisposable
 @using Cloudcrate.AspNetCore.Blazor.Browser.Storage
 @using Microsoft.AspNetCore.WebUtilities
+@using System.Text.RegularExpressions
 @using PartagesWebBlazorFSCore3.Client.Helpers
 @using PartagesWebBlazorFSCore3.Client.Services
 @using PartagesWebBlazorFSCore3.Client.Services.Http
@@ -47,7 +48,7 @@ else
                 {
                     <tr>
                         <td>@item.Date</td>
-                        <td>@item.Content</td>
+                        <TdContentHtml Content="@Regex.Replace(@item.Content, @"(\r\n)|\n|\r", "<br />")"></TdContentHtml>
                         <td>@item.User.Username</td>
                     </tr>
                 }

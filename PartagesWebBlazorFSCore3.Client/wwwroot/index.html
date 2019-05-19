@@ -22,10 +22,22 @@
             let navbarBasicExampleEl = document.getElementById('navbarBasicExample');
             navbarBurgerEl.classList.toggle('is-active');
             navbarBasicExampleEl.classList.toggle('is-active');
+            return true;
         }
         window.Alertify = (text, type, sec) => {
             alertify.notify(text, type, sec, function () { /* console.log('dismissed'); */ });
+            return true;
         }
+        window.RawHtmlContent = (value) => {
+            let element = document.getElementById('content-html');
+            element.innerHTML = value;
+            for (var i = element.childNodes.length - 1; i >= 0; i--) {
+                var childNode = element.childNodes[i];
+                element.parentNode.insertBefore(childNode, element);
+            }
+            element.parentNode.removeChild(element);
+            return true;
+        };
     </script>
     <script src="_framework/blazor.webassembly.js"></script>
 </body>

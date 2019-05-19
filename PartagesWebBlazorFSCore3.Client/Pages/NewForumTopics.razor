@@ -89,7 +89,7 @@ else
         {
             case System.Net.HttpStatusCode.OK:
                 AlertifyService.Open($"Sujet « {model.NameTopic.CapitalizeFirst()} » crée", TypeAlertify.Success);
-                UriHelper.NavigateTo($"/forumCategorie/{id}");
+                UriHelper.NavigateTo($"/forumTopics/{id}");
                 break;
             case System.Net.HttpStatusCode.BadRequest:
                 CantCreateTopic = await response.Content.ReadAsStringAsync();
