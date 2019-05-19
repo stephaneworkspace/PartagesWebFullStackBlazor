@@ -27,18 +27,18 @@
 else
 {
     <p><a href="forumCategories">Index du forum</a> » <a href="forumTopics/@forumTopic.ForumCategorieId">@forumTopic.ForumCategorie.Name</a> » <a href="forumPosts/@id">@forumTopic.Name</a></p>
-    <div class="columns">
+    <div class="columns columns-top">
         <div class="column @(Storage["token"] == null ? "is-7" : "is-9")">
-            <p>Contenu</p>
+            <p><b>Contenu</b></p>
         </div>
         @if (Storage["token"] != null)
         {
             <div class="column is-2">
-                <p>Citation</p>
+                <p><b>Citation</b></p>
             </div>
         }
         <div class="column is-3">
-            <p>Par</p>
+            <p><b>Par</b></p>
         </div>
     </div>
     @foreach (var item in items)
@@ -48,7 +48,7 @@ else
             <p>
                 <b>Re: @item.ForumTopic.Name</b>
             </p>
-            <p>
+            <p class="small-user">
                 par @item.User.Username.CapitalizeFirst() @itemsDate[item.Id].ToString()
             </p>
             <p>@((MarkupString)(Regex.Replace(item.Content, @"(\r\n)|\n|\r", "<br />")))</p>

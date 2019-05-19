@@ -34,6 +34,11 @@ h1 {
     font-size: 0.9rem;
 }
 
+.columns-top {
+    vertical-align: top;
+    margin-top: 0.1rem !important;
+}
+
 /* For alertify theme to Bulma */
 .alertify-notifier .ajs-message.ajs-success {
     color: #fff;
