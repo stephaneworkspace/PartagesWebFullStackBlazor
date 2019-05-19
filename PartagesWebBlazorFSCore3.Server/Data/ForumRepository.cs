@@ -126,7 +126,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         /// </summary>
         /// <param name="id">ForumCategirue primary key</param>
         /// <returns></returns>
-        public async Task<ForumPost> GetLastForumPosteFromForumCategorie(int id)
+        public async Task<ForumPost> GetLastForumPostFromForumCategorie(int id)
         {
             var item = await _context.ForumPosts.Where(x => x.ForumTopic.ForumCategorieId == id).OrderByDescending(x => x.Date).FirstOrDefaultAsync();
             return item;

@@ -61,21 +61,35 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             List<ForumTopicForListDto> newDto = new List<ForumTopicForListDto>();
             foreach (var unite in items)
             {
-                // A FAIRE
-                //LastForumPost = null,
-                //    PageLastForumPost = 10
-                ForumTopicForListDto Dto = new ForumTopicForListDto
-                {
-                    Id = unite.Id,
-                    Name = unite.Name,
-                    ForumCategorieId = unite.ForumCategorieId,
-                    ForumCategorie = _mapper.Map<ForumCategorieForListForumTopicDto>(unite.ForumCategorie),
-                    Date = unite.Date,
-                    View = unite.View,
-                    LastForumPost = null,
-                    PageLastForumPost = 10
-    };
+                var lastForumPost = await _repo.GetLastForumPostFromAForumTopic(unite.Id);
+                 ForumTopicForListDto Dto = new ForumTopicForListDto
+                 {
+                     Id = unite.Id,
+                     Name = unite.Name,
+                     ForumCategorieId = unite.ForumCategorieId,
+                     ForumCategorie = _mapper.Map<ForumCategorieForListForumTopicDto>(unite.ForumCategorie),
+                     Date = unite.Date,
+                     View = unite.View,
+                     LastForumPost = null,
+                     PageLastForumPost = 10
+                 };
                 Dto.CountForumPost = await _repo.GetCountLastForumPostFromAForumTopic(unite.Id);
+
+                // LastForumPost
+                Dto.LastForumPost = _mapper.Map<ForumPostForListForumTopicDto>(lastForumPost);
+                if (lastForumPost != null)
+                {
+                    var CountLastForumPost = await _repo.GetCountLastForumPostFromAForumTopic(lastForumPost.ForumTopicId);
+                    var pageSize = new ForumPostParams();
+                    double calc = CountLastForumPost / pageSize.PageSize;
+                    Dto.PageLastForumPost = Convert.ToInt32(Math.Ceiling(calc)) + 1;
+                }
+                else
+                {
+                    //Dto.CountLastForumPost = 0;
+                    Dto.PageLastForumPost = 0;
+                }
+
                 newDto.Add(Dto);
             }
             Response.AddPagination(items.CurrentPage, items.PageSize, items.TotalCount, items.TotalPages);

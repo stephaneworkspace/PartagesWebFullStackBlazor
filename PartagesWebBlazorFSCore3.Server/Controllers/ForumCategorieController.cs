@@ -61,7 +61,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
                 };
                 Dto.CountForumTopic = await _repo.GetCountForumTopic(unite.Id);
                 Dto.CountForumPost = await _repo.GetCountForumPostFromForumCategorie(unite.Id);
-                var lastForumPost = await _repo.GetLastForumPosteFromForumCategorie(unite.Id);
+                var lastForumPost = await _repo.GetLastForumPostFromForumCategorie(unite.Id);
                 Dto.LastForumPost = _mapper.Map<ForumPostForListForumCategorieDto>(lastForumPost);
                 if (lastForumPost != null)
                 {

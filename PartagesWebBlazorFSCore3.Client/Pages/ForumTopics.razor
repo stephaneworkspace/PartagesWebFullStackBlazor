@@ -30,6 +30,7 @@ else
                 <th>Nom</th>
                 <th>Vues</th>
                 <th>Postes</th>
+                <th>Dernière réponse</th>
             </tr>
         </thead>
         <tbody>
@@ -37,6 +38,7 @@ else
             {
                 <tr>
                     <td>Aucun sujet</td>
+                    <td></td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -49,6 +51,7 @@ else
                         <td><a href="forumPosts/@item.Id">@item.Name</a></td>
                         <td>@item.View</td>
                         <td>@item.CountForumPost</td>
+                        <td><a href="forumPosts/@item.Id?page=@item.PageLastForumPost">@item.Name</a> par @item.LastForumPost.User.Username.CapitalizeFirst()</td>
                     </tr>
                 }
             }

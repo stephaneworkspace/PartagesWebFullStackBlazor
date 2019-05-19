@@ -78,7 +78,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         /// </summary>
         /// <param name="id">ForumCategirue primary key</param>
         /// <returns></returns>
-        Task<ForumPost> GetLastForumPosteFromForumCategorie(int id);
+        Task<ForumPost> GetLastForumPostFromForumCategorie(int id);
 
         /**
          * ForumTopic
