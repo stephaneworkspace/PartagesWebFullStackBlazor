@@ -6,48 +6,36 @@
 @using PartagesWebBlazorFSCore3.Shared.Helpers
 <div class="columns">
     <div class="column is-6">
-        <div class="columns is-mobile">
-            <div class="column">
-                <p>
-                    <b>Re: @item.ForumTopic.Name</b>
-                </p>
-                <p>
-                    par @item.User.Username.CapitalizeFirst() @messageDateFromNow
-                </p>
-                <PContentHtml UniqueId="@item.Id" Content="@Regex.Replace(@item.Content, @"(\r\n)|\n|\r", "<br />")"></PContentHtml>
-            </div>
-        </div>
+        <p>
+            <b>Re: @item.ForumTopic.Name</b>
+        </p>
+        <p>
+            par @item.User.Username.CapitalizeFirst() @messageDateFromNow
+        </p>
+        <PContentHtml UniqueId="@item.Id" Content="@Regex.Replace(@item.Content, @"(\r\n)|\n|\r", "<br />")" />
     </div>
     <div class="column is-2">
-        <div class="columns is-mobile">
-            <div class="column">
-                <p class="bd-notification is-info">
-                    <a href="some/link" class="button is-primary is-outlined is-small">
-                        <span class="icon is-small">
-                            <i class="fas fa-quote-right"></i>
-                        </span>
-                    </a>
-                </p>
-            </div>
-        </div>
+        <p>
+            <a href="/newForumPost/@item.ForumTopicId/@item.Id" class="button is-primary is-outlined is-small">
+                <span class="icon is-small">
+                    <i class="fas fa-quote-right"></i>
+                </span>
+            </a>
+        </p>
     </div>
     <div class="column is-4">
-        <div class="columns is-mobile">
-            <div class="column">
-                <p>
-                    @item.User.Username.CapitalizeFirst()<br />
-                    Postes : item.user.messageCount<br />
-                    Membre depuis : @membreFromDateFormat<br />
-                    <!--if"loggedIn && !item.swCurrentUser">
-                    Contact
-                    <a href="some/link" class="button is-primary is-outlined is-small">
-                        <span class="icon is-small">
-                            <i class="far fa-envelope"></i>
-                        </span>
-                    </a>-->
-                </p>
-            </div>
-        </div>
+        <p>
+            @item.User.Username.CapitalizeFirst()<br />
+            Postes : item.user.messageCount<br />
+            Membre depuis : @membreFromDateFormat<br />
+            <!--if"loggedIn && !item.swCurrentUser">
+            Contact
+            <a href="some/link" class="button is-primary is-outlined is-small">
+                <span class="icon is-small">
+                    <i class="far fa-envelope"></i>
+                </span>
+            </a>-->
+        </p>
     </div>
 </div>
 @functions {
