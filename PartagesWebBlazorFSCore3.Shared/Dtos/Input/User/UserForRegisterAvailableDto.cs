@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth
+namespace PartagesWebBlazorFSCore3.Shared.Dtos.Input.User
 {
     /// <summary>
     /// Dto for model User
     /// </summary>
-    public class UserForRegisterAvailableInputDto
+    public class UserForRegisterAvailableDto
     {
         /// <summary>
         /// Username

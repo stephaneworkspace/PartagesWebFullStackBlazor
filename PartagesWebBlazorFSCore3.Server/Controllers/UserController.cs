@@ -17,11 +17,11 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
 using NSwag.Annotations;
 using PartagesWebBlazorFSCore3.Server.Data;
-using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth;
-using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Auth.Login;
+using PartagesWebBlazorFSCore3.Shared.Dtos.Input.User;
+using PartagesWebBlazorFSCore3.Shared.Dtos.Output.User.LoginReturn;
 using PartagesWebBlazorFSCore3.Shared.Models;
 using PartagesWebBlazorFSCore3.Shared.Helpers;
-using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Auth.ForSelect;
+using PartagesWebBlazorFSCore3.Shared.Dtos.Output.User.ForSelect;
 
 namespace PartagesWebBlazorFSCore3.Server.Controllers
 {
@@ -30,8 +30,8 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    [SwaggerTag("Auth", Description = "Authentification controller")]
-    public class AuthController : ControllerBase
+    [SwaggerTag("User", Description = "User controller (authentification)")]
+    public class UserController : ControllerBase
     {
         private readonly IAuthRepository _repo;
         private readonly IMessageRepository _repoMessage;
@@ -45,7 +45,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         /// <param name="repoMessage">Private message repository</param>
         /// <param name="config"> Configuration</param>
         /// <param name="mapper">Automapp</param>
-        public AuthController(IAuthRepository repo, IMessageRepository repoMessage, IConfiguration config, IMapper mapper)
+        public UserController(IAuthRepository repo, IMessageRepository repoMessage, IConfiguration config, IMapper mapper)
         {
             _repo = repo;
             _repoMessage = repoMessage;
@@ -64,7 +64,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Vous devez spécifier un nom d'utilisateur entre 2 et 30 caractères")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Le champ « Mot de passe » est obligatoire.")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Vous devez spécifier un mot de passe entre 4 et 8 caractères")]
-        public async Task<IActionResult> Register(UserForRegisterInputDto dto)
+        public async Task<IActionResult> Register(UserForRegisterDto dto)
         {
             dto.Username = dto.Username.ToLower();
             if (await _repo.UserExists(dto.Username))
@@ -82,11 +82,11 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         /// </summary> 
         /// <param name="dto">Dto</param>
         [HttpPost("login")]
-        [SwaggerResponse(HttpStatusCode.OK, typeof(void), Description = "Ok")]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(LoginReturnDto), Description = "Ok")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Le champ « Nom d'utilisateur » est obligatoire.")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Le champ « Mot de passe » est obligatoire.")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, typeof(void), Description = "Pas autorisé à se connecter")]
-        public async Task<IActionResult> Login(UserForLoginInputDto dto)
+        public async Task<IActionResult> Login(UserForLoginDto dto)
         {
             var userFromRepo = await _repo.Login(dto.Username.ToLower(), dto.Password);
             if (userFromRepo == null)
@@ -107,10 +107,10 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             };
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            LoginDto loginDto = new LoginDto
+            LoginReturnDto loginDto = new LoginReturnDto
             {
                 Token = tokenHandler.WriteToken(token),
-                User = _mapper.Map<UserForLoginDto>(userFromRepo),
+                User = _mapper.Map<UserForLoginReturnDto>(userFromRepo),
                 MessagesUnread = await _repoMessage.GetCountMessagesUnread(userFromRepo.Id)
             };
             return Ok(loginDto);
@@ -122,7 +122,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         /// <param name="dto">Dto</param>
         [HttpPost("available")]
         [SwaggerResponse(HttpStatusCode.OK, typeof(Boolean), Description = "Ok")]
-        public async Task<IActionResult> Available(UserForRegisterAvailableInputDto dto)
+        public async Task<IActionResult> Available(UserForRegisterAvailableDto dto)
         {
             Boolean swAvailable = await _repo.UserExists(dto.Username);
             return Ok(!swAvailable);

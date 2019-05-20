@@ -1,12 +1,12 @@
 ﻿@page "/newMessage/{id:int}"
 @inject IUriHelper UriHelper
 @inject IJsAlertifyService JsAlertifyService
-@inject IHttpForumTopicService HttpForumTopicService
+@inject IHttpUserService HttpUserService
 @inject IHttpMessageService HttpMessageService
 @using PartagesWebBlazorFSCore3.Client.Helpers
 @using PartagesWebBlazorFSCore3.Client.Services.Http
 @using PartagesWebBlazorFSCore3.Client.Services.Js
-@using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Auth.ForSelect
+@using PartagesWebBlazorFSCore3.Shared.Dtos.Output.User.ForSelect
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Message
 @using PartagesWebBlazorFSCore3.Shared.Helpers
 
@@ -64,7 +64,7 @@ else
     {
         HttpResponseMessage response;
 
-        response = await HttpMessageService.GetUserForNewMessage(id);
+        response = await HttpUserService.GetUser(id);
         switch (response.StatusCode)
         {
             case System.Net.HttpStatusCode.OK:

@@ -9,12 +9,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth
+namespace PartagesWebBlazorFSCore3.Shared.Dtos.Input.User
 {
     /// <summary>
-    /// Dto for model User
+    /// Dto for model User with event on change Username
     /// </summary>
-    public class UserForRegisterInputDto
+    public class UserForRegisterDto
     {
         private string _Username;
         /// <summary>

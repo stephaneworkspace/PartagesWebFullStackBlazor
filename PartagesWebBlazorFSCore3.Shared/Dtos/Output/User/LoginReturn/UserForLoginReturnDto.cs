@@ -7,12 +7,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Auth.Login
+namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.User.LoginReturn
 {
     /// <summary>
     /// Dto from model User
     /// </summary>
-    public class UserForLoginDto
+    public class UserForLoginReturnDto
     {
         /// <summary>
         /// Username

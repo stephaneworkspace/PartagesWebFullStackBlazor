@@ -71,17 +71,5 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
             req.Headers.Add("Authorization", $"Bearer {_storage["token"]}");
             return await _httpClient.SendAsync(req);
         }
-
-        /// <summary>
-        /// Get User info for post a new message
-        /// </summary>
-        /// <param name="id">Primary key User destination</param>
-        /// <returns></returns>
-        public async Task<HttpResponseMessage> GetUserForNewMessage(int id)
-        {
-            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, $"{Constants.URL_BASE}api/Auth/{id}");
-            req.Headers.Add("Authorization", $"Bearer {_storage["token"]}");
-            return await _httpClient.SendAsync(req);
-        }
     }
 }

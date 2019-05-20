@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Auth.Login
+namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.User.LoginReturn
 {
     /// <summary>
     /// Dto
     /// </summary>
-    public class LoginDto
+    public class LoginReturnDto
     {
         /// <summary>
         /// Jwt token
@@ -17,7 +17,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Auth.Login
         /// <summary>
         /// User
         /// </summary>
-        public UserForLoginDto User { get; set; }
+        public UserForLoginReturnDto User { get; set; }
 
         /// <summary>
         /// Number of messages unread

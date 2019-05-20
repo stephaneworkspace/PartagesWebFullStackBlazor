@@ -5,16 +5,16 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth;
-using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Auth.Login;
+using PartagesWebBlazorFSCore3.Shared.Dtos.Input.User;
+using PartagesWebBlazorFSCore3.Shared.Dtos.Output.User.LoginReturn;
 using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
 
 namespace PartagesWebBlazorFSCore3.Client.Services.Http
 {
     /// <summary>
-    /// Auth service
+    /// User service (authentification)
     /// </summary>
-    public class HttpAuthService: IHttpAuthService
+    public class HttpUserService: IHttpUserService
     {
         /// <summary>
         /// Http client
@@ -30,7 +30,7 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         /// Constructor
         /// </summary>
         /// <param name="httpClient">Http client</param>
-        public HttpAuthService(HttpClient httpClient, LocalStorage storage)
+        public HttpUserService(HttpClient httpClient, LocalStorage storage)
         {
             _httpClient = httpClient;
             _storage = storage;
@@ -41,13 +41,13 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         /// </summary>
         /// <param name="dto">Dto</param>
         /// <returns></returns>
-        public async Task<Boolean> PostIsAvailable(UserForRegisterAvailableInputDto dto)
+        public async Task<Boolean> PostIsAvailable(UserForRegisterAvailableDto dto)
         {
             Boolean swAvailable = false;
             if (dto.Username != "" && dto.Username.Length > 2 && dto.Username.Length < 30)
             {
                 var requestJson = Json.Serialize(dto);
-                HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, $"{Constants.URL_BASE}api/Auth/available");
+                HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, $"{Constants.URL_BASE}api/User/available");
                 req.Content = new StringContent(requestJson, Encoding.Default, "application/json");
                 var response = await _httpClient.SendAsync(req);
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -63,10 +63,10 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         /// </summary>
         /// <param name="dto">Dto</param>
         /// <returns></returns>
-        public async Task<HttpResponseMessage> PostRegister(UserForRegisterInputDto dto)
+        public async Task<HttpResponseMessage> PostRegister(UserForRegisterDto dto)
         {
             var requestJson = Json.Serialize(dto);
-            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, $"{Constants.URL_BASE}api/Auth/register");
+            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, $"{Constants.URL_BASE}api/User/register");
             req.Content = new StringContent(requestJson, Encoding.Default, "application/json");
             return await _httpClient.SendAsync(req);
         }
@@ -76,25 +76,38 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         /// </summary>
         /// <param name="dto">Dto</param>
         /// <returns></returns>
-        public async Task<HttpResponseMessage> PostLogin(UserForLoginInputDto dto)
+        public async Task<HttpResponseMessage> PostLogin(UserForLoginDto dto)
         {
             _storage.RemoveItem("token");
             _storage.RemoveItem("username");
             _storage.RemoveItem("messages-unread");
             var requestJson = Json.Serialize(dto);
-            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, $"{Constants.URL_BASE}api/Auth/login");
+            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, $"{Constants.URL_BASE}api/User/login");
             req.Content = new StringContent(requestJson, Encoding.Default, "application/json");
             var response = await _httpClient.SendAsync(req);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 // Set local storage
                 string content = await response.Content.ReadAsStringAsync();
-                LoginDto _dto = Json.Deserialize<LoginDto>(content);
+                LoginReturnDto _dto = Json.Deserialize<LoginReturnDto>(content);
                 _storage["token"] = _dto.Token;
                 _storage["username"] = _dto.User.Username;
                 _storage["messages-unread"] = _dto.MessagesUnread.ToString();
             }
             return response;
+        }
+
+        /// <summary>
+        /// Get User info for post a new message
+        /// </summary>
+        /// <param name="id">Primary key User destination</param>
+        /// <returns></returns>
+        /// <remarks>Authentificate required</remarks>
+        public async Task<HttpResponseMessage> GetUser(int id)
+        {
+            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, $"{Constants.URL_BASE}api/User/{id}");
+            req.Headers.Add("Authorization", $"Bearer {_storage["token"]}");
+            return await _httpClient.SendAsync(req);
         }
     }
 }

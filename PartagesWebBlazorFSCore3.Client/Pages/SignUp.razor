@@ -2,11 +2,11 @@
 @*inject HttpClient Http // For Udemy*@
 @inject IUriHelper UriHelper
 @inject IJsAlertifyService JsAlertifyService
-@inject IHttpAuthService HttpAuthService
+@inject IHttpUserService HttpUserService
 @using PartagesWebBlazorFSCore3.Client.Helpers
 @using PartagesWebBlazorFSCore3.Client.Services.Http
 @using PartagesWebBlazorFSCore3.Client.Services.Js
-@using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth
+@using PartagesWebBlazorFSCore3.Shared.Dtos.Input.User
 @using PartagesWebBlazorFSCore3.Shared.Helpers
 
 <NavBarTop />
@@ -62,7 +62,7 @@
     </div>
 </EditForm>
 @functions {
-    private UserForRegisterInputDto model = new UserForRegisterInputDto();
+    private UserForRegisterDto model = new UserForRegisterDto();
     private bool swAvailable = false;
     private string UserExistText = "";
 
@@ -73,7 +73,7 @@
 
     public async void CheckIfUsernameAvailableEvent(object sender, EventArgs e)
     {
-        UserForRegisterAvailableInputDto dtoAvailable = new UserForRegisterAvailableInputDto()
+        UserForRegisterAvailableDto dtoAvailable = new UserForRegisterAvailableDto()
         {
             Username = model.Username
         };
@@ -84,14 +84,14 @@
             swAvailable = await Http.PostJsonAsync<Boolean>("api/Auth/available", dtoAvailable);
             StateHasChanged();
         }*/
-        swAvailable = await HttpAuthService.PostIsAvailable(dtoAvailable);
+        swAvailable = await HttpUserService.PostIsAvailable(dtoAvailable);
         StateHasChanged();
     }
 
     protected async Task HandleValidSubmit()
     {
         UserExistText = "";
-        var response = await HttpAuthService.PostRegister(model);
+        var response = await HttpUserService.PostRegister(model);
         switch (response.StatusCode)
         {
             case System.Net.HttpStatusCode.Created:

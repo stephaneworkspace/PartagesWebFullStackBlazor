@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Auth.ForSelect
+namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.User.ForSelect
 {
     /// <summary>
     /// Dto from model User

@@ -8,12 +8,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth
+namespace PartagesWebBlazorFSCore3.Shared.Dtos.Input.User
 {
     /// <summary>
     /// Dto for model User
     /// </summary>
-    public class UserForLoginInputDto
+    public class UserForLoginDto
     {
         /// <summary>
         /// Username

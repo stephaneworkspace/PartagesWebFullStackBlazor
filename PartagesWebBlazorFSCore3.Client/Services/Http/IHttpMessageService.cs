@@ -35,12 +35,5 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         /// <param name="id">Message primary key</param>
         /// <returns></returns>
         Task<HttpResponseMessage> GetMessage(int id);
-
-        /// <summary>
-        /// Get User info for post a new message
-        /// </summary>
-        /// <param name="id">Primary key User destination</param>
-        /// <returns></returns>
-        Task<HttpResponseMessage> GetUserForNewMessage(int id);
     }
 }

@@ -1,11 +1,11 @@
 ﻿@page "/login"
 @inject IUriHelper UriHelper
 @inject IJsAlertifyService JsAlertifyService
-@inject IHttpAuthService HttpAuthService
+@inject IHttpUserService HttpUserService
 @using PartagesWebBlazorFSCore3.Client.Helpers
 @using PartagesWebBlazorFSCore3.Client.Services.Http
 @using PartagesWebBlazorFSCore3.Client.Services.Js
-@using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth
+@using PartagesWebBlazorFSCore3.Shared.Dtos.Input.User
 @using PartagesWebBlazorFSCore3.Shared.Helpers
 
 <NavBarTop />
@@ -53,13 +53,13 @@
     </div>
 </EditForm>
 @functions {
-    private UserForLoginInputDto model = new UserForLoginInputDto();
+    private UserForLoginDto model = new UserForLoginDto();
     private string InvalidCredentialsText = "";
 
     protected async Task HandleValidSubmit()
     {
         InvalidCredentialsText = "";
-        var response = await HttpAuthService.PostLogin(model);
+        var response = await HttpUserService.PostLogin(model);
         switch (response.StatusCode)
         {
             case System.Net.HttpStatusCode.OK:
