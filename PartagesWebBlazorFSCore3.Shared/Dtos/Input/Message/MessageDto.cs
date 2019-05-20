@@ -22,6 +22,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Input.Message
         /// </summary>
         [Required(ErrorMessage = "Le champ « {0} » est obligatoire.")]
         [Display(Name = "Sujet")]
+        [StringLength(30, MinimumLength = 2, ErrorMessage = "Vous devez spécifier un nom de sujet entre 2 et 30 caractères")]
         public string Subject { get; set; }
 
         /// <summary>
@@ -29,6 +30,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Input.Message
         /// </summary>
         [Required(ErrorMessage = "Le champ « {0} » est obligatoire.")]
         [Display(Name = "Contenu")]
+        [StringLength(10000, MinimumLength = 5, ErrorMessage = "Le contenu doit faire plus de 5 caractères")]
         public string Content { get; set; }
     }
 }

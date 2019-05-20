@@ -16,7 +16,7 @@ using NSwag.Annotations;
 using PartagesWebBlazorFSCore3.Server.Data;
 using PartagesWebBlazorFSCore3.Server.Helpers;
 using PartagesWebBlazorFSCore3.Server.Helpers.PagedParams;
-using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Forum.ForumTopic.ForNewTopic;
+using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Forum.ForumTopic.ForNew;
 using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumTopic.ForList;
 using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumTopic.ForSingleSelect;
 using PartagesWebBlazorFSCore3.Shared.Models;
@@ -117,9 +117,11 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpPost]
-        [SwaggerResponse(HttpStatusCode.OK, typeof(ForumPost), Description = "Ok")]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(void), Description = "Ok")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Impossible de créer le sujet, le même nom de sujet existe déjà")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Impossible de créer le sujet")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Vous devez spécifier un nom de sujet entre 2 et 30 caractères")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Le contenu doit faire plus de 5 caractères")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Contenu » est obligatoire.")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Nom du sujet » est obligatoire.")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Catégorie du sujet » est obligatoire.")]
@@ -162,7 +164,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             _repo.Add(item);
 
             if (await _repo.SaveAll())
-                return Ok(item);
+                return Ok();
 
             return BadRequest("Impossible de créer le sujet");
         }

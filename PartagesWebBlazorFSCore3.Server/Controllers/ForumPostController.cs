@@ -106,8 +106,9 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpPost]
-        [SwaggerResponse(HttpStatusCode.OK, typeof(ForumPost), Description = "Ok")]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(void), Description = "Ok")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Impossible de répondre à ce poste")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Le contenu doit faire plus de 5 caractères")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Contenu » est obligatoire.")]
         public async Task<IActionResult> ReplyForumPoste(ForumPostForReplyDto dto)
         {
@@ -135,7 +136,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             if (!await _repo.SaveAll())
                 return BadRequest("Impossible de modifier la date du sujet");
 
-            return Ok(item);
+            return Ok();
         }
 
         /// <summary>  

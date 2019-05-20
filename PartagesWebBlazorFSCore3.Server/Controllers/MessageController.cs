@@ -127,6 +127,8 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         [HttpPost]
         [SwaggerResponse(HttpStatusCode.OK, typeof(void), Description = "Ok")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Impossible d'envoyer le message")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Vous devez spécifier un nom de sujet entre 2 et 30 caractères")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Le contenu doit faire plus de 5 caractères")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Destinataire » est obligatoire.")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Sujet » est obligatoire.")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Contenu » est obligatoire.")]

@@ -26,6 +26,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Input.Forum.ForumPost.ForReply
         /// </summary>
         [Required(ErrorMessage = "Le champ « {0} » est obligatoire.")]
         [DisplayName("Contenu")]
+        [StringLength(10000, MinimumLength = 5, ErrorMessage = "Le contenu doit faire plus de 5 caractères")]
         public string Content { get; set; }
     }
 }

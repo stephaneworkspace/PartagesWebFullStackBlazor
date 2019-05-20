@@ -1,4 +1,4 @@
-﻿using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Forum.ForumTopic.ForNewTopic;
+﻿using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Forum.ForumTopic.ForNew;
 using System;
 using System.Collections.Generic;
 using System.Linq;
