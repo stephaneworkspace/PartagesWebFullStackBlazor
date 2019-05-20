@@ -73,7 +73,7 @@ else
                 user = Json.Deserialize<UserForSelectDto>(content);
                 break;
             case System.Net.HttpStatusCode.Unauthorized:
-                UriHelper.NavigateTo("/");
+                UriHelper.NavigateTo("/login");
                 break;
             default:
                 JsAlertifyService.Open($"Erreur lors du chargement des données du destinaire", TypeAlertify.Error);
@@ -94,7 +94,7 @@ else
                     model.Subject = $"Re: {replyDto.Subject}";
                     break;
                 case System.Net.HttpStatusCode.Unauthorized:
-                    UriHelper.NavigateTo("/");
+                    UriHelper.NavigateTo("/login");
                     break;
                 default:
                     JsAlertifyService.Open($"Erreur lors du chargement du message à répondre", TypeAlertify.Error);

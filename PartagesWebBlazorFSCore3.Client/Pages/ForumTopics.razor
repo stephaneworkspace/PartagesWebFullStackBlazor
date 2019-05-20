@@ -60,7 +60,7 @@ else
             }
         </tbody>
     </table>
-    @if (Storage["token"] == null)
+    @if (Storage["token"] != null)
     {
         <button class="button is-primary" onclick="@NewTopic">Nouveau sujet</button>
     }

@@ -98,7 +98,7 @@ private async Task LoadDatas(int page)
             }
             break;
         case System.Net.HttpStatusCode.Unauthorized:
-            UriHelper.NavigateTo("/");
+            UriHelper.NavigateTo("/login");
             break;
         default:
             JsAlertifyService.Open($"Erreur lors du chargement des messages", TypeAlertify.Error);

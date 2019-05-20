@@ -195,6 +195,18 @@ namespace PartagesWebBlazorFSCore3.Server.Data
             return await SaveAll();
         }
 
+        /// <summary>
+        /// Test if topic name is unique
+        /// </summary>
+        /// <param name="name">ForumTopic.Name</param>
+        /// <returns></returns>
+        public async Task<bool> ForumTopicExist(string name)
+        {
+            if (await _context.ForumTopics.AnyAsync(x => x.Name == name))
+                return true;
+            return false;
+        }
+
         /**
          * ForumPost
          **/

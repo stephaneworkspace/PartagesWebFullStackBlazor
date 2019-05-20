@@ -28,6 +28,7 @@ else
     <p class="small-user">De <b>@item.SendByUser.Username.CapitalizeFirst()</b> @itemDate</p>
     <br />
     <p> @((MarkupString)(itemContent))</p>
+    <br />
     <button class="button is-primary" onclick="@Reply">Répondre</button>
 }
 
@@ -54,7 +55,7 @@ else
                 }
                 break;
             case System.Net.HttpStatusCode.Unauthorized:
-                UriHelper.NavigateTo("/");
+                UriHelper.NavigateTo("/login");
                 break;
             default:
                 JsAlertifyService.Open($"Erreur lors du chargement du message", TypeAlertify.Error);

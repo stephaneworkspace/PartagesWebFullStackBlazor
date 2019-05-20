@@ -118,12 +118,19 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         [Authorize]
         [HttpPost]
         [SwaggerResponse(HttpStatusCode.OK, typeof(ForumPost), Description = "Ok")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Impossible de créer le sujet, le même nom de sujet existe déjà")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Impossible de créer le sujet")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Contenu » est obligatoire.")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Nom du sujet » est obligatoire.")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Catégorie du sujet » est obligatoire.")]
         public async Task<IActionResult> NewForumTopicAndForumPost(ForumPostForNewForumTopicDto dto)
         {
+            // Test if ForumTopic.Name is unique
+            if (await _repo.ForumTopicExist(dto.NameTopic))
+            {
+                return BadRequest($"Impossible de créer le sujet, le même nom de sujet « {dto.NameTopic} » existe déjà");
+            }
+
             // Prepare ForumTopic
             var itemForumTopic = new ForumTopic
             {

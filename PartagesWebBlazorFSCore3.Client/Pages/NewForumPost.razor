@@ -24,6 +24,7 @@
 else
 {
     <p><a href="forumCategories">Index du forum</a> » <a href="forumTopics/@forumTopic.ForumCategorieId">@forumTopic.ForumCategorie.Name</a> » <a href="forumPosts/@forumTopic.Id">@forumTopic.Name</a> » <a href="newForumReply/@id">Réponse</a></p>
+    <br />
     <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit">
         <DataAnnotationsValidator />
         <ValidationSummary />

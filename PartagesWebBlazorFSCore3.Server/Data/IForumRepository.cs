@@ -119,6 +119,13 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         /// <param name="id">ForumTopic primary key</param>
         Task<bool> IncViewForumTopic(int id);
 
+        /// <summary>
+        /// Test if topic name is unique
+        /// </summary>
+        /// <param name="name">ForumTopic.Name</param>
+        /// <returns></returns>
+        Task<bool> ForumTopicExist(string name);
+
         /**
          * ForumPost
          **/
