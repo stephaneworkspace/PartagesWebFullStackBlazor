@@ -17,7 +17,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    [SwaggerTag("Auth", Description = "Authentification controller")]
+    [SwaggerTag("Message", Description = "Message controller")]
     public class MessageController : Controller
     {
         private readonly IMessageRepository _repo;
