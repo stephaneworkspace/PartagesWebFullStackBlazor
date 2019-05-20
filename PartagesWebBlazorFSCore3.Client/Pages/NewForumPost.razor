@@ -45,7 +45,7 @@ else
 @functions {
     // ForumTopic id
     [Parameter] int id { get; set; }
-    // Quote id, 0 = no quote
+    // idQuote = 0 -> no quote
     [Parameter] int idQuote { get; set; }
     ForumTopicForSelectDto forumTopic;
     ForumPostForReplyDto model = new ForumPostForReplyDto();

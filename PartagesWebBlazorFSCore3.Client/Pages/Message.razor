@@ -24,43 +24,44 @@
 else
 {
     <p><a href="messages">Liste des messages</a> » <a href="messages/@id">@item.Subject</a></p>
-    <p class="small-user">De : <b>@item.SendByUser.Username.CapitalizeFirst()</b> @itemDate</p>
-    <p>Contenu :</p>
+    <br />
+    <p class="small-user">De <b>@item.SendByUser.Username.CapitalizeFirst()</b> @itemDate</p>
+    <br />
     <p> @((MarkupString)(itemContent))</p>
     <button class="button is-primary" onclick="@Reply">Répondre</button>
- }
+}
 
- @functions {
-     // ForumCategorie id
-     [Parameter] int id { get; set; }
-     MessageForSelectDto item;
-     string itemDate = "";
-     string itemContent = "";
+@functions {
+    // ForumCategorie id
+    [Parameter] int id { get; set; }
+    MessageForSelectDto item;
+    string itemDate = "";
+    string itemContent = "";
 
-     protected override async Task OnInitAsync()
-     {
-         HttpResponseMessage response = await HttpMessageService.GetMessage(id);
-         switch (response.StatusCode)
-         {
-             case System.Net.HttpStatusCode.OK:
-                 string content = await response.Content.ReadAsStringAsync();
-                 item = Json.Deserialize<MessageForSelectDto>(content);
-                 itemDate = await JsMomentService.FromNow(item.Date.ToString());
-                 // variable itemContent, regex in template error if item.Content is null
-                 if (item.Content != null)
-                 {
-                     itemContent = Regex.Replace(item.Content, @"(\r\n)|\n|\r", "<br />");
-                 }
-                 break;
-             default:
-                 JsAlertifyService.Open($"Erreur lors du chargement du message", TypeAlertify.Error);
-                 UriHelper.NavigateTo("/messages");
-                 break;
-         };
-     }
+    protected override async Task OnInitAsync()
+    {
+        HttpResponseMessage response = await HttpMessageService.GetMessage(id);
+        switch (response.StatusCode)
+        {
+            case System.Net.HttpStatusCode.OK:
+                string content = await response.Content.ReadAsStringAsync();
+                item = Json.Deserialize<MessageForSelectDto>(content);
+                itemDate = await JsMomentService.FromNow(item.Date.ToString());
+                // variable itemContent, regex in template error if item.Content is null
+                if (item.Content != null)
+                {
+                    itemContent = Regex.Replace(item.Content, @"(\r\n)|\n|\r", "<br />");
+                }
+                break;
+            default:
+                JsAlertifyService.Open($"Erreur lors du chargement du message", TypeAlertify.Error);
+                UriHelper.NavigateTo("/messages");
+                break;
+        };
+    }
 
-     private void Reply()
-     {
-
-     }
+    private void Reply()
+    {
+        UriHelper.NavigateTo($"/newMessage/{item.SendByUserId}/{item.Id}");
+    }
 }

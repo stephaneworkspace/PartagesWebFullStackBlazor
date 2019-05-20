@@ -1,4 +1,4 @@
-﻿@page "/newMessage/{id:int}"
+﻿@page "/newMessage/{id:int}/{idReply:int}"
 @inject IUriHelper UriHelper
 @inject IJsAlertifyService JsAlertifyService
 @inject IHttpUserService HttpUserService
@@ -7,6 +7,7 @@
 @using PartagesWebBlazorFSCore3.Client.Services.Http
 @using PartagesWebBlazorFSCore3.Client.Services.Js
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Output.User.ForSelect
+@using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Message.ForSelect;
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Message
 @using PartagesWebBlazorFSCore3.Shared.Helpers
 
@@ -18,15 +19,17 @@
 }
 else
 {
-    <h1 class="title is-3">Message privé pour @user.Username</h1>
+    <h1 class="title is-3">Message</h1>
+    <p><a href="messages">Liste des messages</a> » Message privé pour @user.Username</p>
+    <br />
     <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit">
         <DataAnnotationsValidator />
         <ValidationSummary />
         @if (CantCreateMessage != "")
         {
-        <ul class="validation-errors">
-            <li class="validation-message">@CantCreateMessage</li>
-        </ul>
+            <ul class="validation-errors">
+                <li class="validation-message">@CantCreateMessage</li>
+            </ul>
         }
         <div class="field">
             <label class="label">Sujet du message</label>
@@ -49,22 +52,17 @@ else
 @functions {
     // User id destinataire
     [Parameter] int id { get; set; }
+    // idReply = 0 -> no quote
+    [Parameter] int idReply { get; set; }
     UserForSelectDto user;
     MessageDto model = new MessageDto();
+    MessageForSelectDto replyDto = new MessageForSelectDto();
     string CantCreateMessage = "";
 
     protected override async Task OnInitAsync()
     {
-        // Load data with query on load page
-        await LoadData();
-        StateHasChanged();
-    }
-
-    private async Task LoadData()
-    {
-        HttpResponseMessage response;
-
-        response = await HttpUserService.GetUser(id);
+        // Load User
+        HttpResponseMessage response = await HttpUserService.GetUser(id);
         switch (response.StatusCode)
         {
             case System.Net.HttpStatusCode.OK:
@@ -74,8 +72,27 @@ else
                 break;
             default:
                 JsAlertifyService.Open($"Erreur lors du chargement des données du destinaire", TypeAlertify.Error);
-                UriHelper.NavigateTo("/");
+                UriHelper.NavigateTo("/messages");
                 break;
+        }
+
+        // Load original message to reply
+        if (idReply > 0)
+        {
+            response = await HttpMessageService.GetMessage(idReply);
+            switch (response.StatusCode)
+            {
+                case System.Net.HttpStatusCode.OK:
+                    string content = await response.Content.ReadAsStringAsync();
+                    replyDto = Json.Deserialize<MessageForSelectDto>(content);
+                    model.Content = $"{replyDto.SendByUser.Username} : “{replyDto.Content}”";
+                    model.Subject = $"Re: {replyDto.Subject}";
+                    break;
+                default:
+                    JsAlertifyService.Open($"Erreur lors du chargement du message à répondre", TypeAlertify.Error);
+                    UriHelper.NavigateTo("/messages");
+                    break;
+            }
         }
     }
 
