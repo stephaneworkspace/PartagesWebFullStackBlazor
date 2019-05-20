@@ -14,6 +14,7 @@ using PartagesWebBlazorFSCore3.Server.Helpers;
 using PartagesWebBlazorFSCore3.Server.Helpers.PagedParams;
 using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Message;
 using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Message.ForList;
+using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Message.ForSelect;
 using PartagesWebBlazorFSCore3.Shared.Models;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -48,11 +49,14 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         }
 
         [Authorize]
-        [HttpGet("{id}")]
+        [HttpGet]
         [SwaggerResponse(HttpStatusCode.OK, typeof(MessageForListDto[]), Description = "Ok")]
-        public async Task<IActionResult> GetMessages([FromQuery] MessageParams messageParams, int id)
+        public async Task<IActionResult> GetMessages([FromQuery] MessageParams messageParams)
         {
-            var items = await _repo.GetMessages(messageParams, id);
+            // Find current user
+            var currentUser = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var items = await _repo.GetMessages(messageParams, currentUser);
             /// No automapp because computed field
             List<MessageForListDto> newDto = new List<MessageForListDto>();
             foreach (var item in items)
@@ -70,6 +74,45 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             }
             Response.AddPagination(items.CurrentPage, items.PageSize, items.TotalCount, items.TotalPages);
             return Ok(newDto);
+        }
+
+        /// <summary>  
+        /// Get Message by primary key
+        /// </summary> 
+        /// <param name="id">Message primary key</param>
+        [Authorize]
+        [HttpGet("{id}")]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(MessageForSelectDto), Description = "Ok")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Impossible de lire le message")]
+        public async Task<IActionResult> GetMessage(int id)
+        {
+            // Find current user
+            var currentUser = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            // Get Message by primary key
+            var item = await _repo.GetMessage(id);
+
+            item.SwRead = true;
+
+            User sendByUser = await _repoUser.GetUser(item.SendByUserId ?? default(int));
+
+            MessageForSelectDto dto = new MessageForSelectDto()
+            {
+                Id = item.Id,
+                SendByUserId = item.SendByUserId,
+                SendByUser = _mapper.Map<UserForMessageForSelectDto>(sendByUser), // automapp
+                Subject = item.Subject,
+                SwRead = item.SwRead
+            };
+
+            // Update SwRead
+            _repo.Update(item);          
+
+            if (await _repo.SaveAll())
+                return Ok(dto);
+
+            return BadRequest("Impossible de lire le message");
+
         }
 
         /// <summary>
