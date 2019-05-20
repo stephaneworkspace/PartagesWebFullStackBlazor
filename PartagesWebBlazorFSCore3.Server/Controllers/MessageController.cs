@@ -68,6 +68,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
                     SendByUserId = item.SendByUserId,
                     SendByUser = _mapper.Map<UserForMessageForListDto>(sendByUser), // automapp
                     Subject = item.Subject,
+                    Date = item.Date,
                     SwRead = item.SwRead
                 };
                 newDto.Add(dto);
@@ -102,6 +103,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
                 SendByUserId = item.SendByUserId,
                 SendByUser = _mapper.Map<UserForMessageForSelectDto>(sendByUser), // automapp
                 Subject = item.Subject,
+                Date = item.Date,
                 SwRead = item.SwRead
             };
 

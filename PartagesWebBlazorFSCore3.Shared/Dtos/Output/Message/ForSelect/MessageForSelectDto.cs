@@ -38,6 +38,11 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Message.ForSelect
         public string Subject { get; set; }
 
         /// <summary>
+        /// Date of the message
+        /// </summary>
+        public DateTime Date { get; set; }
+
+        /// <summary>
         /// Content
         /// </summary>
         public string Content { get; set; }

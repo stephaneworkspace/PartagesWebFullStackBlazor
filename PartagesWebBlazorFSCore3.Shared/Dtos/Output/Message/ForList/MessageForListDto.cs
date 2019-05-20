@@ -38,6 +38,11 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Message.ForList
         public string Subject { get; set; }
 
         /// <summary>
+        /// Date of the message
+        /// </summary>
+        public DateTime Date { get; set; }
+
+        /// <summary>
         /// Switch if message is read
         /// </summary>
         public Boolean SwRead { get; set; }

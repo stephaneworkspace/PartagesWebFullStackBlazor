@@ -1,0 +1,132 @@
+﻿@page "/messages"
+@inject LocalStorage Storage
+@inject IUriHelper UriHelper
+@inject IJsAlertifyService JsAlertifyService
+@inject IJsMomentService JsMomentService
+@inject IHttpMessageService HttpMessageService
+@implements IDisposable
+@using Microsoft.AspNetCore.WebUtilities
+@using System.Collections
+@using Cloudcrate.AspNetCore.Blazor.Browser.Storage
+@using PartagesWebBlazorFSCore3.Client.Helpers
+@using PartagesWebBlazorFSCore3.Client.Services.Http
+@using PartagesWebBlazorFSCore3.Client.Services.Js
+@using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForSelect
+@using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Message.ForList
+@using PartagesWebBlazorFSCore3.Shared.Helpers
+
+<NavBarTop />
+
+<h1 class="title is-3">Messages</h1>
+
+@if (items == null)
+{
+    <p><em>Chargement...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Message de</th>
+                <th>Sujet</th>
+                <th>Envoyé le</th>
+                <th>Lu</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (items.Length == 0)
+            {
+                <tr>
+                    <td>Aucun message</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var item in items)
+                {
+                    <tr>
+                        <td>@item.SendByUser.Username.CapitalizeFirst()</td>
+                        <td><a href="message/@item.Id">@item.Subject</a></td>
+                        <td>@itemsDate[item.Id].ToString()</td>
+                        <td>@(item.SwRead ? "Lu" : "Non lu")</td>
+                      </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <BulmaPagination PageCount="@pagination.TotalPages" CurrentPage="@pagination.CurrentPage" OnPageChanged="OnPageChange"></BulmaPagination>
+    }
+
+    @functions {
+    // ForumCategorie id
+    [Parameter] int id { get; set; }
+    MessageForListDto[] items;
+    Hashtable itemsDate = new Hashtable();
+    ForumCategorieForSelectDto forumCategorie;
+    PaginationHeader pagination = new PaginationHeader();
+    string PageQuery { get; set; }
+
+    protected override async Task OnInitAsync()
+    {
+        // Query param detection
+        RefreshType();
+        UriHelper.OnLocationChanged += OnLocationChanges;
+
+        // Load data with query on load page
+        await LoadDatas(Int32.Parse(PageQuery) > 0 ? Int32.Parse(PageQuery) : 1);
+        StateHasChanged();
+    }
+
+    private async Task LoadDatas(int page)
+    {
+        HttpResponseMessage response = await HttpMessageService.GetMessages(page);
+        switch (response.StatusCode)
+        {
+            case System.Net.HttpStatusCode.OK:
+                string content = await response.Content.ReadAsStringAsync();
+                items = Json.Deserialize<MessageForListDto[]>(content);
+                var head = response.Headers.GetValues("Pagination");
+                pagination = Json.Deserialize<PaginationHeader>(head.FirstOrDefault());
+
+                // Hashtable for date async
+                itemsDate = new Hashtable();
+                foreach (var item in items)
+                {
+                    itemsDate.Add(item.Id, await JsMomentService.FromNow(item.Date.ToString()));
+                }
+                break;
+            default:
+                JsAlertifyService.Open($"Erreur lors du chargement des sujets du forum de la catégorie {forumCategorie.Name}", TypeAlertify.Error);
+                UriHelper.NavigateTo("/");
+                break;
+        };
+    }
+
+    private async Task OnPageChange(int page)
+    {
+        await LoadDatas(page);
+        StateHasChanged();
+    }
+
+    private void OnLocationChanges(object sender, string location) => RefreshType();
+
+    private void RefreshType()
+    {
+        var uri = new Uri(UriHelper.GetAbsoluteUri());
+        PageQuery = QueryHelpers.ParseQuery(uri.Query).TryGetValue("page", out var page) ? page.First() : "";
+        if (PageQuery == "")
+        {
+            PageQuery = "1";
+        }
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        UriHelper.OnLocationChanged -= OnLocationChanges;
+    }
+    }
