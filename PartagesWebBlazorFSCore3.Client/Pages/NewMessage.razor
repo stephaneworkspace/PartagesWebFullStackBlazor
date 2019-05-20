@@ -1,0 +1,98 @@
+﻿@page "/newMessage/{id:int}"
+@inject IUriHelper UriHelper
+@inject IJsAlertifyService JsAlertifyService
+@inject IHttpForumTopicService HttpForumTopicService
+@inject IHttpMessageService HttpMessageService
+@using PartagesWebBlazorFSCore3.Client.Helpers
+@using PartagesWebBlazorFSCore3.Client.Services.Http
+@using PartagesWebBlazorFSCore3.Client.Services.Js
+@using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Auth.ForSelect
+@using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Message
+@using PartagesWebBlazorFSCore3.Shared.Helpers
+
+<NavBarTop />
+
+@if (user == null)
+{
+    <p><em>Chargement...</em></p>
+}
+else
+{
+    <h1 class="title is-3">Message privé pour @user.Username</h1>
+    <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        @if (CantCreateMessage != "")
+        {
+        <ul class="validation-errors">
+            <li class="validation-message">@CantCreateMessage</li>
+        </ul>
+        }
+        <div class="field">
+            <label class="label">Sujet du message</label>
+            <p class="control">
+                <InputText id="nametopic" bind-Value="@model.Subject" class="input" />
+                <span class="help is-danger"><ValidationMessage For="@(() => model.Subject)" /></span>
+            </p>
+        </div>
+        <div class="field">
+            <label class="label">Contenu</label>
+            <p class="control">
+                <InputTextArea bind-Value="@model.Content" class="textarea textarea-height-define" />
+                <span class="help is-danger"><ValidationMessage For="@(() => model.Content)" /></span>
+            </p>
+        </div>
+        <button class="button is-primary" type="submit">Crée un nouveau sujet</button>
+    </EditForm>
+}
+
+@functions {
+    // User id destinataire
+    [Parameter] int id { get; set; }
+    UserForSelectDto user;
+    MessageDto model = new MessageDto();
+    string CantCreateMessage = "";
+
+    protected override async Task OnInitAsync()
+    {
+        // Load data with query on load page
+        await LoadData();
+        StateHasChanged();
+    }
+
+    private async Task LoadData()
+    {
+        HttpResponseMessage response;
+
+        response = await HttpMessageService.GetUserForNewMessage(id);
+        switch (response.StatusCode)
+        {
+            case System.Net.HttpStatusCode.OK:
+                model.UserId = id;
+                string content = await response.Content.ReadAsStringAsync();
+                user = Json.Deserialize<UserForSelectDto>(content);
+                break;
+            default:
+                JsAlertifyService.Open($"Erreur lors du chargement des données du destinaire", TypeAlertify.Error);
+                UriHelper.NavigateTo("/");
+                break;
+        }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        CantCreateMessage = "";
+        var response = await HttpMessageService.PostMessage(model);
+        switch (response.StatusCode)
+        {
+            case System.Net.HttpStatusCode.OK:
+                JsAlertifyService.Open($"Message envoyé à « {user.Username.CapitalizeFirst()} »", TypeAlertify.Success);
+                UriHelper.NavigateTo($"/");
+                break;
+            case System.Net.HttpStatusCode.BadRequest:
+                CantCreateMessage = await response.Content.ReadAsStringAsync();
+                JsAlertifyService.Open(CantCreateMessage, TypeAlertify.Error);
+                break;
+        };
+    }
+}

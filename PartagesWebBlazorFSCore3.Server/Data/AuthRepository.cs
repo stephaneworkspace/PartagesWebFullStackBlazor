@@ -94,5 +94,16 @@ namespace PartagesWebBlazorFSCore3.Server.Data
                 return true;
             return false;
         }
+
+        /// <summary>
+        /// Get User model
+        /// </summary>
+        /// <param name="id">User primary key</param>
+        /// <returns></returns>
+        public async Task<User> GetUser(int id)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            return user;
+        }
     }
 }

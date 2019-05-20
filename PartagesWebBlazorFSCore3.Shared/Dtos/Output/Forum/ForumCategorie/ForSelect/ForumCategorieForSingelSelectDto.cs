@@ -7,12 +7,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForSingleSelect
+namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForSelect
 {
     /// <summary>
     /// Dto from model ForumCategorie
     /// </summary>
-    public class ForumCategorieForSingleSelectDto
+    public class ForumCategorieForSelectDto
     {
         /// <summary>
         /// Primary key

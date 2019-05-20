@@ -34,7 +34,7 @@ else
         <div class="field">
             <label class="label">Contenu</label>
             <p class="control">
-                <InputTextArea id="content" bind-Value="@model.Content" class="textarea textarea-height-define" />
+                <InputTextArea bind-Value="@model.Content" class="textarea textarea-height-define" />
                 <span class="help is-danger"><ValidationMessage For="@(() => model.Content)" /></span>
             </p>
         </div>

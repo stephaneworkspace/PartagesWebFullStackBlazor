@@ -19,6 +19,7 @@ namespace PartagesWebBlazorFSCore3.Client
               .AddSingleton<IHttpForumCategorieService, HttpForumCategorieService>()
               .AddSingleton<IHttpForumTopicService, HttpForumTopicService>()
               .AddSingleton<IHttpForumPostService, HttpForumPostService>()
+              .AddSingleton<IHttpMessageService, HttpMessageService>()
               // Javascript Services
               .AddSingleton<IJsAlertifyService, JsAlertifyService>()
               .AddSingleton<IJsMomentService, JsMomentService>()

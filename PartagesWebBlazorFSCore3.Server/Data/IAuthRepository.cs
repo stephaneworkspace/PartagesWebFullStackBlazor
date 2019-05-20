@@ -34,5 +34,12 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         /// </summary>  
         /// <param name="username">Username</param>
         Task<bool> UserExists(string username);
+
+        /// <summary>
+        /// Get User model
+        /// </summary>
+        /// <param name="id">User primary key</param>
+        /// <returns></returns>
+        Task<User> GetUser(int id);
     }
 }

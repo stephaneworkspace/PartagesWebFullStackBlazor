@@ -12,7 +12,7 @@
 @using PartagesWebBlazorFSCore3.Client.Helpers
 @using PartagesWebBlazorFSCore3.Client.Services.Http
 @using PartagesWebBlazorFSCore3.Client.Services.Js
-@using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForSingleSelect
+@using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForSelect
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumTopic.ForList
 @using PartagesWebBlazorFSCore3.Shared.Helpers
 
@@ -72,7 +72,7 @@ else
     [Parameter] int id { get; set; }
     ForumTopicForListDto[] items;
     Hashtable itemsDate = new Hashtable();
-    ForumCategorieForSingleSelectDto forumCategorie;
+    ForumCategorieForSelectDto forumCategorie;
     PaginationHeader pagination = new PaginationHeader();
     string PageQuery { get; set; }
 
@@ -96,7 +96,7 @@ else
         {
             case System.Net.HttpStatusCode.OK:
                 string content = await response.Content.ReadAsStringAsync();
-                forumCategorie = Json.Deserialize<ForumCategorieForSingleSelectDto>(content);
+                forumCategorie = Json.Deserialize<ForumCategorieForSelectDto>(content);
                 break;
             default:
                 JsAlertifyService.Open($"Erreur lors du chargement de la catégorie {id} du forum", TypeAlertify.Error);

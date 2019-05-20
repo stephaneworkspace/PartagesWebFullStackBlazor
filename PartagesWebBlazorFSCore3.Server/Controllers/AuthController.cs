@@ -14,12 +14,14 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
 using NSwag.Annotations;
 using PartagesWebBlazorFSCore3.Server.Data;
 using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Auth;
 using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Auth.Login;
 using PartagesWebBlazorFSCore3.Shared.Models;
 using PartagesWebBlazorFSCore3.Shared.Helpers;
+using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Auth.ForSelect;
 
 namespace PartagesWebBlazorFSCore3.Server.Controllers
 {
@@ -45,9 +47,9 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         /// <param name="mapper">Automapp</param>
         public AuthController(IAuthRepository repo, IMessageRepository repoMessage, IConfiguration config, IMapper mapper)
         {
-            _config = config;
             _repo = repo;
             _repoMessage = repoMessage;
+            _config = config;
             _mapper = mapper;
         }
 
@@ -125,5 +127,19 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             Boolean swAvailable = await _repo.UserExists(dto.Username);
             return Ok(!swAvailable);
         }
+
+        /// <summary>
+        /// Get user info for post a message
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet("{id}")]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(Boolean), Description = "Ok")]
+        public async Task<IActionResult> GetUser(UserForSelectDto dto, int id)
+        {
+            User item = await _repo.GetUser(id);
+            return Ok(_mapper.Map<UserForSelectDto>(item));
+         }
     }
 }

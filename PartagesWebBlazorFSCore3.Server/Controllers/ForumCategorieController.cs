@@ -14,7 +14,7 @@ using NSwag.Annotations;
 using PartagesWebBlazorFSCore3.Server.Data;
 using PartagesWebBlazorFSCore3.Server.Helpers.PagedParams;
 using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForList;
-using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForSingleSelect;
+using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForSelect;
 
 namespace PartagesWebBlazorFSCore3.Server.Controllers
 {
@@ -84,11 +84,11 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         /// Get ForumCategorie
         /// </summary> 
         [HttpGet("{id}")]
-        [SwaggerResponse(HttpStatusCode.OK, typeof(ForumCategorieForSingleSelectDto[]), Description = "Ok")]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(ForumCategorieForSelectDto[]), Description = "Ok")]
         public async Task<IActionResult> GetForumCategorie(int id)
         {
             var item = await _repo.GetForumCategorie(id);
-            var itemDto = _mapper.Map<ForumCategorieForSingleSelectDto>(item);
+            var itemDto = _mapper.Map<ForumCategorieForSelectDto>(item);
             return Ok(itemDto);
         }
     }
