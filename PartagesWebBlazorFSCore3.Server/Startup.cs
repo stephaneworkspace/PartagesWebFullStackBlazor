@@ -94,8 +94,8 @@ namespace PartagesWebBlazorFSCore3.Server
 
             app.UseRouting();
 
-             // seeder.SeedUsers(); Data already Seed in Database
-            // seeder.SeedForumCategorie();
+            // _ = seeder.SeedUsers(); // Data already Seed in Database
+            // _ = seeder.SeedForumCategorie();
             // seeder.SeedForumTopic();
             // seeder.SeedForumPost();
             // app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());

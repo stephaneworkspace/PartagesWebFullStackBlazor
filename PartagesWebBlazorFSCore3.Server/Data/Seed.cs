@@ -41,42 +41,39 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         /// <remarks>
         /// Code in comment don't compile, so the solution for unique data is comment this method in Startup.cs
         /// </remarks>
-        public void SeedUsers()
+        public async Task SeedUsers()
         {
             var userData = System.IO.File.ReadAllText("Data/Seed/UsersSeedData.json");
             var users = JsonConvert.DeserializeObject<List<User>>(userData);
             foreach (var user in users)
             {
-                // var userQuery = await _context.Users.FirstOrDefaultAsync(x => x.Username == user.Username);
-                // if (userQuery == null)
-                // if (!await _context.Users.AnyAsync(x => x.Username == user.Username))
-                // {
-                PasswordGenerate passwordGenerate = new PasswordGenerate();
-                passwordGenerate.CreatePasswordHash("password", out byte[] passwordHash, out byte[] passwordSalt);
+                if (!await _context.Users.AnyAsync(x => x.Username == user.Username))
+                {
+                    PasswordGenerate passwordGenerate = new PasswordGenerate();
+                    passwordGenerate.CreatePasswordHash("password", out byte[] passwordHash, out byte[] passwordSalt);
 
-                user.PasswordHash = passwordHash;
-                user.PasswordSalt = passwordSalt;
-                user.Username = user.Username.ToLower();
+                    user.PasswordHash = passwordHash;
+                    user.PasswordSalt = passwordSalt;
+                    user.Username = user.Username.ToLower();
 
-                _context.Users.Add(user);
-                // }
+                   await  _context.Users.AddAsync(user);
+                }
             }
-
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         ///<summary>
         /// Seed ForumCategorie
         ///</summary>
-        public async void SeedForumCategorie()
+        public async Task SeedForumCategorie()
         {
             var itemData = System.IO.File.ReadAllText("Data/Seed/ForumCategoriesSeedData.json", Encoding.GetEncoding("iso-8859-1"));
             var items = JsonConvert.DeserializeObject<List<ForumCategorie>>(itemData);
             foreach (var item in items)
             {
-                if (!_context.ForumCategories.Any(x => x.Name.ToLower() == item.Name.ToLower()))
+                if (!await _context.ForumCategories.AnyAsync(x => x.Name.ToLower() == item.Name.ToLower()))
                 {
-                    _context.ForumCategories.Add(item);
+                    await _context.ForumCategories.AddAsync(item);
                 }
                 await _context.SaveChangesAsync();
             }
