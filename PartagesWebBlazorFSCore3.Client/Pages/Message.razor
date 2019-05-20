@@ -53,6 +53,9 @@ else
                     itemContent = Regex.Replace(item.Content, @"(\r\n)|\n|\r", "<br />");
                 }
                 break;
+            case System.Net.HttpStatusCode.Unauthorized:
+                UriHelper.NavigateTo("/");
+                break;
             default:
                 JsAlertifyService.Open($"Erreur lors du chargement du message", TypeAlertify.Error);
                 UriHelper.NavigateTo("/messages");

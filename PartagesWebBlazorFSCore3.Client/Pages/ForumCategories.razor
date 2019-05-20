@@ -1,9 +1,11 @@
 ﻿@page "/forumCategories"
+@inject LocalStorage Storage
 @inject IUriHelper UriHelper
 @inject IJsAlertifyService JsAlertifyService
 @inject IJsMomentService JsMomentService
 @inject IHttpForumCategorieService HttpForumCategorieService
 @using System.Collections
+@using Cloudcrate.AspNetCore.Blazor.Browser.Storage
 @using PartagesWebBlazorFSCore3.Client.Helpers
 @using PartagesWebBlazorFSCore3.Client.Services.Http
 @using PartagesWebBlazorFSCore3.Client.Services.Js

@@ -1,8 +1,10 @@
 ﻿@page "/newMessage/{id:int}/{idReply:int}"
+@inject LocalStorage Storage
 @inject IUriHelper UriHelper
 @inject IJsAlertifyService JsAlertifyService
 @inject IHttpUserService HttpUserService
 @inject IHttpMessageService HttpMessageService
+@using Cloudcrate.AspNetCore.Blazor.Browser.Storage
 @using PartagesWebBlazorFSCore3.Client.Helpers
 @using PartagesWebBlazorFSCore3.Client.Services.Http
 @using PartagesWebBlazorFSCore3.Client.Services.Js
@@ -70,6 +72,9 @@ else
                 string content = await response.Content.ReadAsStringAsync();
                 user = Json.Deserialize<UserForSelectDto>(content);
                 break;
+            case System.Net.HttpStatusCode.Unauthorized:
+                UriHelper.NavigateTo("/");
+                break;
             default:
                 JsAlertifyService.Open($"Erreur lors du chargement des données du destinaire", TypeAlertify.Error);
                 UriHelper.NavigateTo("/messages");
@@ -87,6 +92,9 @@ else
                     replyDto = Json.Deserialize<MessageForSelectDto>(content);
                     model.Content = $"{replyDto.SendByUser.Username} : “{replyDto.Content}”";
                     model.Subject = $"Re: {replyDto.Subject}";
+                    break;
+                case System.Net.HttpStatusCode.Unauthorized:
+                    UriHelper.NavigateTo("/");
                     break;
                 default:
                     JsAlertifyService.Open($"Erreur lors du chargement du message à répondre", TypeAlertify.Error);
@@ -109,6 +117,10 @@ else
             case System.Net.HttpStatusCode.BadRequest:
                 CantCreateMessage = await response.Content.ReadAsStringAsync();
                 JsAlertifyService.Open(CantCreateMessage, TypeAlertify.Error);
+                break;
+            case System.Net.HttpStatusCode.Unauthorized:
+                JsAlertifyService.Open("Pas identifié", TypeAlertify.Warning);
+                UriHelper.NavigateTo($"/login");
                 break;
         };
     }

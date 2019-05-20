@@ -1,8 +1,10 @@
 ﻿@page "/newForumTopic/{id:int}"
+@inject LocalStorage Storage
 @inject IUriHelper UriHelper
 @inject IJsAlertifyService JsAlertifyService
 @inject IHttpForumCategorieService HttpForumCategorieService
 @inject IHttpForumTopicService HttpForumTopicService
+@using Cloudcrate.AspNetCore.Blazor.Browser.Storage
 @using PartagesWebBlazorFSCore3.Client.Helpers
 @using PartagesWebBlazorFSCore3.Client.Services.Http
 @using PartagesWebBlazorFSCore3.Client.Services.Js
@@ -94,6 +96,10 @@ else
             case System.Net.HttpStatusCode.BadRequest:
                 CantCreateTopic = await response.Content.ReadAsStringAsync();
                 JsAlertifyService.Open(CantCreateTopic, TypeAlertify.Error);
+                break;
+            case System.Net.HttpStatusCode.Unauthorized:
+                JsAlertifyService.Open("Pas identifié", TypeAlertify.Warning);
+                UriHelper.NavigateTo($"/login");
                 break;
         };
     }
