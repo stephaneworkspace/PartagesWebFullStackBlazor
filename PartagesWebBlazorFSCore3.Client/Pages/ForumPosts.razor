@@ -52,7 +52,7 @@ else
             <p class="small-user">
                 par @item.User.Username.CapitalizeFirst() @itemsDate[item.Id].ToString()
             </p>
-            <p>@((MarkupString)(Regex.Replace(item.Content, @"(\r\n)|\n|\r", "<br />")))</p>
+            <p>@((MarkupString)(itemsContent[item.Id].ToString()))</p>
         </div>
         @if (Storage["token"] != null)
         {
@@ -102,6 +102,7 @@ else
     // ForumTopic id
     [Parameter] int id { get; set; }
     ForumPostForListDto[] items;
+    Hashtable itemsContent = new Hashtable();
     Hashtable itemsDate = new Hashtable();
     Hashtable itemsUserDateCreated = new Hashtable();
     ForumTopicForSelectDto forumTopic;
@@ -146,6 +147,13 @@ else
                 items = Json.Deserialize<ForumPostForListDto[]>(content);
                 var head = response.Headers.GetValues("Pagination");
                 pagination = Json.Deserialize<PaginationHeader>(head.FirstOrDefault());
+
+                // Hashtable for content, regex in template error if item.Content is null
+                itemsContent = new Hashtable();
+                foreach (var item in items)
+                {
+                    itemsContent.Add(item.Id, Regex.Replace(item.Content, @"(\r\n)|\n|\r", "<br />"));
+                }
 
                 // Hashtable for date async
                 itemsDate = new Hashtable();

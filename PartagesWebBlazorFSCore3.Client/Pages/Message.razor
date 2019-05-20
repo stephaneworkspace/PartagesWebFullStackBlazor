@@ -1,0 +1,66 @@
+﻿@page "/message/{id:int}"
+@inject LocalStorage Storage
+@inject IUriHelper UriHelper
+@inject IJsAlertifyService JsAlertifyService
+@inject IJsMomentService JsMomentService
+@inject IHttpMessageService HttpMessageService
+@using System.Collections
+@using System.Text.RegularExpressions
+@using Cloudcrate.AspNetCore.Blazor.Browser.Storage
+@using PartagesWebBlazorFSCore3.Client.Helpers
+@using PartagesWebBlazorFSCore3.Client.Services.Http
+@using PartagesWebBlazorFSCore3.Client.Services.Js
+@using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Message.ForSelect
+@using PartagesWebBlazorFSCore3.Shared.Helpers
+
+<NavBarTop />
+
+<h1 class="title is-3">Messages</h1>
+
+@if (item == null)
+{
+    <p><em>Chargement...</em></p>
+}
+else
+{
+    <p><a href="messages">Liste des messages</a> » <a href="messages/@id">@item.Subject</a></p>
+    <p class="small-user">De : <b>@item.SendByUser.Username.CapitalizeFirst()</b> @itemDate</p>
+    <p>Contenu :</p>
+    <p> @((MarkupString)(itemContent))</p>
+    <button class="button is-primary" onclick="@Reply">Répondre</button>
+ }
+
+ @functions {
+     // ForumCategorie id
+     [Parameter] int id { get; set; }
+     MessageForSelectDto item;
+     string itemDate = "";
+     string itemContent = "";
+
+     protected override async Task OnInitAsync()
+     {
+         HttpResponseMessage response = await HttpMessageService.GetMessage(id);
+         switch (response.StatusCode)
+         {
+             case System.Net.HttpStatusCode.OK:
+                 string content = await response.Content.ReadAsStringAsync();
+                 item = Json.Deserialize<MessageForSelectDto>(content);
+                 itemDate = await JsMomentService.FromNow(item.Date.ToString());
+                 // variable itemContent, regex in template error if item.Content is null
+                 if (item.Content != null)
+                 {
+                     itemContent = Regex.Replace(item.Content, @"(\r\n)|\n|\r", "<br />");
+                 }
+                 break;
+             default:
+                 JsAlertifyService.Open($"Erreur lors du chargement du message", TypeAlertify.Error);
+                 UriHelper.NavigateTo("/messages");
+                 break;
+         };
+     }
+
+     private void Reply()
+     {
+
+     }
+}

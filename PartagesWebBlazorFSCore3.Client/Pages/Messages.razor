@@ -11,7 +11,6 @@
 @using PartagesWebBlazorFSCore3.Client.Helpers
 @using PartagesWebBlazorFSCore3.Client.Services.Http
 @using PartagesWebBlazorFSCore3.Client.Services.Js
-@using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForSelect
 @using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Message.ForList
 @using PartagesWebBlazorFSCore3.Shared.Helpers
 
@@ -66,7 +65,6 @@ else
     [Parameter] int id { get; set; }
     MessageForListDto[] items;
     Hashtable itemsDate = new Hashtable();
-    ForumCategorieForSelectDto forumCategorie;
     PaginationHeader pagination = new PaginationHeader();
     string PageQuery { get; set; }
 
@@ -100,7 +98,7 @@ else
                 }
                 break;
             default:
-                JsAlertifyService.Open($"Erreur lors du chargement des sujets du forum de la catégorie {forumCategorie.Name}", TypeAlertify.Error);
+                JsAlertifyService.Open($"Erreur lors du chargement des messages", TypeAlertify.Error);
                 UriHelper.NavigateTo("/");
                 break;
         };
