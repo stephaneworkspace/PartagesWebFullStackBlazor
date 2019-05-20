@@ -13,9 +13,9 @@ using System.Threading.Tasks;
 namespace PartagesWebBlazorFSCore3.Server.Data
 {
     /// <summary>
-    /// Authtification repository
+    /// User repository (authtification)
     /// </summary>
-    public class AuthRepository : IAuthRepository
+    public class UserRepository : IUserRepository
     {
         private readonly DataContext _context;
 
@@ -23,7 +23,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         /// Constructor
         /// </summary>  
         /// <param name="context">DataContext</param>
-        public AuthRepository(DataContext context)
+        public UserRepository(DataContext context)
         {
             _context = context;
         }

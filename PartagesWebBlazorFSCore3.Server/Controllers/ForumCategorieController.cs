@@ -54,28 +54,28 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             List<ForumCategorieForListDto> newDto = new List<ForumCategorieForListDto>();
             foreach (var unite in items)
             {
-                ForumCategorieForListDto Dto = new ForumCategorieForListDto
+                ForumCategorieForListDto dto = new ForumCategorieForListDto
                 {
                     Id = unite.Id,
                     Name = unite.Name
                 };
-                Dto.CountForumTopic = await _repo.GetCountForumTopic(unite.Id);
-                Dto.CountForumPost = await _repo.GetCountForumPostFromForumCategorie(unite.Id);
+                dto.CountForumTopic = await _repo.GetCountForumTopic(unite.Id);
+                dto.CountForumPost = await _repo.GetCountForumPostFromForumCategorie(unite.Id);
                 var lastForumPost = await _repo.GetLastForumPostFromForumCategorie(unite.Id);
-                Dto.LastForumPost = _mapper.Map<ForumPostForListForumCategorieDto>(lastForumPost);
+                dto.LastForumPost = _mapper.Map<ForumPostForListForumCategorieDto>(lastForumPost);
                 if (lastForumPost != null)
                 {
                     var countLastForumPost = await _repo.GetCountLastForumPostFromAForumTopic(lastForumPost.ForumTopicId);
                     var pageSize = new ForumPostParams();
                     double calc = (countLastForumPost + pageSize.PageSize - 1) / pageSize.PageSize;
-                    Dto.PageLastForumPost = Convert.ToInt32(Math.Ceiling(calc));
+                    dto.PageLastForumPost = Convert.ToInt32(Math.Ceiling(calc));
                 }
                 else
                 {
-                    Dto.PageLastForumPost = 0;
+                    dto.PageLastForumPost = 0;
                 }
 
-                newDto.Add(Dto);
+                newDto.Add(dto);
             }
             return Ok(newDto);
         }

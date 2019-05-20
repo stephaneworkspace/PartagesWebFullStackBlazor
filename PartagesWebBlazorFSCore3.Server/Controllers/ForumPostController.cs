@@ -68,10 +68,10 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             List<ForumPostForListDto> itemsDtoFinal = new List<ForumPostForListDto>();
             foreach (var item in items)
             {
-                var UserIdCurrent = 0;
+                var userIdCurrent = 0;
                 if (User.Identity.IsAuthenticated)
                 {
-                    UserIdCurrent = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                    userIdCurrent = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
                 }
                 /// No automapp because computed field
                 var userWithVirtual = new UserForListForumPostDto
@@ -91,7 +91,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
                     UserId = item.UserId,
                     Content = item.Content,
                     Date = item.Date,
-                    SwCurrentUser = UserIdCurrent == item.UserId
+                    SwCurrentUser = userIdCurrent == item.UserId
                 };
                 itemsDtoFinal.Add(itemDtoWithVirtual);
             }
@@ -109,33 +109,33 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         [SwaggerResponse(HttpStatusCode.OK, typeof(ForumPost), Description = "Ok")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Impossible de répondre à ce poste")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Contenu » est obligatoire.")]
-        public async Task<IActionResult> ReplyForumPoste(ForumPostForReplyDto Dto)
+        public async Task<IActionResult> ReplyForumPoste(ForumPostForReplyDto dto)
         {
             // Trouver l'utilisateur actuel
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             // Préparation du model
-            var Item = new ForumPost
+            var item = new ForumPost
             {
-                ForumTopicId = Dto.ForumTopicId,
+                ForumTopicId = dto.ForumTopicId,
                 UserId = userId,
                 Date = DateTime.Now,
-                Content = Dto.Content
+                Content = dto.Content
             };
 
-            _repo.Add(Item);
+            _repo.Add(item);
 
             if (! await _repo.SaveAll())
                 return BadRequest("Impossible de répondre à ce poste");
 
-            var ItemTopic = await _repo.GetForumTopic(Dto.ForumTopicId);
-            ItemTopic.Date = Item.Date;
-            _repo.Update(ItemTopic);
+            var itemTopic = await _repo.GetForumTopic(dto.ForumTopicId);
+            itemTopic.Date = item.Date;
+            _repo.Update(itemTopic);
 
             if (!await _repo.SaveAll())
                 return BadRequest("Impossible de modifier la date du sujet");
 
-            return Ok(Item);
+            return Ok(item);
         }
 
         /// <summary>  

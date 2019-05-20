@@ -107,7 +107,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         public async Task<PagedList<Message>> GetMessages(MessageParams messageParams, int userId)
         {
             var items = _context.Messages
-                .OrderBy(u => u.Date).Where(x => x.UserId == userId).AsQueryable();
+                .OrderByDescending(u => u.Date).Where(x => x.UserId == userId).AsQueryable();
             return await PagedList<Message>.CreateAsync(items, messageParams.PageNumber, messageParams.PageSize);
         }
         

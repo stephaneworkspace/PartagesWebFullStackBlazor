@@ -50,7 +50,7 @@ namespace PartagesWebBlazorFSCore3.Server
             services.AddSwaggerDocument();
             services.AddAutoMapper();
             services.AddTransient<Seed>();
-            services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IForumRepository, ForumRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();

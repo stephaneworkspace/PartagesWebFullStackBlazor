@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 namespace PartagesWebBlazorFSCore3.Server.Data
 {
     /// <summary>
-    /// Repository Authentification
+    /// User repository (authentification)
     /// </summary>
-    public interface IAuthRepository
+    public interface IUserRepository
     {
         /// <summary>  
         /// Login

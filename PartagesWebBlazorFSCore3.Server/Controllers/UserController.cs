@@ -33,7 +33,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
     [SwaggerTag("User", Description = "User controller (authentification)")]
     public class UserController : ControllerBase
     {
-        private readonly IAuthRepository _repo;
+        private readonly IUserRepository _repo;
         private readonly IMessageRepository _repoMessage;
         private readonly IConfiguration _config;
         private readonly IMapper _mapper;
@@ -45,7 +45,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         /// <param name="repoMessage">Private message repository</param>
         /// <param name="config"> Configuration</param>
         /// <param name="mapper">Automapp</param>
-        public UserController(IAuthRepository repo, IMessageRepository repoMessage, IConfiguration config, IMapper mapper)
+        public UserController(IUserRepository repo, IMessageRepository repoMessage, IConfiguration config, IMapper mapper)
         {
             _repo = repo;
             _repoMessage = repoMessage;

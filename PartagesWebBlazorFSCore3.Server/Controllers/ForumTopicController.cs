@@ -63,7 +63,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             foreach (var item in items)
             {
                  var lastForumPost = await _repo.GetLastForumPostFromAForumTopic(item.Id);
-                 ForumTopicForListDto Dto = new ForumTopicForListDto
+                 ForumTopicForListDto dto = new ForumTopicForListDto
                  {
                      Id = item.Id,
                      Name = item.Name,
@@ -74,23 +74,23 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
                      LastForumPost = null, // computed field
                      PageLastForumPost = 0 // computed field
                  };
-                Dto.CountForumPost = await _repo.GetCountLastForumPostFromAForumTopic(item.Id); // computed field
+                dto.CountForumPost = await _repo.GetCountLastForumPostFromAForumTopic(item.Id); // computed field
 
                 // LastForumPost
-                Dto.LastForumPost = _mapper.Map<ForumPostForListForumTopicDto>(lastForumPost);
+                dto.LastForumPost = _mapper.Map<ForumPostForListForumTopicDto>(lastForumPost);
                 if (lastForumPost != null)
                 {
                     var countLastForumPost = await _repo.GetCountLastForumPostFromAForumTopic(lastForumPost.ForumTopicId);
                     var pageSize = new ForumPostParams();
                     double calc = ((countLastForumPost + pageSize.PageSize - 1) / pageSize.PageSize);
-                    Dto.PageLastForumPost = Convert.ToInt32(Math.Ceiling(calc));
+                    dto.PageLastForumPost = Convert.ToInt32(Math.Ceiling(calc));
                 }
                 else
                 {
-                    Dto.PageLastForumPost = 0;
+                    dto.PageLastForumPost = 0;
                 }
 
-                newDto.Add(Dto);
+                newDto.Add(dto);
             }
             Response.AddPagination(items.CurrentPage, items.PageSize, items.TotalCount, items.TotalPages);
             return Ok(newDto);
@@ -122,18 +122,18 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Contenu » est obligatoire.")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Nom du sujet » est obligatoire.")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Catégorie du sujet » est obligatoire.")]
-        public async Task<IActionResult> NouveauSujetEtPoste(ForumPostForNewForumTopicDto Dto)
+        public async Task<IActionResult> NouveauSujetEtPoste(ForumPostForNewForumTopicDto dto)
         {
             // Prepare ForumTopic
-            var ItemForumTopic = new ForumTopic
+            var itemForumTopic = new ForumTopic
             {
                 Date = DateTime.Now,
-                ForumCategorieId = Dto.ForumCategorieId,
-                Name = Dto.NameTopic,
+                ForumCategorieId = dto.ForumCategorieId,
+                Name = dto.NameTopic,
                 View = 0
             };
 
-            _repo.Add(ItemForumTopic);
+            _repo.Add(itemForumTopic);
 
             if (!await _repo.SaveAll())
             {
@@ -144,18 +144,18 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             // Prepare ForumPost
-            var Item = new ForumPost
+            var item = new ForumPost
             {
-                ForumTopicId = ItemForumTopic.Id,
+                ForumTopicId = itemForumTopic.Id,
                 UserId = userId,
                 Date = DateTime.Now,
-                Content = Dto.Content
+                Content = dto.Content
             };
 
-            _repo.Add(Item);
+            _repo.Add(item);
 
             if (await _repo.SaveAll())
-                return Ok(Item);
+                return Ok(item);
 
             return BadRequest("Impossible de créer le sujet");
         }
