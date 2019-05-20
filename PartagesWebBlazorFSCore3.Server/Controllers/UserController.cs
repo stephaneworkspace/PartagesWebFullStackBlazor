@@ -34,7 +34,6 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _repo;
-        private readonly IMessageRepository _repoMessage;
         private readonly IConfiguration _config;
         private readonly IMapper _mapper;
 
@@ -45,10 +44,9 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         /// <param name="repoMessage">Private message repository</param>
         /// <param name="config"> Configuration</param>
         /// <param name="mapper">Automapp</param>
-        public UserController(IUserRepository repo, IMessageRepository repoMessage, IConfiguration config, IMapper mapper)
+        public UserController(IUserRepository repo, IConfiguration config, IMapper mapper)
         {
             _repo = repo;
-            _repoMessage = repoMessage;
             _config = config;
             _mapper = mapper;
         }
@@ -111,7 +109,6 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             {
                 Token = tokenHandler.WriteToken(token),
                 User = _mapper.Map<UserForLoginReturnDto>(userFromRepo),
-                MessagesUnread = await _repoMessage.GetCountMessagesUnread(userFromRepo.Id)
             };
             return Ok(loginDto);
         }

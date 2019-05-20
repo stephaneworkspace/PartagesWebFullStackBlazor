@@ -81,14 +81,7 @@
     {
         Storage.RemoveItem("token");
         Storage.RemoveItem("username");
-        Storage.RemoveItem("messages-unread");
-        if (UriHelper.GetBaseUri() == "/")
-        {
-            UriHelper.NavigateTo("/");
-            await JSRuntime.InvokeAsync<bool>("Refresh");
-        } else
-        {
-            await JSRuntime.InvokeAsync<bool>("Refresh");
-        }
+        UriHelper.NavigateTo("/");
+        await JSRuntime.InvokeAsync<bool>("Refresh");
     }
 }

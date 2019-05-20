@@ -18,10 +18,5 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.User.LoginReturn
         /// User
         /// </summary>
         public UserForLoginReturnDto User { get; set; }
-
-        /// <summary>
-        /// Number of messages unread
-        /// </summary>
-        public int MessagesUnread { get; set; }
     }
 }

@@ -64,7 +64,6 @@
         {
             case System.Net.HttpStatusCode.OK:
                 JsAlertifyService.Open($"Utilisateur « {model.Username.CapitalizeFirst()} » connecté", TypeAlertify.Success);
-                StateHasChanged();
                 UriHelper.NavigateTo("/");
                 break;
             case System.Net.HttpStatusCode.Unauthorized:

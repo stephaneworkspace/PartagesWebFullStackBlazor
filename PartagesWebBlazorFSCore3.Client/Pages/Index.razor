@@ -1,19 +1,53 @@
 ﻿@page "/"
 @inject LocalStorage Storage
+@inject IUriHelper UriHelper
+@inject IHttpMessageService HttpMessageService
 @using Cloudcrate.AspNetCore.Blazor.Browser.Storage
-
+@using PartagesWebBlazorFSCore3.Client.Services.Http
 <NavBarTop />
 
 <h1 class="title is-3">Accueil</h1>
 
 @if (Storage["token"] == null)
 {
-    <p>Bienvenue, pour participer au forum tu peux t'inscrire <NavLink class="nav-link" href="SignUp">ici</NavLink></p>
+    <p>Bienvenue, pour participer au forum l'inscription est <NavLink class="nav-link" href="SignUp">ici</NavLink></p>
 }
 else
 {
     <p>Bienvenue @Storage["username"]</p>
+    if (countMessageUnread == 1)
+    {
+        <p>
+            @countMessageUnread message non lu
+        </p>
+    }
+    if (countMessageUnread > 1)
+    {
+        <p>
+            @countMessageUnread messages non lus
+        </p>
+    }
+    <br />
 }
 
 @functions {
+    int countMessageUnread = 0;
+    protected override async Task OnInitAsync()
+    {
+        @if (Storage["token"] != null)
+        {
+            HttpResponseMessage response = await HttpMessageService.GetCountUnread();
+            switch (response.StatusCode)
+            {
+                case System.Net.HttpStatusCode.OK:
+                    string content = await response.Content.ReadAsStringAsync();
+                    countMessageUnread = Int32.Parse(content);
+                    break;
+                case System.Net.HttpStatusCode.Unauthorized:
+                    UriHelper.NavigateTo("/login");
+                    break;
+            };
+        }
+
+    }
 }

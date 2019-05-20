@@ -80,7 +80,6 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         {
             _storage.RemoveItem("token");
             _storage.RemoveItem("username");
-            _storage.RemoveItem("messages-unread");
             var requestJson = Json.Serialize(dto);
             HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, $"{Constants.URL_BASE}api/User/login");
             req.Content = new StringContent(requestJson, Encoding.Default, "application/json");
@@ -92,7 +91,6 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
                 LoginReturnDto _dto = Json.Deserialize<LoginReturnDto>(content);
                 _storage["token"] = _dto.Token;
                 _storage["username"] = _dto.User.Username;
-                _storage["messages-unread"] = _dto.MessagesUnread.ToString();
             }
             return response;
         }

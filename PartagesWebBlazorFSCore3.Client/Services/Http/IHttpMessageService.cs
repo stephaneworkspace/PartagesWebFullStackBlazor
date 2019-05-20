@@ -35,5 +35,11 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         /// <param name="id">Message primary key</param>
         /// <returns></returns>
         Task<HttpResponseMessage> GetMessage(int id);
+
+        /// <summary>
+        /// Get count of unread message
+        /// </summary>
+        /// <returns></returns>
+        Task<HttpResponseMessage> GetCountUnread();
     }
 }

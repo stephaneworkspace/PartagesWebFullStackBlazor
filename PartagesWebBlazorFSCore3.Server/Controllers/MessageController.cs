@@ -118,6 +118,16 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
 
         }
 
+        [Authorize]
+        [HttpGet("countUnread")]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(int), Description = "Ok")]
+        public async Task<int> GetCountMessagesUnread()
+        {
+            // Find current user
+            var currentUser = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            return await _repo.GetCountMessagesUnread(currentUser);
+        }
+
         /// <summary>
         /// New ForumTopic and ForumPost
         /// </summary>

@@ -71,5 +71,16 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
             req.Headers.Add("Authorization", $"Bearer {_storage["token"]}");
             return await _httpClient.SendAsync(req);
         }
+
+        /// <summary>
+        /// Get count of unread message
+        /// </summary>
+        /// <returns></returns>
+        public async Task<HttpResponseMessage> GetCountUnread()
+        {
+            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, $"{Constants.URL_BASE}api/Message/countUnread");
+            req.Headers.Add("Authorization", $"Bearer {_storage["token"]}");
+            return await _httpClient.SendAsync(req);
+        }
     }
 }
