@@ -122,7 +122,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Contenu » est obligatoire.")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Nom du sujet » est obligatoire.")]
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Catégorie du sujet » est obligatoire.")]
-        public async Task<IActionResult> NouveauSujetEtPoste(ForumPostForNewForumTopicDto dto)
+        public async Task<IActionResult> NewForumTopicAndForumPost(ForumPostForNewForumTopicDto dto)
         {
             // Prepare ForumTopic
             var itemForumTopic = new ForumTopic

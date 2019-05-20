@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -11,6 +12,7 @@ using NSwag.Annotations;
 using PartagesWebBlazorFSCore3.Server.Data;
 using PartagesWebBlazorFSCore3.Server.Helpers;
 using PartagesWebBlazorFSCore3.Server.Helpers.PagedParams;
+using PartagesWebBlazorFSCore3.Shared.Dtos.Input.Message;
 using PartagesWebBlazorFSCore3.Shared.Dtos.Output.Message.ForList;
 using PartagesWebBlazorFSCore3.Shared.Models;
 
@@ -68,6 +70,42 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
             }
             Response.AddPagination(items.CurrentPage, items.PageSize, items.TotalCount, items.TotalPages);
             return Ok(newDto);
+        }
+
+        /// <summary>
+        /// New ForumTopic and ForumPost
+        /// </summary>
+        /// <param name="Dto">Dto Input</param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(void), Description = "Ok")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "Impossible d'envoyer le message")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Destinataire » est obligatoire.")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Sujet » est obligatoire.")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, typeof(void), Description = "error.errors.Nom[0] == Le champ « Contenu » est obligatoire.")]
+        public async Task<IActionResult> PostMessage(MessageDto dto)
+        {
+            // Find current user
+            var currentUser = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            // Prepare message
+            Message item = new Message
+            {
+                UserId = dto.UserId,
+                SendByUserId = currentUser,
+                Date = DateTime.Now,
+                Subject = dto.Subject,
+                Content = dto.Content,
+                SwRead = false,
+            };
+
+            _repo.Add(item);
+
+            if (await _repo.SaveAll())
+                return Ok(item);
+
+            return BadRequest("Impossible d'envoyer le message");
         }
     }
 }

@@ -13,9 +13,8 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Input.Message
         /// <summary>
         /// User destination
         /// </summary>
-        /// <remarks>-> SendByUserId in Message model, not UserId, this is the authentificate User</remarks>
         [Required(ErrorMessage = "Le champ « {0} » est obligatoire.")]
-        [Display(Name = "Nom d'utilisateur")]
+        [Display(Name = "Destinataire")]
         public int UserId { get; set; }
 
         /// <summary>
