@@ -48,12 +48,12 @@ namespace PartagesWebBlazorFSCore3.Server
             services.AddDbContext<DataContext>(x => x.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().AddNewtonsoftJson();
             services.AddSwaggerDocument();
-            // services.AddCors();
             services.AddAutoMapper();
             services.AddTransient<Seed>();
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IForumRepository, ForumRepository>();
+            services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters
@@ -94,8 +94,7 @@ namespace PartagesWebBlazorFSCore3.Server
 
             app.UseRouting();
 
-            // cut
-            // seeder.SeedUsers(); Data already Seed in Database
+             // seeder.SeedUsers(); Data already Seed in Database
             // seeder.SeedForumCategorie();
             // seeder.SeedForumTopic();
             // seeder.SeedForumPost();
@@ -104,7 +103,6 @@ namespace PartagesWebBlazorFSCore3.Server
             app.UseAuthorization();
             app.UseSwagger();
             app.UseSwaggerUi3();
-            // cut
 
             app.UseEndpoints(endpoints =>
             {

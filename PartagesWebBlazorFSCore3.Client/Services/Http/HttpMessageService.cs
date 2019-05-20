@@ -79,7 +79,7 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         /// <returns></returns>
         public async Task<HttpResponseMessage> GetUserForNewMessage(int id)
         {
-            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, $"{Constants.URL_BASE}api/User/{id}");
+            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, $"{Constants.URL_BASE}api/Auth/{id}");
             req.Headers.Add("Authorization", $"Bearer {_storage["token"]}");
             return await _httpClient.SendAsync(req);
         }

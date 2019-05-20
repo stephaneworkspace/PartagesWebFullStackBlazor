@@ -136,7 +136,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         [Authorize]
         [HttpGet("{id}")]
         [SwaggerResponse(HttpStatusCode.OK, typeof(Boolean), Description = "Ok")]
-        public async Task<IActionResult> GetUser(UserForSelectDto dto, int id)
+        public async Task<IActionResult> GetUser(int id)
         {
             User item = await _repo.GetUser(id);
             return Ok(_mapper.Map<UserForSelectDto>(item));
