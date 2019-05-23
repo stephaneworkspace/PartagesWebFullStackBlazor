@@ -1,8 +1,10 @@
 ﻿@page "/signUp"
 @*inject HttpClient Http // For Udemy*@
+@inject LocalStorage Storage
 @inject IUriHelper UriHelper
 @inject IJsAlertifyService JsAlertifyService
 @inject IHttpUserService HttpUserService
+@using Cloudcrate.AspNetCore.Blazor.Browser.Storage
 @using PartagesWebBlazorFSCore3.Client.Helpers
 @using PartagesWebBlazorFSCore3.Client.Services.Http
 @using PartagesWebBlazorFSCore3.Client.Services.Js
@@ -69,6 +71,10 @@
     protected override void OnInit()
     {
         model.ValueChanged += CheckIfUsernameAvailableEvent;
+        @if (Storage["token"] != null || Storage["username"] != null)
+        {
+            UriHelper.NavigateTo("/");
+        }
     }
 
     public async void CheckIfUsernameAvailableEvent(object sender, EventArgs e)

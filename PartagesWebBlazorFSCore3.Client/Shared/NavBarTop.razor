@@ -5,8 +5,9 @@
 @using PartagesWebBlazorFSCore3.Shared.Helpers
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
-            <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+        <a class="navbar-item" href="/forumCategories">
+            <!--<img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">-->
+            <img src="nav_bar.png" width="112" height="28" />
         </a>
 
         <a id="navbar-burger" role="button" onclick="@ToogleNavbar" class="navbar-burger burger @toogleClass" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -26,7 +27,7 @@
                 Forum
             </a>
 
-            @if (Storage["token"] != null)
+            @if (Storage["token"] != null && Storage["username"] != null)
             {
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
@@ -45,7 +46,7 @@
                 </div>
             }
         </div>
-        @if (Storage["token"] == null)
+        @if (Storage["token"] == null || Storage["username"] == null)
         {
             <div class="navbar-end">
                 <div class="navbar-item">
