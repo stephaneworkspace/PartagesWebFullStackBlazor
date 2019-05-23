@@ -106,7 +106,7 @@ namespace PartagesWebBlazorFSCore3.Server
             app.UseSwaggerUi3();
 
             // Client image
-            app.UseStaticFiles();
+            // app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {
