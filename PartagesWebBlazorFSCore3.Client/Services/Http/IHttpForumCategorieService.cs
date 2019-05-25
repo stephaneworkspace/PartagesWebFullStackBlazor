@@ -16,6 +16,7 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         /// </summary>
         /// <returns></returns>
         Task<HttpResponseMessage> GetForumCategorie(int id);
+
         /// <summary>
         /// Get all ForumCategorie
         /// </summary>

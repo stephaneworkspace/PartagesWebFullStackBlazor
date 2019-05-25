@@ -96,11 +96,11 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         }
 
         /// <summary>
-        /// Get User info for post a new message
+        /// Get User info to post a new message
         /// </summary>
         /// <param name="id">Primary key User destination</param>
         /// <returns></returns>
-        /// <remarks>Authentificate required</remarks>
+        /// <remarks>Authentification required</remarks>
         public async Task<HttpResponseMessage> GetUser(int id)
         {
             HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, $"{Constants.URL_BASE}api/User/{id}");

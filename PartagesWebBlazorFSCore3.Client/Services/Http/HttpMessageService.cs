@@ -73,7 +73,7 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Http
         }
 
         /// <summary>
-        /// Get count of unread message
+        /// Get number of unread message(s)
         /// </summary>
         /// <returns></returns>
         public async Task<HttpResponseMessage> GetCountUnread()

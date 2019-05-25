@@ -13,14 +13,14 @@ namespace PartagesWebBlazorFSCore3.Client.Services.Js
     public interface IJsMomentService
     {
         /// <summary>
-        /// Return date from now in french
+        /// Return date from now in French
         /// </summary>
         /// <param name="date">Date string</param>
         /// <returns></returns>
         Task<string> FromNow(string date);
 
         /// <summary>
-        /// Return date formated in french
+        /// Return date formated in French
         /// </summary>
         /// <param name="date">Date string</param>
         /// <returns></returns>
