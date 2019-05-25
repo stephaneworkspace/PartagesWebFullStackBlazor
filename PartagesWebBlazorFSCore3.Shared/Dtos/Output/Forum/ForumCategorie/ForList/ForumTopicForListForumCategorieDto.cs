@@ -35,7 +35,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForLi
         public DateTime Date { get; set; }
 
         /// <summary>
-        /// Number of view
+        /// Number of views
         /// </summary>
         public int View { get; set; }
     }

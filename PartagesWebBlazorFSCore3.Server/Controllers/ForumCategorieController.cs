@@ -29,6 +29,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         private readonly IForumRepository _repo;
         private readonly IMapper _mapper;
         private readonly IConfiguration _config;
+
         /// <summary>  
         /// Constructor
         /// </summary>  

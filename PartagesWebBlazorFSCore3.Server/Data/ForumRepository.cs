@@ -104,7 +104,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         }
 
         /// <summary>
-        /// Count ForumPostes from a ForumCategirue
+        /// Count ForumPostes from a ForumCategorie
         /// </summary>
         /// <param name="id">ForumCategorie primary key</param>
         /// <returns></returns>

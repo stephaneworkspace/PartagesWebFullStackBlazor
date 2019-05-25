@@ -18,7 +18,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Input.Message
         public int UserId { get; set; }
 
         /// <summary>
-        /// Subject du message
+        /// Subject of message
         /// </summary>
         [Required(ErrorMessage = "Le champ « {0} » est obligatoire.")]
         [Display(Name = "Sujet")]

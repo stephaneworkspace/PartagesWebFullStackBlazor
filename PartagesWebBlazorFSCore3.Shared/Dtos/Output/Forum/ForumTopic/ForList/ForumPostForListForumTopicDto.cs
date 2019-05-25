@@ -35,7 +35,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumTopic.ForList
         public virtual UsersForListForumTopicDto User { get; set; }
 
         /// <summary>
-        /// Date last ForumPost
+        /// Date of last ForumPost
         /// </summary>
         public DateTime Date { get; set; }
 

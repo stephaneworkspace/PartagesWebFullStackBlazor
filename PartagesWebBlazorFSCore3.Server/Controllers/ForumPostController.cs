@@ -36,7 +36,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         private readonly IConfiguration _config;
 
         /// <summary>  
-        /// Cette méthode est le constructeur 
+        /// Constructor
         /// </summary>  
         /// <param name="repo">Forum Repository</param>
         /// <param name="mapper">AutoMapp</param>

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForList
 {
     /// <summary>
-    /// Dto from model ForumCategorie with computed Field CountForumTopic, CountForumPost, LastForumPost, PageLastForumPost
+    /// Dto from model ForumCategorie with computed fields: CountForumTopic, CountForumPost, LastForumPost, PageLastForumPost
     /// </summary>
     public class ForumCategorieForListDto
     {
@@ -20,7 +20,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumCategorie.ForLi
         public int Id { get; set; }
 
         /// <summary>
-        /// Categorie name
+        /// Category name
         /// </summary>
         public string Name { get; set; }
 

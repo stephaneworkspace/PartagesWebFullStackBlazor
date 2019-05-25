@@ -17,7 +17,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Input.Forum.ForumPost.ForReply
     public class ForumPostForReplyDto
     {
         /// <summary>
-        /// Primary key froum ForumTopic
+        /// Primary key from ForumTopic
         /// </summary>
         public int ForumTopicId { get; set; }
 

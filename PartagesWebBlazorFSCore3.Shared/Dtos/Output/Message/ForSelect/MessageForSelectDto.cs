@@ -19,10 +19,10 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Message.ForSelect
         public int Id { get; set; }
 
         /// <summary>
-        /// Clé de l'utilisateur qui envoie le message
+        /// Sender User key
         /// </summary>
         /// <remarks>
-        /// This can be null, if User is delete of the DB
+        /// This can be null, if User is deleted from the DB
         /// </remarks>
         public int? SendByUserId { get; set; }
 

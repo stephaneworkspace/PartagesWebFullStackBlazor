@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace PartagesWebBlazorFSCore3.Server.Data
 {
     /// <summary>
-    /// Private message repository
+    /// Repository for private message between User
     /// </summary>
     public interface IMessageRepository
     {

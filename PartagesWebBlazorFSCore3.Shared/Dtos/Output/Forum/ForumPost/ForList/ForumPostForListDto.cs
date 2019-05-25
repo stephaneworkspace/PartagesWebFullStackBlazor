@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumPost.ForList
 {
     /// <summary>
-    /// Dto from model ForumPost with computed field SwCurrentUser and computed inside User/UserForListForumPostDto
+    /// Dto from model ForumPost with computed fields: SwCurrentUser and computed inside User/UserForListForumPostDto
     /// </summary>
     public class ForumPostForListDto
     {
@@ -50,7 +50,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumPost.ForList
         public string Content { get; set; }
 
         /// <summary>
-        /// Switch if current user in [Authorize]
+        /// Switch if current user is currently [Authorize]
         /// </summary>
         /// <remarks>Computed DTO field</remarks>
         public bool? SwCurrentUser { get; set; }

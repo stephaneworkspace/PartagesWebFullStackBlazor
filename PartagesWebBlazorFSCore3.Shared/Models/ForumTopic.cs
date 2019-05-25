@@ -39,7 +39,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Models
         public DateTime Date { get; set; }
 
         /// <summary>
-        /// Number of view
+        /// Number of views
         /// </summary>
         public int View { get; set; }
     }

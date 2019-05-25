@@ -126,7 +126,7 @@ namespace PartagesWebBlazorFSCore3.Server.Controllers
         }
 
         /// <summary>
-        /// Get user info for post a message
+        /// Get user info to post a message
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumPost.ForList
 {
     /// <summary>
-    /// Dto from model User with a computed field, MessageCount
+    /// Dto from model User with a computed field: MessageCount
     /// </summary>
     public class UserForListForumPostDto
     {
@@ -30,7 +30,7 @@ namespace PartagesWebBlazorFSCore3.Shared.Dtos.Output.Forum.ForumPost.ForList
         public DateTime Created { get; set; }
 
         /// <summary>
-        /// Message count of user
+        /// Message count of a user
         /// </summary>
         /// <remarks>Computed DTO field</remarks>
         public int MessageCount { get; set; }
