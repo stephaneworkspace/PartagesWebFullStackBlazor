@@ -1,17 +1,17 @@
 [
   {
-    "Nom": "Dev web - Backend"
+    "Name": "Dev web - Backend"
   },
   {
-    "Nom": "Dev web - Frontend"
+    "Name": "Dev web - Frontend"
   },
   {
-    "Nom": "Linux"
+    "Name": "Linux"
   },
   {
-    "Nom": "Musique assisté par ordinateur"
+    "Name": "Musique assisté par ordinateur"
   },
   {
-    "Nom": "Astrologie"
+    "Name": "Astrologie"
   }
 ]

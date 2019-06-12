@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using PartagesWebBlazorFSCore3.Server.Dtos.Input.Seed.Forum.ForumCategorie.ForSeed;
 using PartagesWebBlazorFSCore3.Server.Dtos.Input.Seed.Forum.ForumPost.ForSeed;
 using PartagesWebBlazorFSCore3.Server.Dtos.Input.Seed.Forum.ForumTopic.ForSeed;
 using PartagesWebBlazorFSCore3.Server.Helpers;
@@ -65,17 +66,17 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         ///<summary>
         /// Seed ForumCategorie
         ///</summary>
-        public async Task SeedForumCategorie()
+        public void SeedForumCategorie()
         {
-            var itemData = System.IO.File.ReadAllText("Data/Seed/ForumCategoriesSeedData.json", Encoding.GetEncoding("iso-8859-1"));
-            var items = JsonConvert.DeserializeObject<List<ForumCategorie>>(itemData);
-            foreach (var item in items)
+            if (!_context.ForumCategories.Any())
             {
-                if (!await _context.ForumCategories.AnyAsync(x => x.Name.ToLower() == item.Name.ToLower()))
+                var itemData = System.IO.File.ReadAllText("Data/Seed/ForumCategoriesSeedData.json", Encoding.GetEncoding("iso-8859-1"));
+                var items = JsonConvert.DeserializeObject<ForumCategorie[]>(itemData);
+                foreach (var item in items)
                 {
-                    await _context.ForumCategories.AddAsync(item);
+                    _context.ForumCategories.Add(item);
                 }
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
         }
 

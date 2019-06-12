@@ -18,6 +18,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using PartagesWebBlazorFSCore3.Server.Helpers;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace PartagesWebBlazorFSCore3.Server
 {
@@ -95,7 +96,7 @@ namespace PartagesWebBlazorFSCore3.Server
             app.UseRouting();
 
             // _ = seeder.SeedUsers(); // Data already Seed in Database
-            // _ = seeder.SeedForumCategorie();
+            seeder.SeedForumCategorie();
             // seeder.SeedForumTopic();
             // seeder.SeedForumPost();
             // app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
