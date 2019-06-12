@@ -95,10 +95,10 @@ namespace PartagesWebBlazorFSCore3.Server
 
             app.UseRouting();
 
-            // _ = seeder.SeedUsers(); // Data already Seed in Database
+            seeder.SeedUsers(); // Data already Seed in Database
             seeder.SeedForumCategorie();
-            // seeder.SeedForumTopic();
-            // seeder.SeedForumPost();
+            seeder.SeedForumTopic();
+            seeder.SeedForumPost();
             // app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             
             app.UseAuthentication();

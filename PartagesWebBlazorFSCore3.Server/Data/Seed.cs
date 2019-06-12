@@ -42,13 +42,13 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         /// <remarks>
         /// Code in comment don't compile, so the solution for unique data is comment this method in Startup.cs
         /// </remarks>
-        public async Task SeedUsers()
+        public void SeedUsers()
         {
             var userData = System.IO.File.ReadAllText("Data/Seed/UsersSeedData.json");
             var users = JsonConvert.DeserializeObject<List<User>>(userData);
             foreach (var user in users)
             {
-                if (!await _context.Users.AnyAsync(x => x.Username == user.Username))
+                if (!_context.Users.Any(x => x.Username == user.Username))
                 {
                     PasswordGenerate passwordGenerate = new PasswordGenerate();
                     passwordGenerate.CreatePasswordHash("password", out byte[] passwordHash, out byte[] passwordSalt);
@@ -57,10 +57,10 @@ namespace PartagesWebBlazorFSCore3.Server.Data
                     user.PasswordSalt = passwordSalt;
                     user.Username = user.Username.ToLower();
 
-                   await  _context.Users.AddAsync(user);
+                   _context.Users.Add(user);
                 }
             }
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         ///<summary>
@@ -68,22 +68,21 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         ///</summary>
         public void SeedForumCategorie()
         {
-            if (!_context.ForumCategories.Any())
+            var itemData = System.IO.File.ReadAllText("Data/Seed/ForumCategoriesSeedData.json", Encoding.GetEncoding("iso-8859-1"));
+            var items = JsonConvert.DeserializeObject<ForumCategorie[]>(itemData);
+            foreach (var item in items)
             {
-                var itemData = System.IO.File.ReadAllText("Data/Seed/ForumCategoriesSeedData.json", Encoding.GetEncoding("iso-8859-1"));
-                var items = JsonConvert.DeserializeObject<ForumCategorie[]>(itemData);
-                foreach (var item in items)
-                {
+                if (!_context.ForumCategories.Any(x => x.Name.ToLower() == item.Name.ToLower())) {
                     _context.ForumCategories.Add(item);
                 }
-                _context.SaveChanges();
             }
+            _context.SaveChanges();
         }
 
         ///<summary>
         /// Seed ForumTopic
         ///</summary>
-        public async void SeedForumTopic()
+        public void SeedForumTopic()
         {
             var itemData = System.IO.File.ReadAllText("Data/Seed/ForumTopicsSeedData.json", Encoding.GetEncoding("iso-8859-1"));
             var items2 = JsonConvert.DeserializeObject<List<ForumTopicForSeedDto>>(itemData);
@@ -100,7 +99,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
                         View = item.View
                     };
                     _context.ForumTopics.Add(forumTopic);
-                    await _context.SaveChangesAsync();
+                    _context.SaveChanges();
                 }
             }
         }
@@ -108,7 +107,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
         ///<summary>
         /// Seed ForumPost
         ///</summary>
-        public async void SeedForumPost()
+        public void SeedForumPost()
         {
             var itemData = System.IO.File.ReadAllText("Data/Seed/ForumPostsSeedData.json", Encoding.GetEncoding("iso-8859-1"));
             var items3 = JsonConvert.DeserializeObject<List<ForumPostForSeedDto>>(itemData);
@@ -126,7 +125,7 @@ namespace PartagesWebBlazorFSCore3.Server.Data
                         Content = item.Content
                     };
                     _context.ForumPosts.Add(forumPost);
-                    await _context.SaveChangesAsync();
+                    _context.SaveChanges();
                 }
             }
         }
